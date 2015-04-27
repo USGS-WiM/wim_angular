@@ -21,6 +21,7 @@
 
 
 //Imports"
+///<reference path="../Extensions/String.ts" />
 // Interface
 module WiM.Models {
     export interface IPoint {

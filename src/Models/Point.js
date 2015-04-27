@@ -15,6 +15,7 @@
 //Comments
 //08.20.2014 jkn - Created
 //Imports"
+///<reference path="../Extensions/String.ts" />
 // Interface
 var WiM;
 (function (WiM) {
