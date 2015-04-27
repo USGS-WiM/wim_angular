@@ -1,6 +1,0 @@
-C:\WIM\Documents\Visual Studio\Projects\WiM\wim_angular\obj\Debug\wim_angular.csprojResolveAssemblyReference.cache
-C:\WIM\Documents\Visual Studio\Projects\WiM\wim_angular\bin\wim_angular.dll.config
-C:\WIM\Documents\Visual Studio\Projects\WiM\wim_angular\bin\wim_angular.dll
-C:\WIM\Documents\Visual Studio\Projects\WiM\wim_angular\bin\wim_angular.pdb
-C:\WIM\Documents\Visual Studio\Projects\WiM\wim_angular\obj\Debug\wim_angular.dll
-C:\WIM\Documents\Visual Studio\Projects\WiM\wim_angular\obj\Debug\wim_angular.pdb
