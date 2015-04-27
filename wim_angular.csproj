@@ -52,6 +52,9 @@
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="dist\wim_angular.js" />
+    <Content Include="dist\wim_angular.min.js" />
+    <Content Include="gulpfile.js" />
     <TypeScriptCompile Include="src\Extensions\String.ts" />
     <TypeScriptCompile Include="src\Models\Citation.ts" />
     <TypeScriptCompile Include="src\Models\KeyValue.ts" />
@@ -81,5 +84,6 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
 </Project>
