@@ -44,8 +44,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
-    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>False</TypeScriptSourceMap>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
@@ -55,6 +55,9 @@
     <Content Include="dist\wim_angular.js" />
     <Content Include="dist\wim_angular.min.js" />
     <Content Include="gulpfile.js" />
+    <TypeScriptCompile Include="dist\wim_angular.d.ts" />
+    <TypeScriptCompile Include="_references.ts" />
+    <TypeScriptCompile Include="src\Services\service.module.ts" />
     <TypeScriptCompile Include="src\Extensions\String.ts" />
     <TypeScriptCompile Include="src\Models\Citation.ts" />
     <TypeScriptCompile Include="src\Models\KeyValue.ts" />
@@ -64,11 +67,7 @@
     <TypeScriptCompile Include="src\Services\Helpers\RequestInfo.ts" />
     <TypeScriptCompile Include="src\Services\HTTPServiceBase.ts" />
     <TypeScriptCompile Include="src\Services\SearchAPIService.ts" />
-    <TypeScriptCompile Include="src\Services\service.module.ts" />
     <TypeScriptCompile Include="src\Services\StateWatcherService.ts" />
-    <TypeScriptCompile Include="typings\angularjs\angular.d.ts" />
-    <TypeScriptCompile Include="typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="typings\tsd.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="tsd.json" />
@@ -85,5 +84,9 @@
     </None>
   </ItemGroup>
   <ItemGroup />
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
+    <TypeScriptOutFile>dist/wim_angular.js</TypeScriptOutFile>
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
 </Project>

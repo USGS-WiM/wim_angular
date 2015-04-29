@@ -2,21 +2,21 @@
 var gulp = require('gulp');
 
 // Include Our Plugins
-var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
+var ts = require('gulp-tsc');
 
+
+var src = ['dist/wim_angular.js'];
 
 // Concatenate & Minify JS
 gulp.task('scripts', function () {
-    return gulp.src('src/**/*.js')
-        .pipe(concat('wim_angular.js'))
-        .pipe(gulp.dest('dist'))
+    return gulp.src(src)
         .pipe(rename('wim_angular.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('dist'));
 });
 
 
-// Default Task
+// Default Taskgul
 gulp.task('default', ['scripts']);
