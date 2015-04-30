@@ -27,3 +27,4 @@ var WiM;
         })(Helpers = Services.Helpers || (Services.Helpers = {}));
     })(Services = WiM.Services || (WiM.Services = {}));
 })(WiM || (WiM = {}));
+//# sourceMappingURL=RequestInfo.js.map
