@@ -346,3 +346,4 @@ var WiM;
         angular.module('WiM.Services').factory('WiM.Services.StateWatcherService', factory);
     })(Services = WiM.Services || (WiM.Services = {}));
 })(WiM || (WiM = {}));
+//# sourceMappingURL=wim_angular.js.map
