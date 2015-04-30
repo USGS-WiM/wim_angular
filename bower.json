@@ -11,16 +11,8 @@
         "dist/src/**/.*"
     ],
   "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests",
-    "src",
-    "typings",
-    "bin",
-    "obj",
-    "_references.*",
-    "bower.json"
+    "*",
+    "!dist/",
+    "!dist/*"
   ]
 }
