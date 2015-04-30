@@ -1,0 +1,29 @@
+{
+  "name": "wim_angular",
+  "version": "1.0.0",
+  "description": "Contains base typescript modules and services for WiM",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/USGS-WiM/wim_angular"
+  },
+  "keywords": [
+    "angular",
+    "wim"
+  ],
+  "author": "Jeremy Newson, Marty Smith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/USGS-WiM/wim_angular/issues"
+  },
+  "homepage": "https://github.com/USGS-WiM/wim_angular",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.2.0"
+  }
+}
