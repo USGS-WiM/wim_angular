@@ -8,13 +8,19 @@
     "description": "angular library for wim apps",
     "license": "MIT",
     "main": [ 
-        "dist/*"
+        "dist/src/**/.*"
     ],
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "src",
+    "typings",
+    "bin",
+    "obj",
+    "_references.*",
+    "bower.json"
   ]
 }
