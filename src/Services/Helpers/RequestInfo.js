@@ -12,15 +12,11 @@ var WiM;
                     this.url = ul;
                     this.method = methodType[mthd];
                     this.dataType = dtype;
-                    //Avoid setting custom header if you don't want to do a CORS preflight dance
-                    //this.headers = {
-                    //    'Content-Type': contentType
-                    //}
                     this.data = data;
                 }
                 return RequestInfo;
             })();
-            Helpers.RequestInfo = RequestInfo; //end class
+            Helpers.RequestInfo = RequestInfo;
             (function (methodType) {
                 methodType[methodType["GET"] = 0] = "GET";
                 methodType[methodType["POST"] = 1] = "POST";
@@ -30,5 +26,4 @@ var WiM;
             var methodType = Helpers.methodType;
         })(Helpers = Services.Helpers || (Services.Helpers = {}));
     })(Services = WiM.Services || (WiM.Services = {}));
-})(WiM || (WiM = {})); //end module
-//# sourceMappingURL=RequestInfo.js.map
+})(WiM || (WiM = {}));

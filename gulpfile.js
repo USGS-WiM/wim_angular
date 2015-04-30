@@ -4,7 +4,6 @@ var gulp = require('gulp');
 // Include Our Plugins
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
-var ts = require('gulp-tsc');
 
 
 var src = ['dist/wim_angular.js'];
