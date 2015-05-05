@@ -1,4 +1,4 @@
-module StreamStats.Models{
+module WiM.Models{
     export interface IKeyValue {
         Key: any;
         Value: any;

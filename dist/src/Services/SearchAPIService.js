@@ -20,7 +20,6 @@ var WiM;
             }
             return SearchLocation;
         })();
-        Services.SearchLocation = SearchLocation;
         var SearchAPIService = (function (_super) {
             __extends(SearchAPIService, _super);
             function SearchAPIService($http, $q) {
@@ -30,9 +29,11 @@ var WiM;
             }
             SearchAPIService.prototype.getLocations = function (searchTerm) {
                 var _this = this;
+                this.term = searchTerm;
                 var request = new WiM.Services.Helpers.RequestInfo("/search");
                 request.params = {
-                    term: searchTerm,
+                    term: this.term,
+                    state: this.state,
                     includeGNIS: this.includeGNIS,
                     useCommonGnisClasses: this.useCommonGnisClasses,
                     includeUsgsSiteSW: this.includeUsgsSiteSW,
@@ -67,6 +68,8 @@ var WiM;
                 this.includeState = true;
                 this.topN = 100;
                 this.debug = false;
+                this.term = '';
+                this.state = '';
             };
             return SearchAPIService;
         })(Services.HTTPServiceBase);
