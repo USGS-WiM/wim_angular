@@ -39,7 +39,7 @@ module WiM.Services {
     export interface ISearchAPIService {
         getLocations(searchTerm: string): ng.IPromise<Array<ISearchAPIOutput>>;
     }
-    export class SearchLocation implements ISearchAPIOutput {
+    class SearchLocation implements ISearchAPIOutput {
         public Name: string; //name
         public Category: string; //category
         public State: string; //state
@@ -79,6 +79,8 @@ module WiM.Services {
         public includeState: boolean;
         public topN: number;
         public debug: boolean;
+        public term: string;
+        public state: string;
 
         
         //Constructor
@@ -91,10 +93,11 @@ module WiM.Services {
         //Methods
         //-+-+-+-+-+-+-+-+-+-+-+-
         public getLocations(searchTerm: string):ng.IPromise<Array<ISearchAPIOutput>> {
-
+            this.term = searchTerm;
             var request: WiM.Services.Helpers.RequestInfo = new WiM.Services.Helpers.RequestInfo("/search");
             request.params = {
-                term: searchTerm,
+                term: this.term,
+                state:this.state,
                 includeGNIS: this.includeGNIS,
                 useCommonGnisClasses : this.useCommonGnisClasses,
                 includeUsgsSiteSW : this.includeUsgsSiteSW,
@@ -117,8 +120,7 @@ module WiM.Services {
                     return this.$q.reject(error.data)
                 });
         }
-
-
+        
         //HelperMethods
         //-+-+-+-+-+-+-+-+-+-+-+-
         private init() {
@@ -134,7 +136,10 @@ module WiM.Services {
             this.includeState = true;
             this.topN = 100;
             this.debug = false;
+            this.term = '';
+            this.state = '';
         }
+
 
     }//end class
 

@@ -13,6 +13,7 @@
   "ignore": [
     "*",
     "!dist/",
-    "!dist/**/*"
+    "!dist/**/*",
+    "_references.*"
   ]
 }

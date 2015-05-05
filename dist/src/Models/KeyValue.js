@@ -1,5 +1,5 @@
-var StreamStats;
-(function (StreamStats) {
+var WiM;
+(function (WiM) {
     var Models;
     (function (Models) {
         var KeyValue = (function () {
@@ -11,6 +11,6 @@ var StreamStats;
             }
             return KeyValue;
         })();
-    })(Models = StreamStats.Models || (StreamStats.Models = {}));
-})(StreamStats || (StreamStats = {}));
+    })(Models = WiM.Models || (WiM.Models = {}));
+})(WiM || (WiM = {}));
 //# sourceMappingURL=KeyValue.js.map
