@@ -20,6 +20,11 @@ var WiM;
             }
             return SearchLocation;
         })();
+        var SearchConfig = (function () {
+            function SearchConfig() {
+            }
+            return SearchConfig;
+        })();
         var SearchAPIService = (function (_super) {
             __extends(SearchAPIService, _super);
             function SearchAPIService($http, $q) {
@@ -27,49 +32,72 @@ var WiM;
                 this.$q = $q;
                 this.init();
             }
-            SearchAPIService.prototype.getLocations = function (searchTerm) {
+            Object.defineProperty(SearchAPIService.prototype, "onSelectedAreaOfInterestChanged", {
+                get: function () {
+                    return this._onSelectedAreaOfInterestChanged;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(SearchAPIService.prototype, "selectedAreaOfInterest", {
+                get: function () {
+                    return this._selectedAreaOfInterest;
+                },
+                set: function (val) {
+                    if (this._selectedAreaOfInterest !== val) {
+                        this._selectedAreaOfInterest = val;
+                        this._onSelectedAreaOfInterestChanged.raise(null, WiM.Event.EventArgs.Empty);
+                    }
+                },
+                enumerable: true,
+                configurable: true
+            });
+            SearchAPIService.prototype.loadLocations = function (searchTerm) {
                 var _this = this;
-                this.term = searchTerm;
+                this.areaOfInterestList.length = 0;
+                this.config.term = searchTerm;
                 var request = new WiM.Services.Helpers.RequestInfo("/search");
                 request.params = {
-                    term: this.term,
-                    state: this.state,
-                    includeGNIS: this.includeGNIS,
-                    useCommonGnisClasses: this.useCommonGnisClasses,
-                    includeUsgsSiteSW: this.includeUsgsSiteSW,
-                    includeUsgsSiteGW: this.includeUsgsSiteGW,
-                    includeUsgsSiteSP: this.includeUsgsSiteSP,
-                    includeUsgsSiteAT: this.includeUsgsSiteAT,
-                    includeUsgsSiteOT: this.includeUsgsSiteOT,
-                    includeZIPcodes: this.includeZIPcodes,
-                    includeAREAcodes: this.includeAREAcodes,
-                    includeState: this.includeState,
-                    topN: this.topN,
-                    debug: this.debug
+                    term: this.config.term,
+                    state: this.config.state,
+                    includeGNIS: this.config.includeGNIS,
+                    useCommonGnisClasses: this.config.useCommonGnisClasses,
+                    includeUsgsSiteSW: this.config.includeUsgsSiteSW,
+                    includeUsgsSiteGW: this.config.includeUsgsSiteGW,
+                    includeUsgsSiteSP: this.config.includeUsgsSiteSP,
+                    includeUsgsSiteAT: this.config.includeUsgsSiteAT,
+                    includeUsgsSiteOT: this.config.includeUsgsSiteOT,
+                    includeZIPcodes: this.config.includeZIPcodes,
+                    includeAREAcodes: this.config.includeAREAcodes,
+                    includeState: this.config.includeState,
+                    topN: this.config.topN,
+                    debug: this.config.debug
                 };
                 return this.Execute(request).then(function (response) {
-                    return response.data.map(function (item) {
-                        return new SearchLocation(item.nm, item.ct, item.st, item.y, item.x);
+                    response.data.map(function (item) {
+                        _this.areaOfInterestList.push(new SearchLocation(item.nm, item.ct, item.st, item.y, item.x));
                     });
                 }, function (error) {
                     return _this.$q.reject(error.data);
                 });
             };
             SearchAPIService.prototype.init = function () {
-                this.includeGNIS = true;
-                this.useCommonGnisClasses = true;
-                this.includeUsgsSiteSW = true;
-                this.includeUsgsSiteGW = true;
-                this.includeUsgsSiteSP = true;
-                this.includeUsgsSiteAT = true;
-                this.includeUsgsSiteOT = true;
-                this.includeZIPcodes = true;
-                this.includeAREAcodes = true;
-                this.includeState = true;
-                this.topN = 100;
-                this.debug = false;
-                this.term = '';
-                this.state = '';
+                this.areaOfInterestList = [];
+                this.config = new SearchConfig();
+                this.config.includeGNIS = true;
+                this.config.useCommonGnisClasses = true;
+                this.config.includeUsgsSiteSW = true;
+                this.config.includeUsgsSiteGW = true;
+                this.config.includeUsgsSiteSP = true;
+                this.config.includeUsgsSiteAT = true;
+                this.config.includeUsgsSiteOT = true;
+                this.config.includeZIPcodes = true;
+                this.config.includeAREAcodes = true;
+                this.config.includeState = true;
+                this.config.topN = 100;
+                this.config.debug = false;
+                this.config.term = '';
+                this.config.state = '';
             };
             return SearchAPIService;
         })(Services.HTTPServiceBase);

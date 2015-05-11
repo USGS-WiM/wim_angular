@@ -37,8 +37,31 @@ module WiM.Services {
         Source: string; //Database source
     }
     export interface ISearchAPIService {
-        getLocations(searchTerm: string): ng.IPromise<Array<ISearchAPIOutput>>;
+        selectedAreaOfInterest: ISearchAPIOutput;
+        areaOfInterestList: Array<ISearchAPIOutput>;
+        loadLocations(searchTerm: string);
     }
+    export interface ISearchConfig {
+        LATmin: number;
+        LATmax: number;
+        LONmin: number;
+        LONmax: number;
+        includeGNIS: boolean;
+        useCommonGnisClasses: boolean;
+        includeUsgsSiteSW: boolean;
+        includeUsgsSiteGW: boolean;
+        includeUsgsSiteSP: boolean;
+        includeUsgsSiteAT: boolean;
+        includeUsgsSiteOT: boolean;
+        includeZIPcodes: boolean;
+        includeAREAcodes: boolean;
+        includeState: boolean;
+        topN: number;
+        debug: boolean;
+        term: string;
+        state: string;
+    }
+
     class SearchLocation implements ISearchAPIOutput {
         public Name: string; //name
         public Category: string; //category
@@ -60,9 +83,7 @@ module WiM.Services {
             this.crs = "4326";
         }
     }
-    class SearchAPIService extends HTTPServiceBase implements ISearchAPIService {
-        //Properties
-        //-+-+-+-+-+-+-+-+-+-+-+-
+    class SearchConfig implements ISearchConfig {
         public LATmin: number;
         public LATmax: number;
         public LONmin: number;
@@ -81,8 +102,32 @@ module WiM.Services {
         public debug: boolean;
         public term: string;
         public state: string;
+        constructor() {
+        }
+    }
 
+    class SearchAPIService extends HTTPServiceBase implements ISearchAPIService {
+        //Events
+        private _onSelectedAreaOfInterestChanged: WiM.Event.Delegate<WiM.Event.EventArgs>;
+        public get onSelectedAreaOfInterestChanged(): WiM.Event.Delegate<WiM.Event.EventArgs> {
+            return this._onSelectedAreaOfInterestChanged;
+        }
         
+        //Properties
+        //-+-+-+-+-+-+-+-+-+-+-+-
+        private _selectedAreaOfInterest: WiM.Services.ISearchAPIOutput;
+        public set selectedAreaOfInterest(val: WiM.Services.ISearchAPIOutput) {
+            if (this._selectedAreaOfInterest !== val) {
+                this._selectedAreaOfInterest = val;
+                this._onSelectedAreaOfInterestChanged.raise(null, WiM.Event.EventArgs.Empty);
+            }
+        }
+        public get selectedAreaOfInterest(): WiM.Services.ISearchAPIOutput {
+            return this._selectedAreaOfInterest
+        }
+        public areaOfInterestList: Array<ISearchAPIOutput>;
+        public config: ISearchConfig;      
+                
         //Constructor
         //-+-+-+-+-+-+-+-+-+-+-+-
         constructor($http: ng.IHttpService, private $q: ng.IQService) {
@@ -92,30 +137,32 @@ module WiM.Services {
 
         //Methods
         //-+-+-+-+-+-+-+-+-+-+-+-
-        public getLocations(searchTerm: string):ng.IPromise<Array<ISearchAPIOutput>> {
-            this.term = searchTerm;
+        public loadLocations(searchTerm: string) {
+            this.areaOfInterestList.length = 0;//clear array
+
+            this.config.term = searchTerm;
             var request: WiM.Services.Helpers.RequestInfo = new WiM.Services.Helpers.RequestInfo("/search");
             request.params = {
-                term: this.term,
-                state:this.state,
-                includeGNIS: this.includeGNIS,
-                useCommonGnisClasses : this.useCommonGnisClasses,
-                includeUsgsSiteSW : this.includeUsgsSiteSW,
-                includeUsgsSiteGW : this.includeUsgsSiteGW,
-                includeUsgsSiteSP : this.includeUsgsSiteSP,
-                includeUsgsSiteAT : this.includeUsgsSiteAT,
-                includeUsgsSiteOT : this.includeUsgsSiteOT,
-                includeZIPcodes : this.includeZIPcodes,
-                includeAREAcodes : this.includeAREAcodes,
-                includeState : this.includeState,
-                topN : this.topN,
-                debug : this.debug
+                term: this.config.term,
+                state: this.config.state,
+                includeGNIS: this.config.includeGNIS,
+                useCommonGnisClasses: this.config.useCommonGnisClasses,
+                includeUsgsSiteSW: this.config.includeUsgsSiteSW,
+                includeUsgsSiteGW: this.config.includeUsgsSiteGW,
+                includeUsgsSiteSP: this.config.includeUsgsSiteSP,
+                includeUsgsSiteAT: this.config.includeUsgsSiteAT,
+                includeUsgsSiteOT: this.config.includeUsgsSiteOT,
+                includeZIPcodes: this.config.includeZIPcodes,
+                includeAREAcodes: this.config.includeAREAcodes,
+                includeState: this.config.includeState,
+                topN: this.config.topN,
+                debug: this.config.debug
             }
 
             return this.Execute<Array<ISearchAPIOutput>>(request).then(
                 (response: any) => {                    
-                    return response.data.map((item) => {
-                        return new SearchLocation(item.nm, item.ct, item.st, item.y,item.x)});
+                     response.data.map((item) => {
+                        this.areaOfInterestList.push( new SearchLocation(item.nm, item.ct, item.st, item.y,item.x))});
                 },(error) => {
                     return this.$q.reject(error.data)
                 });
@@ -124,22 +171,23 @@ module WiM.Services {
         //HelperMethods
         //-+-+-+-+-+-+-+-+-+-+-+-
         private init() {
-            this.includeGNIS = true;
-            this.useCommonGnisClasses = true;
-            this.includeUsgsSiteSW = true;
-            this.includeUsgsSiteGW = true;
-            this.includeUsgsSiteSP = true;
-            this.includeUsgsSiteAT = true;
-            this.includeUsgsSiteOT = true;
-            this.includeZIPcodes = true;
-            this.includeAREAcodes = true;
-            this.includeState = true;
-            this.topN = 100;
-            this.debug = false;
-            this.term = '';
-            this.state = '';
+            this.areaOfInterestList = [];
+            this.config = new SearchConfig();
+            this.config.includeGNIS = true;
+            this.config.useCommonGnisClasses = true;
+            this.config.includeUsgsSiteSW = true;
+            this.config.includeUsgsSiteGW = true;
+            this.config.includeUsgsSiteSP = true;
+            this.config.includeUsgsSiteAT = true;
+            this.config.includeUsgsSiteOT = true;
+            this.config.includeZIPcodes = true;
+            this.config.includeAREAcodes = true;
+            this.config.includeState = true;
+            this.config.topN = 100;
+            this.config.debug = false;
+            this.config.term = '';
+            this.config.state = '';
         }
-
 
     }//end class
 
