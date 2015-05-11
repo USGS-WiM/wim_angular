@@ -9,6 +9,28 @@ declare module WiM.Services {
         Source: string;
     }
     interface ISearchAPIService {
-        getLocations(searchTerm: string): ng.IPromise<Array<ISearchAPIOutput>>;
+        selectedAreaOfInterest: ISearchAPIOutput;
+        areaOfInterestList: Array<ISearchAPIOutput>;
+        loadLocations(searchTerm: string): any;
+    }
+    interface ISearchConfig {
+        LATmin: number;
+        LATmax: number;
+        LONmin: number;
+        LONmax: number;
+        includeGNIS: boolean;
+        useCommonGnisClasses: boolean;
+        includeUsgsSiteSW: boolean;
+        includeUsgsSiteGW: boolean;
+        includeUsgsSiteSP: boolean;
+        includeUsgsSiteAT: boolean;
+        includeUsgsSiteOT: boolean;
+        includeZIPcodes: boolean;
+        includeAREAcodes: boolean;
+        includeState: boolean;
+        topN: number;
+        debug: boolean;
+        term: string;
+        state: string;
     }
 }
