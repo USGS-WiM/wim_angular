@@ -53,9 +53,8 @@ var WiM;
                 enumerable: true,
                 configurable: true
             });
-            SearchAPIService.prototype.loadLocations = function (searchTerm) {
+            SearchAPIService.prototype.getLocations = function (searchTerm) {
                 var _this = this;
-                this.areaOfInterestList.length = 0;
                 this.config.term = searchTerm;
                 var request = new WiM.Services.Helpers.RequestInfo("/search");
                 request.params = {
@@ -75,15 +74,14 @@ var WiM;
                     debug: this.config.debug
                 };
                 return this.Execute(request).then(function (response) {
-                    response.data.map(function (item) {
-                        _this.areaOfInterestList.push(new SearchLocation(item.nm, item.ct, item.st, item.y, item.x));
+                    return response.data.map(function (item) {
+                        return new SearchLocation(item.nm, item.ct, item.st, item.y, item.x);
                     });
                 }, function (error) {
                     return _this.$q.reject(error.data);
                 });
             };
             SearchAPIService.prototype.init = function () {
-                this.areaOfInterestList = [];
                 this.config = new SearchConfig();
                 this.config.includeGNIS = true;
                 this.config.useCommonGnisClasses = true;
