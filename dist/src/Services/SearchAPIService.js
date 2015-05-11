@@ -9,6 +9,15 @@ var WiM;
     var Services;
     (function (Services) {
         'use strict';
+        var SearchAPIEventArgs = (function (_super) {
+            __extends(SearchAPIEventArgs, _super);
+            function SearchAPIEventArgs(aoi) {
+                _super.call(this);
+                this.selectedAreaOfInterest = aoi;
+            }
+            return SearchAPIEventArgs;
+        })(WiM.Event.EventArgs);
+        Services.SearchAPIEventArgs = SearchAPIEventArgs;
         var SearchLocation = (function () {
             function SearchLocation(nm, ct, st, lat, long) {
                 this.Name = nm;
@@ -36,19 +45,6 @@ var WiM;
             Object.defineProperty(SearchAPIService.prototype, "onSelectedAreaOfInterestChanged", {
                 get: function () {
                     return this._onSelectedAreaOfInterestChanged;
-                },
-                enumerable: true,
-                configurable: true
-            });
-            Object.defineProperty(SearchAPIService.prototype, "selectedAreaOfInterest", {
-                get: function () {
-                    return this._selectedAreaOfInterest;
-                },
-                set: function (val) {
-                    if (this._selectedAreaOfInterest !== val) {
-                        this._selectedAreaOfInterest = val;
-                        this._onSelectedAreaOfInterestChanged.raise(null, WiM.Event.EventArgs.Empty);
-                    }
                 },
                 enumerable: true,
                 configurable: true
