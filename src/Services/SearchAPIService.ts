@@ -133,6 +133,7 @@ module WiM.Services {
         //-+-+-+-+-+-+-+-+-+-+-+-
         constructor($http: ng.IHttpService, private $q: ng.IQService) {
             super($http, configuration.baseurls['SearchAPI']);
+            this._onSelectedAreaOfInterestChanged = new WiM.Event.Delegate<WiM.Event.EventArgs>(); 
             this.init();
         }
 

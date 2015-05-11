@@ -30,6 +30,7 @@ var WiM;
             function SearchAPIService($http, $q) {
                 _super.call(this, $http, configuration.baseurls['SearchAPI']);
                 this.$q = $q;
+                this._onSelectedAreaOfInterestChanged = new WiM.Event.Delegate();
                 this.init();
             }
             Object.defineProperty(SearchAPIService.prototype, "onSelectedAreaOfInterestChanged", {
