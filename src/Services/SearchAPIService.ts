@@ -38,7 +38,6 @@ module WiM.Services {
     }
     export interface ISearchAPIService {
         onSelectedAreaOfInterestChanged: WiM.Event.Delegate<WiM.Event.EventArgs>;
-        selectedAreaOfInterest: ISearchAPIOutput;
         getLocations(searchTerm: string):ng.IPromise < Array < ISearchAPIOutput>>;
     }
     export interface ISearchConfig {
@@ -61,7 +60,15 @@ module WiM.Services {
         term: string;
         state: string;
     }
+    export class SearchAPIEventArgs extends WiM.Event.EventArgs {
+        //properties
+        public selectedAreaOfInterest: ISearchAPIOutput;
+        constructor(aoi: ISearchAPIOutput) {
+            super();
+            this.selectedAreaOfInterest = aoi;
+        }
 
+    }
     class SearchLocation implements ISearchAPIOutput {
         public Name: string; //name
         public Category: string; //category
@@ -108,23 +115,13 @@ module WiM.Services {
 
     class SearchAPIService extends HTTPServiceBase implements ISearchAPIService {
         //Events
-        private _onSelectedAreaOfInterestChanged: WiM.Event.Delegate<WiM.Event.EventArgs>;
-        public get onSelectedAreaOfInterestChanged(): WiM.Event.Delegate<WiM.Event.EventArgs> {
+        private _onSelectedAreaOfInterestChanged: WiM.Event.Delegate<SearchAPIEventArgs>;
+        public get onSelectedAreaOfInterestChanged(): WiM.Event.Delegate<SearchAPIEventArgs> {
             return this._onSelectedAreaOfInterestChanged;
         }
         
         //Properties
         //-+-+-+-+-+-+-+-+-+-+-+-
-        private _selectedAreaOfInterest: WiM.Services.ISearchAPIOutput;
-        public set selectedAreaOfInterest(val: WiM.Services.ISearchAPIOutput) {
-            if (this._selectedAreaOfInterest !== val) {
-                this._selectedAreaOfInterest = val;
-                this._onSelectedAreaOfInterestChanged.raise(null, WiM.Event.EventArgs.Empty);
-            }
-        }
-        public get selectedAreaOfInterest(): WiM.Services.ISearchAPIOutput {
-            return this._selectedAreaOfInterest
-        }
         public config: ISearchConfig;      
                 
         //Constructor
