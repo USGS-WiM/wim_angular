@@ -9,6 +9,7 @@ declare module WiM.Services {
         Source: string;
     }
     interface ISearchAPIService {
+        onSelectedAreaOfInterestChanged: WiM.Event.Delegate<WiM.Event.EventArgs>;
         selectedAreaOfInterest: ISearchAPIOutput;
         areaOfInterestList: Array<ISearchAPIOutput>;
         loadLocations(searchTerm: string): any;

@@ -37,6 +37,7 @@ module WiM.Services {
         Source: string; //Database source
     }
     export interface ISearchAPIService {
+        onSelectedAreaOfInterestChanged: WiM.Event.Delegate<WiM.Event.EventArgs>;
         selectedAreaOfInterest: ISearchAPIOutput;
         areaOfInterestList: Array<ISearchAPIOutput>;
         loadLocations(searchTerm: string);
