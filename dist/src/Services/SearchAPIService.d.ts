@@ -11,8 +11,7 @@ declare module WiM.Services {
     interface ISearchAPIService {
         onSelectedAreaOfInterestChanged: WiM.Event.Delegate<WiM.Event.EventArgs>;
         selectedAreaOfInterest: ISearchAPIOutput;
-        areaOfInterestList: Array<ISearchAPIOutput>;
-        loadLocations(searchTerm: string): any;
+        getLocations(searchTerm: string): ng.IPromise<Array<ISearchAPIOutput>>;
     }
     interface ISearchConfig {
         LATmin: number;

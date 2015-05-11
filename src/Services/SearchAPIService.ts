@@ -39,8 +39,7 @@ module WiM.Services {
     export interface ISearchAPIService {
         onSelectedAreaOfInterestChanged: WiM.Event.Delegate<WiM.Event.EventArgs>;
         selectedAreaOfInterest: ISearchAPIOutput;
-        areaOfInterestList: Array<ISearchAPIOutput>;
-        loadLocations(searchTerm: string);
+        getLocations(searchTerm: string):ng.IPromise < Array < ISearchAPIOutput>>;
     }
     export interface ISearchConfig {
         LATmin: number;
@@ -126,7 +125,6 @@ module WiM.Services {
         public get selectedAreaOfInterest(): WiM.Services.ISearchAPIOutput {
             return this._selectedAreaOfInterest
         }
-        public areaOfInterestList: Array<ISearchAPIOutput>;
         public config: ISearchConfig;      
                 
         //Constructor
@@ -139,8 +137,7 @@ module WiM.Services {
 
         //Methods
         //-+-+-+-+-+-+-+-+-+-+-+-
-        public loadLocations(searchTerm: string) {
-            this.areaOfInterestList.length = 0;//clear array
+        public getLocations(searchTerm: string):ng.IPromise<Array<ISearchAPIOutput>> {
 
             this.config.term = searchTerm;
             var request: WiM.Services.Helpers.RequestInfo = new WiM.Services.Helpers.RequestInfo("/search");
@@ -163,8 +160,8 @@ module WiM.Services {
 
             return this.Execute<Array<ISearchAPIOutput>>(request).then(
                 (response: any) => {                    
-                     response.data.map((item) => {
-                        this.areaOfInterestList.push( new SearchLocation(item.nm, item.ct, item.st, item.y,item.x))});
+                    return response.data.map((item) => {
+                        return new SearchLocation(item.nm, item.ct, item.st, item.y,item.x)});
                 },(error) => {
                     return this.$q.reject(error.data)
                 });
@@ -173,7 +170,6 @@ module WiM.Services {
         //HelperMethods
         //-+-+-+-+-+-+-+-+-+-+-+-
         private init() {
-            this.areaOfInterestList = [];
             this.config = new SearchConfig();
             this.config.includeGNIS = true;
             this.config.useCommonGnisClasses = true;
