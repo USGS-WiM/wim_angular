@@ -3,14 +3,16 @@
         //Properties
 
         public method: string;
+        public includesBaseURL: boolean;
         public url: string;
         //public headers: any;
         public dataType: string
         public params: any;
         public data: any;
 
-        constructor(ul: string, mthd: methodType = methodType.GET, dtype:string ="json", data: any = null ) {
+        constructor(ul: string, includesbaseurl:boolean = false, mthd: methodType = methodType.GET, dtype:string ="json", data: any = null ) {
             this.url = ul;
+            this.includesBaseURL = includesbaseurl;
             this.method = methodType[mthd];
             this.dataType = dtype;
 

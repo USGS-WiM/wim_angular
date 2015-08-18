@@ -9,7 +9,7 @@ var WiM;
                 this.$http = http;
             }
             HTTPServiceBase.prototype.Execute = function (request) {
-                request.url = this.baseURL + request.url;
+                request.url = request.includesBaseURL ? request.url : this.baseURL + request.url;
                 return this.$http(request);
             };
             return HTTPServiceBase;

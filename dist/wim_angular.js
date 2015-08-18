@@ -1,3 +1,47 @@
+var WiM;
+(function (WiM) {
+    var Directives;
+    (function (Directives) {
+        'use string';
+        var wimAboutController = (function () {
+            function wimAboutController($scope) {
+                $scope.vm = this;
+                this.selectedTabName = "about";
+                this.selected = false;
+            }
+            wimAboutController.prototype.toggleSelected = function () {
+                if (this.selected)
+                    this.selected = false;
+                else
+                    this.selected = true;
+                console.log(this.selected);
+            };
+            wimAboutController.prototype.selectTab = function (tabname) {
+                if (this.selectedTabName == tabname)
+                    return;
+                this.selectedTabName = tabname;
+                console.log('selected tab: ' + tabname);
+            };
+            wimAboutController.$inject = ['$scope'];
+            return wimAboutController;
+        })();
+        var wimAbout = (function () {
+            function wimAbout() {
+                this.restrict = 'E';
+                this.controller = wimAboutController;
+                this.templateUrl = 'Views/about/about.html';
+            }
+            wimAbout.instance = function () {
+                return new wimAbout;
+            };
+            wimAbout.prototype.link = function (scope, element, attributes, controller) {
+            };
+            return wimAbout;
+        })();
+        angular.module('wim_angular', []).directive('wimAbout', wimAbout.instance);
+    })(Directives = WiM.Directives || (WiM.Directives = {}));
+})(WiM || (WiM = {}));
+//# sourceMappingURL=wimAbout.js.map
 if (!String.prototype.format) {
     String.prototype.format = function () {
         var args = arguments;
@@ -7,6 +51,73 @@ if (!String.prototype.format) {
     };
 }
 //# sourceMappingURL=String.js.map
+var WiM;
+(function (WiM) {
+    var Event;
+    (function (Event) {
+        var Delegate = (function () {
+            function Delegate() {
+                this._eventHandlers = new Array();
+            }
+            Delegate.prototype.subscribe = function (eventHandler) {
+                if (this._eventHandlers.indexOf(eventHandler) == -1) {
+                    this._eventHandlers.push(eventHandler);
+                }
+            };
+            Delegate.prototype.unsubscribe = function (eventHandler) {
+                var i = this._eventHandlers.indexOf(eventHandler);
+                if (i != -1) {
+                    this._eventHandlers.splice(i, 1);
+                }
+            };
+            Delegate.prototype.raise = function (sender, e) {
+                for (var i = 0; i < this._eventHandlers.length; i++) {
+                    this._eventHandlers[i].handle(sender, e);
+                }
+            };
+            return Delegate;
+        })();
+        Event.Delegate = Delegate;
+    })(Event = WiM.Event || (WiM.Event = {}));
+})(WiM || (WiM = {}));
+//# sourceMappingURL=Delegate.js.map
+var WiM;
+(function (WiM) {
+    var Event;
+    (function (Event) {
+        var EventArgs = (function () {
+            function EventArgs() {
+            }
+            Object.defineProperty(EventArgs, "Empty", {
+                get: function () {
+                    return new EventArgs();
+                },
+                enumerable: true,
+                configurable: true
+            });
+            return EventArgs;
+        })();
+        Event.EventArgs = EventArgs;
+    })(Event = WiM.Event || (WiM.Event = {}));
+})(WiM || (WiM = {}));
+//# sourceMappingURL=EventArgs.js.map
+var WiM;
+(function (WiM) {
+    var Event;
+    (function (Event) {
+        var EventHandler = (function () {
+            function EventHandler(handler) {
+                this._handler = handler;
+            }
+            EventHandler.prototype.handle = function (sender, e) {
+                this._handler(sender, e);
+            };
+            return EventHandler;
+        })();
+        Event.EventHandler = EventHandler;
+    })(Event = WiM.Event || (WiM.Event = {}));
+})(WiM || (WiM = {}));
+//# sourceMappingURL=EventHandler.js.map
 var WiM;
 (function (WiM) {
     var Models;
@@ -30,8 +141,8 @@ var WiM;
     })(Models = WiM.Models || (WiM.Models = {}));
 })(WiM || (WiM = {}));
 //# sourceMappingURL=Citation.js.map
-var StreamStats;
-(function (StreamStats) {
+var WiM;
+(function (WiM) {
     var Models;
     (function (Models) {
         var KeyValue = (function () {
@@ -43,8 +154,8 @@ var StreamStats;
             }
             return KeyValue;
         })();
-    })(Models = StreamStats.Models || (StreamStats.Models = {}));
-})(StreamStats || (StreamStats = {}));
+    })(Models = WiM.Models || (WiM.Models = {}));
+})(WiM || (WiM = {}));
 //# sourceMappingURL=KeyValue.js.map
 var WiM;
 (function (WiM) {
@@ -204,7 +315,7 @@ var WiM;
                 this.$http = http;
             }
             HTTPServiceBase.prototype.Execute = function (request) {
-                request.url = this.baseURL + request.url;
+                request.url = request.includesBaseURL ? request.url : this.baseURL + request.url;
                 return this.$http(request);
             };
             return HTTPServiceBase;
@@ -224,6 +335,15 @@ var WiM;
     var Services;
     (function (Services) {
         'use strict';
+        var SearchAPIEventArgs = (function (_super) {
+            __extends(SearchAPIEventArgs, _super);
+            function SearchAPIEventArgs(aoi) {
+                _super.call(this);
+                this.selectedAreaOfInterest = aoi;
+            }
+            return SearchAPIEventArgs;
+        })(WiM.Event.EventArgs);
+        Services.SearchAPIEventArgs = SearchAPIEventArgs;
         var SearchLocation = (function () {
             function SearchLocation(nm, ct, st, lat, long) {
                 this.Name = nm;
@@ -235,31 +355,45 @@ var WiM;
             }
             return SearchLocation;
         })();
-        Services.SearchLocation = SearchLocation;
+        var SearchConfig = (function () {
+            function SearchConfig() {
+            }
+            return SearchConfig;
+        })();
         var SearchAPIService = (function (_super) {
             __extends(SearchAPIService, _super);
             function SearchAPIService($http, $q) {
                 _super.call(this, $http, configuration.baseurls['SearchAPI']);
                 this.$q = $q;
+                this._onSelectedAreaOfInterestChanged = new WiM.Event.Delegate();
                 this.init();
             }
+            Object.defineProperty(SearchAPIService.prototype, "onSelectedAreaOfInterestChanged", {
+                get: function () {
+                    return this._onSelectedAreaOfInterestChanged;
+                },
+                enumerable: true,
+                configurable: true
+            });
             SearchAPIService.prototype.getLocations = function (searchTerm) {
                 var _this = this;
+                this.config.term = searchTerm;
                 var request = new WiM.Services.Helpers.RequestInfo("/search");
                 request.params = {
-                    term: searchTerm,
-                    includeGNIS: this.includeGNIS,
-                    useCommonGnisClasses: this.useCommonGnisClasses,
-                    includeUsgsSiteSW: this.includeUsgsSiteSW,
-                    includeUsgsSiteGW: this.includeUsgsSiteGW,
-                    includeUsgsSiteSP: this.includeUsgsSiteSP,
-                    includeUsgsSiteAT: this.includeUsgsSiteAT,
-                    includeUsgsSiteOT: this.includeUsgsSiteOT,
-                    includeZIPcodes: this.includeZIPcodes,
-                    includeAREAcodes: this.includeAREAcodes,
-                    includeState: this.includeState,
-                    topN: this.topN,
-                    debug: this.debug
+                    term: this.config.term,
+                    state: this.config.state,
+                    includeGNIS: this.config.includeGNIS,
+                    useCommonGnisClasses: this.config.useCommonGnisClasses,
+                    includeUsgsSiteSW: this.config.includeUsgsSiteSW,
+                    includeUsgsSiteGW: this.config.includeUsgsSiteGW,
+                    includeUsgsSiteSP: this.config.includeUsgsSiteSP,
+                    includeUsgsSiteAT: this.config.includeUsgsSiteAT,
+                    includeUsgsSiteOT: this.config.includeUsgsSiteOT,
+                    includeZIPcodes: this.config.includeZIPcodes,
+                    includeAREAcodes: this.config.includeAREAcodes,
+                    includeState: this.config.includeState,
+                    topN: this.config.topN,
+                    debug: this.config.debug
                 };
                 return this.Execute(request).then(function (response) {
                     return response.data.map(function (item) {
@@ -270,18 +404,21 @@ var WiM;
                 });
             };
             SearchAPIService.prototype.init = function () {
-                this.includeGNIS = true;
-                this.useCommonGnisClasses = true;
-                this.includeUsgsSiteSW = true;
-                this.includeUsgsSiteGW = true;
-                this.includeUsgsSiteSP = true;
-                this.includeUsgsSiteAT = true;
-                this.includeUsgsSiteOT = true;
-                this.includeZIPcodes = true;
-                this.includeAREAcodes = true;
-                this.includeState = true;
-                this.topN = 100;
-                this.debug = false;
+                this.config = new SearchConfig();
+                this.config.includeGNIS = true;
+                this.config.useCommonGnisClasses = true;
+                this.config.includeUsgsSiteSW = true;
+                this.config.includeUsgsSiteGW = true;
+                this.config.includeUsgsSiteSP = true;
+                this.config.includeUsgsSiteAT = true;
+                this.config.includeUsgsSiteOT = true;
+                this.config.includeZIPcodes = true;
+                this.config.includeAREAcodes = true;
+                this.config.includeState = true;
+                this.config.topN = 100;
+                this.config.debug = false;
+                this.config.term = '';
+                this.config.state = '';
             };
             return SearchAPIService;
         })(Services.HTTPServiceBase);
@@ -340,11 +477,13 @@ var WiM;
         var Helpers;
         (function (Helpers) {
             var RequestInfo = (function () {
-                function RequestInfo(ul, mthd, dtype, data) {
+                function RequestInfo(ul, includesbaseurl, mthd, dtype, data) {
+                    if (includesbaseurl === void 0) { includesbaseurl = false; }
                     if (mthd === void 0) { mthd = 0 /* GET */; }
                     if (dtype === void 0) { dtype = "json"; }
                     if (data === void 0) { data = null; }
                     this.url = ul;
+                    this.includesBaseURL = includesbaseurl;
                     this.method = methodType[mthd];
                     this.dataType = dtype;
                     this.data = data;

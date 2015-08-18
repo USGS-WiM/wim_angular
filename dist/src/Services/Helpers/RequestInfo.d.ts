@@ -1,11 +1,12 @@
 declare module WiM.Services.Helpers {
     class RequestInfo implements ng.IRequestConfig {
         method: string;
+        includesBaseURL: boolean;
         url: string;
         dataType: string;
         params: any;
         data: any;
-        constructor(ul: string, mthd?: methodType, dtype?: string, data?: any);
+        constructor(ul: string, includesbaseurl?: boolean, mthd?: methodType, dtype?: string, data?: any);
     }
     enum methodType {
         GET = 0,

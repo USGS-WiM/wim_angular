@@ -5,11 +5,13 @@ var WiM;
         var Helpers;
         (function (Helpers) {
             var RequestInfo = (function () {
-                function RequestInfo(ul, mthd, dtype, data) {
+                function RequestInfo(ul, includesbaseurl, mthd, dtype, data) {
+                    if (includesbaseurl === void 0) { includesbaseurl = false; }
                     if (mthd === void 0) { mthd = 0 /* GET */; }
                     if (dtype === void 0) { dtype = "json"; }
                     if (data === void 0) { data = null; }
                     this.url = ul;
+                    this.includesBaseURL = includesbaseurl;
                     this.method = methodType[mthd];
                     this.dataType = dtype;
                     this.data = data;
