@@ -46,7 +46,8 @@ module WiM.Services{
         //Methods
         //-+-+-+-+-+-+-+-+-+-+-+-
         public Execute<T>(request: Helpers.RequestInfo): ng.IPromise<T> {
-            request.url = this.baseURL + request.url;
+
+            request.url = request.includesBaseURL ? request.url: this.baseURL + request.url;
             return this.$http(request);
         }
 
