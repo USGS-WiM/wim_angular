@@ -5,21 +5,19 @@
         public method: string;
         public includesBaseURL: boolean;
         public url: string;
-        //public headers: any;
+        public headers: any;
         public dataType: string
         public params: any;
         public data: any;
+        public transformRequest:Function;
 
-        constructor(ul: string, includesbaseurl:boolean = false, mthd: methodType = methodType.GET, dtype:string ="json", data: any = null ) {
+        constructor(ul: string, includesbaseurl:boolean = false, mthd: methodType = methodType.GET, dtype:string ="json", data: any = null, headers: any = null, tranform:Function = null ) {
             this.url = ul;
             this.includesBaseURL = includesbaseurl;
             this.method = methodType[mthd];
             this.dataType = dtype;
-
-            //Avoid setting custom header if you don't want to do a CORS preflight dance
-            //this.headers = {
-            //    'Content-Type': contentType
-            //}
+            this.transformRequest = tranform;
+            this.headers = headers;
 
             this.data = data;
         }

@@ -57,6 +57,7 @@
     <TypeScriptCompile Include="src\Events\Delegate.ts" />
     <TypeScriptCompile Include="src\Events\EventArgs.ts" />
     <TypeScriptCompile Include="src\Events\EventHandler.ts" />
+    <TypeScriptCompile Include="src\Services\Helpers\RequestTransform.ts" />
     <TypeScriptCompile Include="_references.ts" />
     <TypeScriptCompile Include="src\Services\service.module.ts" />
     <TypeScriptCompile Include="src\Extensions\String.ts" />
