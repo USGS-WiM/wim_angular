@@ -3,10 +3,12 @@ declare module WiM.Services.Helpers {
         method: string;
         includesBaseURL: boolean;
         url: string;
+        headers: any;
         dataType: string;
         params: any;
         data: any;
-        constructor(ul: string, includesbaseurl?: boolean, mthd?: methodType, dtype?: string, data?: any);
+        transformRequest: Function;
+        constructor(ul: string, includesbaseurl?: boolean, mthd?: methodType, dtype?: string, data?: any, headers?: any, tranform?: Function);
     }
     enum methodType {
         GET = 0,
