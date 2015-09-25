@@ -27,6 +27,7 @@ var WiM;
         })();
         var wimAbout = (function () {
             function wimAbout() {
+                this.scope = true;
                 this.restrict = 'E';
                 this.controller = wimAboutController;
                 this.templateUrl = 'Views/about/about.html';
