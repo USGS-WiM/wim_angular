@@ -76,6 +76,7 @@ module WiM.Directives{
         static instance(): ng.IDirective {
             return new wimAbout;
         }
+        scope = true;
         restrict = 'E';
         controller = wimAboutController;
         templateUrl = 'Views/about/about.html';
