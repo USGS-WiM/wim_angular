@@ -54,41 +54,42 @@ module WiM.Directives{
         //-+-+-+-+-+-+-+-+-+-+-+-
         static $inject = ['$scope', '$http'];
         constructor($scope: IwimAboutControllerScope, $http: ng.IHttpService) {
-            super($http, 'http://api.github.com/');
+            super($http, 'https://api.github.com/');
             $scope.vm = this;
             this.selectedTabName = "about";
             this.selected = false;
             this.gitHubIssueData = {};
-            //this.gitHubIssueData.firstName = '';
-            //this.gitHubIssueData.lastName = '';
-            //this.gitHubIssueData.email = '';
-            this.gitHubIssueData.labels = 'aboutForm';
+            this.gitHubIssueData.firstName = '';
+            this.gitHubIssueData.lastName = '';
+            this.gitHubIssueData.email = '';
+            this.gitHubIssueData.description = '';
+            this.gitHubIssueData.type = '';
+            this.gitHubIssueData.labels = ['StreamStats'];
         }  
         
         //Methods  
         //-+-+-+-+-+-+-+-+-+-+-+-
         public submitIssue(): void {
-            var url = 'repos/USGS-WIM/GitHubAPI_test/issues';
+            var url = 'repos/USGS-WIM/StreamStats/issues';
 
-            //this.gitHubIssueData.body = 'First Name: ' + this.gitHubIssueData.firstName + '\nLast Name: ' + this.gitHubIssueData.lastName + '\nEmail: ' + this.gitHubIssueData.firstName + '\nDescription: ' + this.gitHubIssueData.description;
-            //this.gitHubIssueData.body = this.gitHubIssueData.description;
-            var data = this.gitHubIssueData;
+            if (this.gitHubIssueData.type) {
+                this.gitHubIssueData.labels.push(this.gitHubIssueData.type)
+            }
+            this.gitHubIssueData.body = 'First Name: ' + this.gitHubIssueData.firstName + '\nLast Name: ' + this.gitHubIssueData.lastName + '\nEmail: ' + this.gitHubIssueData.email + '\nDescription: ' + this.gitHubIssueData.description;
+            var data = JSON.stringify(this.gitHubIssueData);
             var headers = {
                 'Authorization': 'token addd1701980216fcafb97eadc0ed808a21bac675'
-            }
-
-
-            console.log('github1', data);
+            };
             var request: WiM.Services.Helpers.RequestInfo = new WiM.Services.Helpers.RequestInfo(url,false,Services.Helpers.methodType.POST,'json',data, headers);
 
             this.Execute(request).then(
                 (response: any) => {
-                    console.log('github2', response);
+                    console.log('Got a response: ', response.statusText);
                     //sm when complete
                 },(error) => {
                     //sm when error
                 }).finally(() => {
-
+                    this.toggleSelected();
             });
         }
 

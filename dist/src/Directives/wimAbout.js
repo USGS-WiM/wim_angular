@@ -12,25 +12,35 @@ var WiM;
         var wimAboutController = (function (_super) {
             __extends(wimAboutController, _super);
             function wimAboutController($scope, $http) {
-                _super.call(this, $http, 'http://api.github.com/');
+                _super.call(this, $http, 'https://api.github.com/');
                 $scope.vm = this;
                 this.selectedTabName = "about";
                 this.selected = false;
                 this.gitHubIssueData = {};
-                this.gitHubIssueData.labels = 'aboutForm';
+                this.gitHubIssueData.firstName = '';
+                this.gitHubIssueData.lastName = '';
+                this.gitHubIssueData.email = '';
+                this.gitHubIssueData.description = '';
+                this.gitHubIssueData.type = '';
+                this.gitHubIssueData.labels = ['StreamStats'];
             }
             wimAboutController.prototype.submitIssue = function () {
-                var url = 'repos/USGS-WIM/GitHubAPI_test/issues';
-                var data = this.gitHubIssueData;
+                var _this = this;
+                var url = 'repos/USGS-WIM/StreamStats/issues';
+                if (this.gitHubIssueData.type) {
+                    this.gitHubIssueData.labels.push(this.gitHubIssueData.type);
+                }
+                this.gitHubIssueData.body = 'First Name: ' + this.gitHubIssueData.firstName + '\nLast Name: ' + this.gitHubIssueData.lastName + '\nEmail: ' + this.gitHubIssueData.email + '\nDescription: ' + this.gitHubIssueData.description;
+                var data = JSON.stringify(this.gitHubIssueData);
                 var headers = {
                     'Authorization': 'token addd1701980216fcafb97eadc0ed808a21bac675'
                 };
-                console.log('github1', data);
                 var request = new WiM.Services.Helpers.RequestInfo(url, false, 1 /* POST */, 'json', data, headers);
                 this.Execute(request).then(function (response) {
-                    console.log('github2', response);
+                    console.log('Got a response: ', response.statusText);
                 }, function (error) {
                 }).finally(function () {
+                    _this.toggleSelected();
                 });
             };
             wimAboutController.prototype.toggleSelected = function () {
