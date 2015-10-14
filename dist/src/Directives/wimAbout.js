@@ -1,14 +1,38 @@
+var __extends = this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
 var WiM;
 (function (WiM) {
     var Directives;
     (function (Directives) {
         'use string';
-        var wimAboutController = (function () {
-            function wimAboutController($scope) {
+        var wimAboutController = (function (_super) {
+            __extends(wimAboutController, _super);
+            function wimAboutController($scope, $http) {
+                _super.call(this, $http, 'http://api.github.com/');
                 $scope.vm = this;
                 this.selectedTabName = "about";
                 this.selected = false;
+                this.gitHubIssueData = {};
+                this.gitHubIssueData.labels = 'aboutForm';
             }
+            wimAboutController.prototype.submitIssue = function () {
+                var url = 'repos/USGS-WIM/GitHubAPI_test/issues';
+                var data = this.gitHubIssueData;
+                var headers = {
+                    'Authorization': 'token addd1701980216fcafb97eadc0ed808a21bac675'
+                };
+                console.log('github1', data);
+                var request = new WiM.Services.Helpers.RequestInfo(url, false, 1 /* POST */, 'json', data, headers);
+                this.Execute(request).then(function (response) {
+                    console.log('github2', response);
+                }, function (error) {
+                }).finally(function () {
+                });
+            };
             wimAboutController.prototype.toggleSelected = function () {
                 if (this.selected)
                     this.selected = false;
@@ -22,9 +46,9 @@ var WiM;
                 this.selectedTabName = tabname;
                 console.log('selected tab: ' + tabname);
             };
-            wimAboutController.$inject = ['$scope'];
+            wimAboutController.$inject = ['$scope', '$http'];
             return wimAboutController;
-        })();
+        })(WiM.Services.HTTPServiceBase);
         var wimAbout = (function () {
             function wimAbout() {
                 this.scope = true;

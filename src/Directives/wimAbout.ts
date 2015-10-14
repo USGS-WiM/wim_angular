@@ -34,6 +34,7 @@ module WiM.Directives{
         selected: boolean;
         selectedTabName: string;
         toggleSelected(): void;
+        submitIssue(): void;
         selectTab(tabname: string): void;
 
     }
@@ -42,23 +43,55 @@ module WiM.Directives{
         mainUrl: string;
     }
 
-    class wimAboutController implements IwimAboutController {
+    class wimAboutController extends WiM.Services.HTTPServiceBase implements IwimAboutController {
         //Properties
         //-+-+-+-+-+-+-+-+-+-+-+-
         public selected: boolean;
         public selectedTabName: string;
+        public gitHubIssueData: any;
         
         //Constructor
         //-+-+-+-+-+-+-+-+-+-+-+-
-        static $inject = ['$scope'];
-        constructor($scope: IwimAboutControllerScope) {
+        static $inject = ['$scope', '$http'];
+        constructor($scope: IwimAboutControllerScope, $http: ng.IHttpService) {
+            super($http, 'http://api.github.com/');
             $scope.vm = this;
             this.selectedTabName = "about";
             this.selected = false;
+            this.gitHubIssueData = {};
+            //this.gitHubIssueData.firstName = '';
+            //this.gitHubIssueData.lastName = '';
+            //this.gitHubIssueData.email = '';
+            this.gitHubIssueData.labels = 'aboutForm';
         }  
         
         //Methods  
         //-+-+-+-+-+-+-+-+-+-+-+-
+        public submitIssue(): void {
+            var url = 'repos/USGS-WIM/GitHubAPI_test/issues';
+
+            //this.gitHubIssueData.body = 'First Name: ' + this.gitHubIssueData.firstName + '\nLast Name: ' + this.gitHubIssueData.lastName + '\nEmail: ' + this.gitHubIssueData.firstName + '\nDescription: ' + this.gitHubIssueData.description;
+            //this.gitHubIssueData.body = this.gitHubIssueData.description;
+            var data = this.gitHubIssueData;
+            var headers = {
+                'Authorization': 'token addd1701980216fcafb97eadc0ed808a21bac675'
+            }
+
+
+            console.log('github1', data);
+            var request: WiM.Services.Helpers.RequestInfo = new WiM.Services.Helpers.RequestInfo(url,false,Services.Helpers.methodType.POST,'json',data, headers);
+
+            this.Execute(request).then(
+                (response: any) => {
+                    console.log('github2', response);
+                    //sm when complete
+                },(error) => {
+                    //sm when error
+                }).finally(() => {
+
+            });
+        }
+
         public toggleSelected(): void {
             if (this.selected) this.selected = false;
             else this.selected = true;
