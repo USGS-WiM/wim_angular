@@ -78,7 +78,7 @@ module WiM.Directives{
             this.gitHubIssueData.body = 'First Name: ' + this.gitHubIssueData.firstName + '\nLast Name: ' + this.gitHubIssueData.lastName + '\nEmail: ' + this.gitHubIssueData.email + '\nDescription: ' + this.gitHubIssueData.description;
             var data = JSON.stringify(this.gitHubIssueData);
             var headers = {
-                'Authorization': 'token addd1701980216fcafb97eadc0ed808a21bac675'
+                'Authorization': 'token 6991db72b598a37339260c9f4ef28a6fe20a1c4b'
             };
             var request: WiM.Services.Helpers.RequestInfo = new WiM.Services.Helpers.RequestInfo(url,false,Services.Helpers.methodType.POST,'json',data, headers);
 
