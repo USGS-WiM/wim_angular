@@ -31,78 +31,149 @@ module WiM.Directives{
         vm: IwimAboutController;
     }
     interface IwimAboutController {
-        selected: boolean;
-        selectedTabName: string;
-        toggleSelected(): void;
-        submitIssue(): void;
-        selectTab(tabname: string): void;
+        aboutSelected: boolean;
+        helpSelected: boolean;
+        selectedAboutTabName: string;
+        selectedHelpTabName: string;
+        toggleAboutSelected(): void;
+       // submitGitHubIssue(): void;
+        selectAboutTab(tabname: string): void;
+        selectHelpTab(tabname: string): void;
 
     }
     interface IUrlAttributes extends ng.IAttributes {
         //must use camelcase
         mainUrl: string;
+        file: any;
+    }
+
+    class FreshdeskTicketData {
+        public firstName: string;
+        public lastName: string;
+        public email: string;
+        public description: string;
+        public subject: string;
+        public attachments: any;
+    }
+
+    class GitHubIssueData {
+        public firstName: string;
+        public lastName: string;
+        public email: string;
+        public description: string;
+        public type: string;
+        public labels: Array<string>;
     }
 
     class wimAboutController extends WiM.Services.HTTPServiceBase implements IwimAboutController {
         //Properties
         //-+-+-+-+-+-+-+-+-+-+-+-
-        public selected: boolean;
-        public selectedTabName: string;
-        public gitHubIssueData: any;
+        public aboutSelected: boolean;
+        public helpSelected: boolean;
+        public selectedAboutTabName: string;
+        public selectedHelpTabName: string;
+        public gitHubIssues: GitHubIssueData;
+        public freshdeskTicketData: FreshdeskTicketData;
+        public displayMessage: string;
+        public isValid: boolean;
         
         //Constructor
         //-+-+-+-+-+-+-+-+-+-+-+-
         static $inject = ['$scope', '$http'];
         constructor($scope: IwimAboutControllerScope, $http: ng.IHttpService) {
-            super($http, 'https://api.github.com/');
+            super($http, '');
             $scope.vm = this;
-            this.selectedTabName = "about";
-            this.selected = false;
-            this.gitHubIssueData = {};
-            this.gitHubIssueData.firstName = '';
-            this.gitHubIssueData.lastName = '';
-            this.gitHubIssueData.email = '';
-            this.gitHubIssueData.description = '';
-            this.gitHubIssueData.type = '';
-            this.gitHubIssueData.labels = ['StreamStats'];
+            this.gitHubIssues = new GitHubIssueData();
+            this.freshdeskTicketData = new FreshdeskTicketData();
+            this.selectedAboutTabName = "about";
+            this.selectedHelpTabName = "submitTicket";
+            this.aboutSelected = false;
+            this.helpSelected = false;
+            this.displayMessage;
+            this.isValid = false;
         }  
         
         //Methods  
         //-+-+-+-+-+-+-+-+-+-+-+-
-        public submitIssue(): void {
-            var url = 'repos/USGS-WIM/StreamStats/issues';
+        public uploadFile(event: any): void {
+            console.log("this did work");
+            this.freshdeskTicketData.attachments = event.target.files;
+        }
 
-            if (this.gitHubIssueData.type) {
-                this.gitHubIssueData.labels.push(this.gitHubIssueData.type)
-            }
-            this.gitHubIssueData.body = 'First Name: ' + this.gitHubIssueData.firstName + '\nLast Name: ' + this.gitHubIssueData.lastName + '\nEmail: ' + this.gitHubIssueData.email + '\nDescription: ' + this.gitHubIssueData.description;
-            var data = JSON.stringify(this.gitHubIssueData);
+        //public submitGitHubIssue(): void {
+        //    var url = 'https://api.github.com/repos/USGS-WIM/StreamStats/issues';
+
+        //    if (this.gitHubIssueData.type) {
+        //        this.gitHubIssueData.labels.push(this.gitHubIssueData.type)
+        //    }
+        //    this.gitHubIssueData.body = 'First Name: ' + this.gitHubIssueData.firstName + '\nLast Name: ' + this.gitHubIssueData.lastName + '\nEmail: ' + this.gitHubIssueData.email + '\nDescription: ' + this.gitHubIssueData.description;
+        //    var data = JSON.stringify(this.gitHubIssueData);
+        //    var headers = {
+        //        'Authorization': 'token 6991db72b598a37339260c9f4ef28a6fe20a1c4b'
+        //    };
+        //    var request: WiM.Services.Helpers.RequestInfo = new WiM.Services.Helpers.RequestInfo(url,true,Services.Helpers.methodType.POST,'json',data, headers);
+
+        //    this.Execute(request).then(
+        //        (response: any) => {
+        //            console.log('Got a response: ', response.statusText);
+        //            //sm when complete
+        //        },(error) => {
+        //            //sm when error
+        //        }).finally(() => {
+        //            this.toggleAboutSelected();
+        //    });
+        //}
+
+        public submitTicket(isValid: boolean): void {
+
+            //console.log("ticket form validity: ", isValid);
+
+            //if (!isValid) return;
+            var url = 'https://streamstats.freshdesk.com/helpdesk/tickets.json';
+            var data = JSON.stringify({ "helpdesk_ticket": this.freshdeskTicketData });
+
+            console.log('ticket data',data);
             var headers = {
-                'Authorization': 'token 6991db72b598a37339260c9f4ef28a6fe20a1c4b'
+                "Authorization": "Basic " + btoa('MpxLRniw8Kf9Eax4ZK9b' + ":" + 'X')
             };
-            var request: WiM.Services.Helpers.RequestInfo = new WiM.Services.Helpers.RequestInfo(url,false,Services.Helpers.methodType.POST,'json',data, headers);
+            var request: WiM.Services.Helpers.RequestInfo = new WiM.Services.Helpers.RequestInfo(url, true, Services.Helpers.methodType.POST, 'json', data, headers);
 
             this.Execute(request).then(
                 (response: any) => {
-                    console.log('Got a response: ', response.statusText);
+                    console.log('Got a response: ', response);
+                    alert("Your request has been submitted.  Your request will be addressed as soon as possible");
+                    this.freshdeskTicketData = new FreshdeskTicketData();
                     //sm when complete
                 },(error) => {
                     //sm when error
                 }).finally(() => {
-                    this.toggleSelected();
+
+                    
             });
         }
 
-        public toggleSelected(): void {
-            if (this.selected) this.selected = false;
-            else this.selected = true;
+        public toggleHelpSelected(): void {
+            if (this.helpSelected) this.helpSelected = false;
+            else this.helpSelected = true;
 
-            console.log(this.selected);
+            console.log(this.helpSelected);
         }
-        public selectTab(tabname:string): void {
-            if (this.selectedTabName == tabname) return;
-            this.selectedTabName = tabname;
+
+        public toggleAboutSelected(): void {
+            if (this.aboutSelected) this.aboutSelected = false;
+            else this.aboutSelected = true;
+
+            console.log(this.aboutSelected);
+        }
+        public selectAboutTab(tabname:string): void {
+            if (this.selectedAboutTabName == tabname) return;
+            this.selectedAboutTabName = tabname;
             console.log('selected tab: '+tabname);
+        }
+        public selectHelpTab(tabname: string): void {
+            if (this.selectedHelpTabName == tabname) return;
+            this.selectedHelpTabName = tabname;
+            console.log('selected tab: ' + tabname);
         }
     }
    

@@ -53,6 +53,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="gulpfile.js" />
+    <TypeScriptCompile Include="src\Directives\SelectFile.ts" />
     <TypeScriptCompile Include="src\Directives\wimAbout.ts" />
     <TypeScriptCompile Include="src\Events\Delegate.ts" />
     <TypeScriptCompile Include="src\Events\EventArgs.ts" />
