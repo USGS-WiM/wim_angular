@@ -40,7 +40,7 @@ var WiM;
             wimAboutController.prototype.submitTicket = function (isValid) {
                 var _this = this;
                 var url = 'https://streamstats.freshdesk.com/helpdesk/tickets.json';
-                var data = JSON.stringify({ "helpdesk_ticket": this.freshdeskTicketData });
+                var data = angular.toJson({ "helpdesk_ticket": this.freshdeskTicketData });
                 console.log('ticket data', data);
                 var headers = {
                     "Authorization": "Basic " + btoa('MpxLRniw8Kf9Eax4ZK9b' + ":" + 'X')

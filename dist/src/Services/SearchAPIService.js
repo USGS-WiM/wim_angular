@@ -41,6 +41,7 @@ var WiM;
                 this.$q = $q;
                 this._onSelectedAreaOfInterestChanged = new WiM.Event.Delegate();
                 this.init();
+                this.loadSearchAPI();
             }
             Object.defineProperty(SearchAPIService.prototype, "onSelectedAreaOfInterestChanged", {
                 get: function () {
@@ -49,6 +50,43 @@ var WiM;
                 enumerable: true,
                 configurable: true
             });
+            SearchAPIService.prototype.loadSearchAPI = function () {
+                var _this = this;
+                var myScript = document.createElement('script');
+                myScript.src = 'http://txpub.usgs.gov/DSS/search_api/1.1/api/search_api.min.js';
+                myScript.onload = function () {
+                    console.log('search api js loaded.');
+                    _this.setSearchAPI();
+                };
+                document.body.appendChild(myScript);
+            };
+            SearchAPIService.prototype.setSearchAPI = function () {
+                var _this = this;
+                search_api.on("load", function () {
+                    console.log('search api onload event');
+                    search_api.setOpts({
+                        "textboxPosition": "user-defined",
+                        "theme": "user-defined",
+                        "DbSearchIncludeUsgsSiteSW": true,
+                        "DbSearchIncludeUsgsSiteGW": true,
+                        "DbSearchIncludeUsgsSiteSP": true,
+                        "DbSearchIncludeUsgsSiteAT": true,
+                        "DbSearchIncludeUsgsSiteOT": true
+                    });
+                    search_api.on("before-search", function () {
+                    });
+                    search_api.on("location-found", function (lastLocationFound) {
+                        console.log('found a location', lastLocationFound);
+                        _this.onSelectedAreaOfInterestChanged.raise(_this, new WiM.Services.SearchAPIEventArgs(new SearchLocation(lastLocationFound.name, lastLocationFound.category, lastLocationFound.state, lastLocationFound.y, lastLocationFound.x)));
+                    });
+                    search_api.on("no-result", function () {
+                        alert("No location matching the entered text could be found.");
+                    });
+                    search_api.on("timeout", function () {
+                        alert("The search operation timed out.");
+                    });
+                });
+            };
             SearchAPIService.prototype.getLocations = function (searchTerm) {
                 var _this = this;
                 this.config.term = searchTerm;
