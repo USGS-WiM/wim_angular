@@ -107,7 +107,7 @@ module WiM.Directives{
         //        this.gitHubIssueData.labels.push(this.gitHubIssueData.type)
         //    }
         //    this.gitHubIssueData.body = 'First Name: ' + this.gitHubIssueData.firstName + '\nLast Name: ' + this.gitHubIssueData.lastName + '\nEmail: ' + this.gitHubIssueData.email + '\nDescription: ' + this.gitHubIssueData.description;
-        //    var data = JSON.stringify(this.gitHubIssueData);
+        //    var data = angular.toJson(this.gitHubIssueData);
         //    var headers = {
         //        'Authorization': 'token 6991db72b598a37339260c9f4ef28a6fe20a1c4b'
         //    };
@@ -130,7 +130,7 @@ module WiM.Directives{
 
             //if (!isValid) return;
             var url = 'https://streamstats.freshdesk.com/helpdesk/tickets.json';
-            var data = JSON.stringify({ "helpdesk_ticket": this.freshdeskTicketData });
+            var data = angular.toJson({ "helpdesk_ticket": this.freshdeskTicketData });
 
             console.log('ticket data',data);
             var headers = {

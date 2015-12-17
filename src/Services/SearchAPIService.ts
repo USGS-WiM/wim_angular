@@ -27,6 +27,9 @@
 
 module WiM.Services {
     'use strict'
+
+    declare var search_api;
+
     export interface ISearchAPIOutput extends Models.IPoint{
         Name: string; //name
         Category: string; //category
@@ -38,7 +41,7 @@ module WiM.Services {
     }
     export interface ISearchAPIService {
         onSelectedAreaOfInterestChanged: WiM.Event.Delegate<WiM.Event.EventArgs>;
-        getLocations(searchTerm: string):ng.IPromise < Array < ISearchAPIOutput>>;
+        getLocations(searchTerm: string): ng.IPromise<Array<ISearchAPIOutput>>;  
     }
     export interface ISearchConfig {
         LATmin: number;
@@ -122,18 +125,75 @@ module WiM.Services {
         
         //Properties
         //-+-+-+-+-+-+-+-+-+-+-+-
-        public config: ISearchConfig;      
-                
+        public config: ISearchConfig;  
+
         //Constructor
         //-+-+-+-+-+-+-+-+-+-+-+-
         constructor($http: ng.IHttpService, private $q: ng.IQService) {
             super($http, configuration.baseurls['SearchAPI']);
             this._onSelectedAreaOfInterestChanged = new WiM.Event.Delegate<WiM.Event.EventArgs>(); 
             this.init();
+            this.loadSearchAPI(); 
         }
 
         //Methods
         //-+-+-+-+-+-+-+-+-+-+-+-
+        public loadSearchAPI() {
+
+            var myScript = document.createElement('script');
+            myScript.src = 'http://txpub.usgs.gov/DSS/search_api/1.1/api/search_api.min.js';
+            myScript.onload = () => {
+                console.log('search api js loaded.');
+                this.setSearchAPI();
+            };
+            document.body.appendChild(myScript);
+        }
+        public setSearchAPI() {
+            // setup must be done after the search_api is loaded and ready ("load" event triggered)
+            search_api.on("load",() => {
+                console.log('search api onload event');
+
+                // OPTIONAL: set search_api options (case-sensitive)
+                search_api.setOpts({
+                    "textboxPosition": "user-defined",
+                    "theme": "user-defined",
+                    "DbSearchIncludeUsgsSiteSW": true,
+                    "DbSearchIncludeUsgsSiteGW": true,
+                    "DbSearchIncludeUsgsSiteSP": true,
+                    "DbSearchIncludeUsgsSiteAT": true,
+                    "DbSearchIncludeUsgsSiteOT": true
+                    //...more options (defaults used for omitted options)...
+                });
+                
+                // OPTIONAL: define what to do when a search is started
+                search_api.on("before-search", function () {
+                    // close any popups
+                    //map.closePopup();
+                });
+                
+                // REQUIRED: define what to do when a location is found
+                search_api.on("location-found", (lastLocationFound) => {
+
+                    console.log('found a location', lastLocationFound);
+                    //send this data to region service
+                    this.onSelectedAreaOfInterestChanged.raise(this, new WiM.Services.SearchAPIEventArgs(new SearchLocation(lastLocationFound.name, lastLocationFound.category, lastLocationFound.state, lastLocationFound.y, lastLocationFound.x)));
+                });
+                
+                // OPTIONAL: define what to do when no location is found
+                search_api.on("no-result", function () {
+                    // give alert dialog
+                    alert("No location matching the entered text could be found.");
+                });
+                
+                // OPTIONAL: define what to do when a search times out
+                search_api.on("timeout", function () {
+                    // give alert dialog
+                    alert("The search operation timed out.");
+                });
+            });
+
+        }
+
         public getLocations(searchTerm: string):ng.IPromise<Array<ISearchAPIOutput>> {
 
             this.config.term = searchTerm;
