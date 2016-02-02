@@ -96,6 +96,6 @@ module WiM.Event {
     function factory() {
         return new EventManager()
     }
-    angular.module('WiM.Event')
+    angular.module('WiM.Event',[])
         .factory('WiM.Event.EventManager', factory)
 }//end module 

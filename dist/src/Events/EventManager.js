@@ -49,7 +49,7 @@ var WiM;
         function factory() {
             return new EventManager();
         }
-        angular.module('WiM.Event').factory('WiM.Event.EventManager', factory);
+        angular.module('WiM.Event', []).factory('WiM.Event.EventManager', factory);
     })(Event = WiM.Event || (WiM.Event = {}));
 })(WiM || (WiM = {}));
 //# sourceMappingURL=EventManager.js.map
