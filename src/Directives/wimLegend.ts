@@ -211,7 +211,7 @@ module WiM.Directives {
             if (e.layerType != 'geojson') return; 
             //remove
             if (this.applicationLayer.layergroup.hasOwnProperty(e.LayerName))
-                delete e.LayerName;
+                delete this.applicationLayer[e.LayerName];
         }
 
     }//end wimLayerControlController class
