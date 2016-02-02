@@ -11,6 +11,7 @@ declare module WiM.Directives {
     }
     var onLayerAdded: string;
     var onLayerChanged: string;
+    var onLayerRemoved: string;
     class LegendLayerAddedEventArgs extends WiM.Event.EventArgs {
         LayerName: string;
         layerType: String;
@@ -22,5 +23,10 @@ declare module WiM.Directives {
         PropertyName: String;
         Value: any;
         constructor(layername: string, propertyname: string, value: any);
+    }
+    class LegendLayerRemovedEventArgs extends WiM.Event.EventArgs {
+        LayerName: string;
+        layerType: String;
+        constructor(layername: string, ltype: string);
     }
 }

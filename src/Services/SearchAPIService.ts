@@ -124,7 +124,7 @@ module WiM.Services {
 
         //Constructor
         //-+-+-+-+-+-+-+-+-+-+-+-
-        constructor($http: ng.IHttpService, private $q: ng.IQService, public eventManager:Event.IEventManager) {
+        constructor($http: ng.IHttpService, private $q: ng.IQService, private eventManager:Event.IEventManager) {
             super($http, configuration.baseurls['SearchAPI']);
             this.eventManager.AddEvent<SearchAPIEventArgs>(onSelectedAreaOfInterestChanged);
             this.init();
