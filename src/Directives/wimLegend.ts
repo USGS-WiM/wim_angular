@@ -93,7 +93,7 @@ module WiM.Directives {
 
         //Constructor
         //-+-+-+-+-+-+-+-+-+-+-+-
-        static $inject = ['$scope', '$http', 'leafletData', 'WiM.Services.EventManager'];
+        static $inject = ['$scope', '$http', 'leafletData', 'WiM.Event.EventManager'];
         constructor($scope: IwimLegendControllerScope, $http: ng.IHttpService, leafletData: any, eventManager: Event.IEventManager)  {
             super($http, '');
             $scope.vm = this;
