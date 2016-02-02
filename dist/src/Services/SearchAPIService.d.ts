@@ -1,4 +1,5 @@
 declare module WiM.Services {
+    var onSelectedAreaOfInterestChanged: string;
     interface ISearchAPIOutput extends Models.IPoint {
         Name: string;
         Category: string;
@@ -9,7 +10,6 @@ declare module WiM.Services {
         Source: string;
     }
     interface ISearchAPIService {
-        onSelectedAreaOfInterestChanged: WiM.Event.Delegate<WiM.Event.EventArgs>;
         getLocations(searchTerm: string): ng.IPromise<Array<ISearchAPIOutput>>;
     }
     interface ISearchConfig {
