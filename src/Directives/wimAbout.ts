@@ -29,6 +29,7 @@ module WiM.Directives{
     'use string';
     interface IwimAboutControllerScope extends ng.IScope {
         vm: IwimAboutController;
+        
     }
     interface IwimAboutController {
         aboutSelected: boolean;

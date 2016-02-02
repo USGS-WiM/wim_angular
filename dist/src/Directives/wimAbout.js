@@ -45,7 +45,7 @@ var WiM;
                 var headers = {
                     "Authorization": "Basic " + btoa('MpxLRniw8Kf9Eax4ZK9b' + ":" + 'X')
                 };
-                var request = new WiM.Services.Helpers.RequestInfo(url, true, WiM.Services.Helpers.methodType.POST, 'json', data, headers);
+                var request = new WiM.Services.Helpers.RequestInfo(url, true, 1 /* POST */, 'json', data, headers);
                 this.Execute(request).then(function (response) {
                     console.log('Got a response: ', response);
                     alert("Your request has been submitted.  Your request will be addressed as soon as possible");

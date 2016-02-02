@@ -53,11 +53,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="gulpfile.js" />
-    <TypeScriptCompile Include="src\Directives\SelectFile.ts" />
     <TypeScriptCompile Include="src\Directives\wimAbout.ts" />
+    <TypeScriptCompile Include="src\Directives\wimLegend.ts" />
     <TypeScriptCompile Include="src\Events\Delegate.ts" />
     <TypeScriptCompile Include="src\Events\EventArgs.ts" />
     <TypeScriptCompile Include="src\Events\EventHandler.ts" />
+    <TypeScriptCompile Include="src\Events\EventManager.ts" />
     <TypeScriptCompile Include="src\Services\Helpers\RequestTransform.ts" />
     <TypeScriptCompile Include="_references.ts" />
     <TypeScriptCompile Include="src\Services\service.module.ts" />
@@ -89,7 +90,7 @@
   <ItemGroup />
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
-    <TypeScriptOutDir>C:\NYBackup\GitHub\wim_angular\dist</TypeScriptOutDir>
+    <TypeScriptOutDir>C:\WIM\Documents\Visual Studio\Projects\WiMGitHub\wim_angular\dist</TypeScriptOutDir>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
 </Project>
