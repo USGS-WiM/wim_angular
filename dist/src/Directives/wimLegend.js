@@ -118,7 +118,7 @@ var WiM;
                     style: e.style
                 };
             };
-            wimLegendController.$inject = ['$scope', '$http', 'leafletData', 'WiM.Services.EventManager'];
+            wimLegendController.$inject = ['$scope', '$http', 'leafletData', 'WiM.Event.EventManager'];
             return wimLegendController;
         })(WiM.Services.HTTPServiceBase);
         var wimLegend = (function () {
