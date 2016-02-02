@@ -137,7 +137,7 @@ var WiM;
                 if (e.layerType != 'geojson')
                     return;
                 if (this.applicationLayer.layergroup.hasOwnProperty(e.LayerName))
-                    delete e.LayerName;
+                    delete this.applicationLayer[e.LayerName];
             };
             wimLegendController.$inject = ['$scope', '$http', 'leafletData', 'WiM.Event.EventManager'];
             return wimLegendController;
