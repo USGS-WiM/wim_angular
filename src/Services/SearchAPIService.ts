@@ -29,6 +29,7 @@ module WiM.Services {
     'use strict'
 
     declare var search_api;
+    export var onSelectedAreaOfInterestChanged: string = "onSelectedAreaOfInterestChanged";
 
     export interface ISearchAPIOutput extends Models.IPoint{
         Name: string; //name
@@ -40,7 +41,6 @@ module WiM.Services {
         Source: string; //Database source
     }
     export interface ISearchAPIService {
-        onSelectedAreaOfInterestChanged: WiM.Event.Delegate<WiM.Event.EventArgs>;
         getLocations(searchTerm: string): ng.IPromise<Array<ISearchAPIOutput>>;  
     }
     export interface ISearchConfig {
@@ -117,11 +117,6 @@ module WiM.Services {
     }
 
     class SearchAPIService extends HTTPServiceBase implements ISearchAPIService {
-        //Events
-        private _onSelectedAreaOfInterestChanged: WiM.Event.Delegate<SearchAPIEventArgs>;
-        public get onSelectedAreaOfInterestChanged(): WiM.Event.Delegate<SearchAPIEventArgs> {
-            return this._onSelectedAreaOfInterestChanged;
-        }
         
         //Properties
         //-+-+-+-+-+-+-+-+-+-+-+-
@@ -129,9 +124,9 @@ module WiM.Services {
 
         //Constructor
         //-+-+-+-+-+-+-+-+-+-+-+-
-        constructor($http: ng.IHttpService, private $q: ng.IQService) {
+        constructor($http: ng.IHttpService, private $q: ng.IQService, public eventManager:Event.IEventManager) {
             super($http, configuration.baseurls['SearchAPI']);
-            this._onSelectedAreaOfInterestChanged = new WiM.Event.Delegate<WiM.Event.EventArgs>(); 
+            this.eventManager.AddEvent<SearchAPIEventArgs>(onSelectedAreaOfInterestChanged);
             this.init();
             this.loadSearchAPI(); 
         }
@@ -176,7 +171,7 @@ module WiM.Services {
 
                     console.log('found a location', lastLocationFound);
                     //send this data to region service
-                    this.onSelectedAreaOfInterestChanged.raise(this, new WiM.Services.SearchAPIEventArgs(new SearchLocation(lastLocationFound.name, lastLocationFound.category, lastLocationFound.state, lastLocationFound.y, lastLocationFound.x)));
+                    this.eventManager.RaiseEvent(onSelectedAreaOfInterestChanged, this, new SearchAPIEventArgs(new SearchLocation(lastLocationFound.name, lastLocationFound.category, lastLocationFound.state, lastLocationFound.y, lastLocationFound.x)));
                 });
                 
                 // OPTIONAL: define what to do when no location is found
@@ -246,9 +241,9 @@ module WiM.Services {
 
     }//end class
 
-    factory.$inject = ['$http', '$q'];
-    function factory($http: ng.IHttpService, $q: ng.IQService) {
-        return new SearchAPIService($http, $q)
+    factory.$inject = ['$http', '$q', 'WiM.Event.EventManager'];
+    function factory($http: ng.IHttpService, $q: ng.IQService, eventManager:Event.IEventManager) {
+        return new SearchAPIService($http, $q, eventManager)
     }
     angular.module('WiM.Services')
         .factory('WiM.Services.SearchAPIService', factory)

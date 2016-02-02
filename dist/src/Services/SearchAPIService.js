@@ -9,6 +9,7 @@ var WiM;
     var Services;
     (function (Services) {
         'use strict';
+        Services.onSelectedAreaOfInterestChanged = "onSelectedAreaOfInterestChanged";
         var SearchAPIEventArgs = (function (_super) {
             __extends(SearchAPIEventArgs, _super);
             function SearchAPIEventArgs(aoi) {
@@ -36,20 +37,14 @@ var WiM;
         })();
         var SearchAPIService = (function (_super) {
             __extends(SearchAPIService, _super);
-            function SearchAPIService($http, $q) {
+            function SearchAPIService($http, $q, eventManager) {
                 _super.call(this, $http, configuration.baseurls['SearchAPI']);
                 this.$q = $q;
-                this._onSelectedAreaOfInterestChanged = new WiM.Event.Delegate();
+                this.eventManager = eventManager;
+                this.eventManager.AddEvent(Services.onSelectedAreaOfInterestChanged);
                 this.init();
                 this.loadSearchAPI();
             }
-            Object.defineProperty(SearchAPIService.prototype, "onSelectedAreaOfInterestChanged", {
-                get: function () {
-                    return this._onSelectedAreaOfInterestChanged;
-                },
-                enumerable: true,
-                configurable: true
-            });
             SearchAPIService.prototype.loadSearchAPI = function () {
                 var _this = this;
                 var myScript = document.createElement('script');
@@ -77,7 +72,7 @@ var WiM;
                     });
                     search_api.on("location-found", function (lastLocationFound) {
                         console.log('found a location', lastLocationFound);
-                        _this.onSelectedAreaOfInterestChanged.raise(_this, new WiM.Services.SearchAPIEventArgs(new SearchLocation(lastLocationFound.name, lastLocationFound.category, lastLocationFound.state, lastLocationFound.y, lastLocationFound.x)));
+                        _this.eventManager.RaiseEvent(Services.onSelectedAreaOfInterestChanged, _this, new SearchAPIEventArgs(new SearchLocation(lastLocationFound.name, lastLocationFound.category, lastLocationFound.state, lastLocationFound.y, lastLocationFound.x)));
                     });
                     search_api.on("no-result", function () {
                         alert("No location matching the entered text could be found.");
@@ -134,9 +129,9 @@ var WiM;
             };
             return SearchAPIService;
         })(Services.HTTPServiceBase);
-        factory.$inject = ['$http', '$q'];
-        function factory($http, $q) {
-            return new SearchAPIService($http, $q);
+        factory.$inject = ['$http', '$q', 'WiM.Event.EventManager'];
+        function factory($http, $q, eventManager) {
+            return new SearchAPIService($http, $q, eventManager);
         }
         angular.module('WiM.Services').factory('WiM.Services.SearchAPIService', factory);
     })(Services = WiM.Services || (WiM.Services = {}));
