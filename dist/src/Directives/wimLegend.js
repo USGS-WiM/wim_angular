@@ -11,6 +11,7 @@ var WiM;
         'use string';
         Directives.onLayerAdded = "onLayerAdded";
         Directives.onLayerChanged = "onLayerChanged";
+        Directives.onLayerRemoved = "onLayerRemoved";
         var LegendLayerAddedEventArgs = (function (_super) {
             __extends(LegendLayerAddedEventArgs, _super);
             function LegendLayerAddedEventArgs(layername, ltype, style) {
@@ -33,6 +34,16 @@ var WiM;
             return LegendLayerChangedEventArgs;
         })(WiM.Event.EventArgs);
         Directives.LegendLayerChangedEventArgs = LegendLayerChangedEventArgs;
+        var LegendLayerRemovedEventArgs = (function (_super) {
+            __extends(LegendLayerRemovedEventArgs, _super);
+            function LegendLayerRemovedEventArgs(layername, ltype) {
+                _super.call(this);
+                this.LayerName = layername;
+                this.layerType = ltype;
+            }
+            return LegendLayerRemovedEventArgs;
+        })(WiM.Event.EventArgs);
+        Directives.LegendLayerRemovedEventArgs = LegendLayerRemovedEventArgs;
         var wimLegendController = (function (_super) {
             __extends(wimLegendController, _super);
             function wimLegendController($scope, $http, leafletData, eventManager) {
@@ -42,8 +53,12 @@ var WiM;
                 this.eventManager = eventManager;
                 this.eventManager.AddEvent(Directives.onLayerAdded);
                 this.eventManager.AddEvent(Directives.onLayerChanged);
+                this.eventManager.AddEvent(Directives.onLayerRemoved);
                 this.eventManager.SubscribeToEvent(Directives.onLayerAdded, new WiM.Event.EventHandler(function (sender, e) {
                     _this.onLayerAdded(sender, e);
+                }));
+                this.eventManager.SubscribeToEvent(Directives.onLayerRemoved, new WiM.Event.EventHandler(function (sender, e) {
+                    _this.onLayerRemoved(sender, e);
                 }));
                 this.leafletData = leafletData;
                 this.init();
@@ -117,6 +132,12 @@ var WiM;
                     visible: true,
                     style: e.style
                 };
+            };
+            wimLegendController.prototype.onLayerRemoved = function (sender, e) {
+                if (e.layerType != 'geojson')
+                    return;
+                if (this.applicationLayer.layergroup.hasOwnProperty(e.LayerName))
+                    delete e.LayerName;
             };
             wimLegendController.$inject = ['$scope', '$http', 'leafletData', 'WiM.Event.EventManager'];
             return wimLegendController;

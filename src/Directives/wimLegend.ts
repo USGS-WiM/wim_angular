@@ -50,6 +50,7 @@ module WiM.Directives {
 
     export var onLayerAdded: string = "onLayerAdded";
     export var onLayerChanged: string = "onLayerChanged";
+    export var onLayerRemoved: string = "onLayerRemoved";
 
     export class LegendLayerAddedEventArgs extends WiM.Event.EventArgs {
         //properties
@@ -77,7 +78,17 @@ module WiM.Directives {
             this.Value = value;
         }
     }
+    export class LegendLayerRemovedEventArgs extends WiM.Event.EventArgs {
+        //properties
+        public LayerName: string;
+        public layerType: String;
 
+        constructor(layername: string, ltype: string) {
+            super();
+            this.LayerName = layername;
+            this.layerType = ltype;
+        }
+    }
     class wimLegendController extends Services.HTTPServiceBase implements IwimLegendController {
         //Properties
         //-+-+-+-+-+-+-+-+-+-+-+-
@@ -101,9 +112,14 @@ module WiM.Directives {
             //subscribe to Events
             this.eventManager.AddEvent <LegendLayerAddedEventArgs>(onLayerAdded);
             this.eventManager.AddEvent<LegendLayerChangedEventArgs>(onLayerChanged);
+            this.eventManager.AddEvent<LegendLayerRemovedEventArgs>(onLayerRemoved);
 
             this.eventManager.SubscribeToEvent(onLayerAdded, new WiM.Event.EventHandler<LegendLayerAddedEventArgs>((sender: any, e: LegendLayerAddedEventArgs) => {
                 this.onLayerAdded(sender, e);
+            }));
+
+            this.eventManager.SubscribeToEvent(onLayerRemoved, new WiM.Event.EventHandler<LegendLayerRemovedEventArgs>((sender: any, e: LegendLayerRemovedEventArgs) => {
+                this.onLayerRemoved(sender, e);
             }));
 
             this.leafletData = leafletData;
@@ -177,9 +193,7 @@ module WiM.Directives {
                         }//end if
                     }//next
                 });//end getLayers                                
-            });//end getMap   
-
-            
+            });//end getMap 
 
         }//end init
 
@@ -192,6 +206,12 @@ module WiM.Directives {
                 visible: true,
                 style: e.style
             }         
+        }
+        private onLayerRemoved(sender: any, e: LegendLayerRemovedEventArgs): void {
+            if (e.layerType != 'geojson') return; 
+            //remove
+            if (this.applicationLayer.layergroup.hasOwnProperty(e.LayerName))
+                delete e.LayerName;
         }
 
     }//end wimLayerControlController class
