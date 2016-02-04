@@ -79,7 +79,7 @@ module WiM.Event {
         public RaiseEvent(EventName: string, sender:any = null, args: EventArgs = EventArgs.Empty) {
             if (!this._eventList.hasOwnProperty(EventName)) return;
             this._eventList[EventName].onChanged.raise(sender, args);
-            console.log("Event Raised " + EventName);
+            //console.log("Event Raised " + EventName);
         }
         public UnSubscribeToEvent<T extends EventArgs>(EventName: string, handler: EventHandler<T>) {
             if (!this._eventList.hasOwnProperty(EventName)) return;

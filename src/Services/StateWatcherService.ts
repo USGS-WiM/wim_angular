@@ -10,16 +10,16 @@
         }
 
         private stateChangeStart(event, toState, toParams, fromState, fromParams) {
-            console.log('state change start',event, toState,toParams,fromState,fromParams);
+            //console.log('state change start',event, toState,toParams,fromState,fromParams);
         }
         private stateChangeSuccess(event, toState, toParams, fromState, fromParams) {
-            console.log('state change success', event, toState, toParams, fromState, fromParams);
+            //console.log('state change success', event, toState, toParams, fromState, fromParams);
         }
         private stateChangeError(event, toState, toParams, fromState, fromParams, error) {
-            console.log('state change error', event, toState, toParams, fromState, fromParams, error);
+            //console.log('state change error', event, toState, toParams, fromState, fromParams, error);
         }
         private stateNotFound(event, unfoundState, toParams, fromState, fromParams) {
-            console.log('state not found', event, unfoundState, toParams, fromState, fromParams);
+            //console.log('state not found', event, unfoundState, toParams, fromState, fromParams);
         }
 
     }//end class
