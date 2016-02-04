@@ -135,7 +135,7 @@ module WiM.Directives {
             var request: Services.Helpers.RequestInfo = new Services.Helpers.RequestInfo(url, true);
             this.Execute(request).then(
                 (response: any) => {
-                    console.log(response.data);
+                    //console.log(response.data);
                     if (response.data.layers.length > 0) {
                         mlyr.isOpen = true;
                         mlyr.layerArray = response.data.layers;                      

@@ -138,7 +138,7 @@ module WiM.Services {
             var myScript = document.createElement('script');
             myScript.src = 'http://txpub.usgs.gov/DSS/search_api/1.1/api/search_api.min.js';
             myScript.onload = () => {
-                console.log('search api js loaded.');
+                //console.log('search api js loaded.');
                 this.setSearchAPI();
             };
             document.body.appendChild(myScript);
@@ -146,7 +146,7 @@ module WiM.Services {
         public setSearchAPI() {
             // setup must be done after the search_api is loaded and ready ("load" event triggered)
             search_api.on("load",() => {
-                console.log('search api onload event');
+                //console.log('search api onload event');
 
                 // OPTIONAL: set search_api options (case-sensitive)
                 search_api.setOpts({
@@ -169,7 +169,7 @@ module WiM.Services {
                 // REQUIRED: define what to do when a location is found
                 search_api.on("location-found", (lastLocationFound) => {
 
-                    console.log('found a location', lastLocationFound);
+                    //console.log('found a location', lastLocationFound);
                     //send this data to region service
                     this.eventManager.RaiseEvent(onSelectedAreaOfInterestChanged, this, new SearchAPIEventArgs(new SearchLocation(lastLocationFound.name, lastLocationFound.category, lastLocationFound.state, lastLocationFound.y, lastLocationFound.x)));
                 });

@@ -97,7 +97,7 @@ module WiM.Directives{
         //Methods  
         //-+-+-+-+-+-+-+-+-+-+-+-
         public uploadFile(event: any): void {
-            console.log("this did work");
+            //console.log("this did work");
             this.freshdeskTicketData.attachments = event.target.files;
         }
 
@@ -133,7 +133,7 @@ module WiM.Directives{
             var url = 'https://streamstats.freshdesk.com/helpdesk/tickets.json';
             var data = angular.toJson({ "helpdesk_ticket": this.freshdeskTicketData });
 
-            console.log('ticket data',data);
+            //console.log('ticket data',data);
             var headers = {
                 "Authorization": "Basic " + btoa('MpxLRniw8Kf9Eax4ZK9b' + ":" + 'X')
             };
@@ -141,7 +141,7 @@ module WiM.Directives{
 
             this.Execute(request).then(
                 (response: any) => {
-                    console.log('Got a response: ', response);
+                    //console.log('Got a response: ', response);
                     alert("Your request has been submitted.  Your request will be addressed as soon as possible");
                     this.freshdeskTicketData = new FreshdeskTicketData();
                     //sm when complete
@@ -157,24 +157,24 @@ module WiM.Directives{
             if (this.helpSelected) this.helpSelected = false;
             else this.helpSelected = true;
 
-            console.log(this.helpSelected);
+            //console.log(this.helpSelected);
         }
 
         public toggleAboutSelected(): void {
             if (this.aboutSelected) this.aboutSelected = false;
             else this.aboutSelected = true;
 
-            console.log(this.aboutSelected);
+            //console.log(this.aboutSelected);
         }
         public selectAboutTab(tabname:string): void {
             if (this.selectedAboutTabName == tabname) return;
             this.selectedAboutTabName = tabname;
-            console.log('selected tab: '+tabname);
+            //console.log('selected tab: '+tabname);
         }
         public selectHelpTab(tabname: string): void {
             if (this.selectedHelpTabName == tabname) return;
             this.selectedHelpTabName = tabname;
-            console.log('selected tab: ' + tabname);
+            //console.log('selected tab: ' + tabname);
         }
     }
    
