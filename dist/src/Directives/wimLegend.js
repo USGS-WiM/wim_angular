@@ -69,7 +69,6 @@ var WiM;
                 var url = mlyr.url + "/legend?f=pjson";
                 var request = new WiM.Services.Helpers.RequestInfo(url, true);
                 this.Execute(request).then(function (response) {
-                    console.log(response.data);
                     if (response.data.layers.length > 0) {
                         mlyr.isOpen = true;
                         mlyr.layerArray = response.data.layers;

@@ -12,16 +12,12 @@ var WiM;
                 $rootScope.$on('$stateNotFound', this.stateNotFound);
             }
             StateWatcherService.prototype.stateChangeStart = function (event, toState, toParams, fromState, fromParams) {
-                console.log('state change start', event, toState, toParams, fromState, fromParams);
             };
             StateWatcherService.prototype.stateChangeSuccess = function (event, toState, toParams, fromState, fromParams) {
-                console.log('state change success', event, toState, toParams, fromState, fromParams);
             };
             StateWatcherService.prototype.stateChangeError = function (event, toState, toParams, fromState, fromParams, error) {
-                console.log('state change error', event, toState, toParams, fromState, fromParams, error);
             };
             StateWatcherService.prototype.stateNotFound = function (event, unfoundState, toParams, fromState, fromParams) {
-                console.log('state not found', event, unfoundState, toParams, fromState, fromParams);
             };
             return StateWatcherService;
         })();

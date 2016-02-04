@@ -36,7 +36,6 @@ var WiM;
                 if (!this._eventList.hasOwnProperty(EventName))
                     return;
                 this._eventList[EventName].onChanged.raise(sender, args);
-                console.log("Event Raised " + EventName);
             };
             EventManager.prototype.UnSubscribeToEvent = function (EventName, handler) {
                 if (!this._eventList.hasOwnProperty(EventName))

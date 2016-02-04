@@ -50,7 +50,6 @@ var WiM;
                 var myScript = document.createElement('script');
                 myScript.src = 'http://txpub.usgs.gov/DSS/search_api/1.1/api/search_api.min.js';
                 myScript.onload = function () {
-                    console.log('search api js loaded.');
                     _this.setSearchAPI();
                 };
                 document.body.appendChild(myScript);
@@ -58,7 +57,6 @@ var WiM;
             SearchAPIService.prototype.setSearchAPI = function () {
                 var _this = this;
                 search_api.on("load", function () {
-                    console.log('search api onload event');
                     search_api.setOpts({
                         "textboxPosition": "user-defined",
                         "theme": "user-defined",
@@ -71,7 +69,6 @@ var WiM;
                     search_api.on("before-search", function () {
                     });
                     search_api.on("location-found", function (lastLocationFound) {
-                        console.log('found a location', lastLocationFound);
                         _this.eventManager.RaiseEvent(Services.onSelectedAreaOfInterestChanged, _this, new SearchAPIEventArgs(new SearchLocation(lastLocationFound.name, lastLocationFound.category, lastLocationFound.state, lastLocationFound.y, lastLocationFound.x)));
                     });
                     search_api.on("no-result", function () {
