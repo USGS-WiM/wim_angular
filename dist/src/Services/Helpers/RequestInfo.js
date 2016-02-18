@@ -7,7 +7,7 @@ var WiM;
             var RequestInfo = (function () {
                 function RequestInfo(ul, includesbaseurl, mthd, dtype, data, headers, tranform) {
                     if (includesbaseurl === void 0) { includesbaseurl = false; }
-                    if (mthd === void 0) { mthd = 0 /* GET */; }
+                    if (mthd === void 0) { mthd = methodType.GET; }
                     if (dtype === void 0) { dtype = "json"; }
                     if (data === void 0) { data = null; }
                     if (headers === void 0) { headers = null; }

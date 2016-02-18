@@ -25,7 +25,8 @@ var WiM;
         function factory($rootScope) {
             return new StateWatcherService($rootScope);
         }
-        angular.module('WiM.Services').factory('WiM.Services.StateWatcherService', factory);
+        angular.module('WiM.Services')
+            .factory('WiM.Services.StateWatcherService', factory);
     })(Services = WiM.Services || (WiM.Services = {}));
 })(WiM || (WiM = {}));
 //# sourceMappingURL=StateWatcherService.js.map
