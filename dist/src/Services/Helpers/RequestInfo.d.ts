@@ -7,8 +7,8 @@ declare module WiM.Services.Helpers {
         dataType: string;
         params: any;
         data: any;
-        transformRequest: Function;
-        constructor(ul: string, includesbaseurl?: boolean, mthd?: methodType, dtype?: string, data?: any, headers?: any, tranform?: Function);
+        transformRequest: any;
+        constructor(ul: string, includesbaseurl?: boolean, mthd?: methodType, dtype?: string, data?: any, headers?: any, tranform?: any);
     }
     enum methodType {
         GET = 0,

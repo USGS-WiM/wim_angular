@@ -9,9 +9,9 @@
         public dataType: string
         public params: any;
         public data: any;
-        public transformRequest:Function;
+        public transformRequest:any;
 
-        constructor(ul: string, includesbaseurl:boolean = false, mthd: methodType = methodType.GET, dtype:string ="json", data: any = null, headers: any = null, tranform:Function = null ) {
+        constructor(ul: string, includesbaseurl: boolean = false, mthd: methodType = methodType.GET, dtype: string = "json", data: any = null, headers: any = null, tranform: any = null ) {
             this.url = ul;
             this.includesBaseURL = includesbaseurl;
             this.method = methodType[mthd];
