@@ -1,8 +1,7 @@
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var WiM;
 (function (WiM) {
@@ -26,14 +25,16 @@ var WiM;
                     authdata = this.encode(this.User.username + ":" + password);
                 }
                 this.$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
-                return this.Execute(request).then(function (response) {
+                return this.Execute(request)
+                    .then(function (response) {
                 });
             };
             AuthenticationServiceAgent.prototype.SetTokenAuthentication = function (uri, password) {
                 var _this = this;
                 try {
                     var request = new Services.Helpers.RequestInfo(uri);
-                    return this.Execute(request).then(function (response) {
+                    return this.Execute(request)
+                        .then(function (response) {
                         _this.$http.defaults.headers.common['Authorization'] = 'token ' + response.data;
                     });
                 }
@@ -66,7 +67,11 @@ var WiM;
                         else if (isNaN(chr3)) {
                             enc4 = 64;
                         }
-                        output = output + keyStr.charAt(enc1) + keyStr.charAt(enc2) + keyStr.charAt(enc3) + keyStr.charAt(enc4);
+                        output = output +
+                            keyStr.charAt(enc1) +
+                            keyStr.charAt(enc2) +
+                            keyStr.charAt(enc3) +
+                            keyStr.charAt(enc4);
                         chr1 = chr2 = chr3 = NaN;
                         enc1 = enc2 = enc3 = enc4 = NaN;
                     } while (i < input.length);

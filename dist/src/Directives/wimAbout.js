@@ -1,8 +1,7 @@
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var WiM;
 (function (WiM) {
@@ -43,7 +42,7 @@ var WiM;
                 var headers = {
                     "Authorization": "Basic " + btoa('MpxLRniw8Kf9Eax4ZK9b' + ":" + 'X')
                 };
-                var request = new WiM.Services.Helpers.RequestInfo(url, true, 1 /* POST */, 'json', data, headers);
+                var request = new WiM.Services.Helpers.RequestInfo(url, true, WiM.Services.Helpers.methodType.POST, 'json', data, headers);
                 this.Execute(request).then(function (response) {
                     alert("Your request has been submitted.  Your request will be addressed as soon as possible");
                     _this.freshdeskTicketData = new FreshdeskTicketData();
@@ -90,7 +89,8 @@ var WiM;
             };
             return wimAbout;
         })();
-        angular.module('wim_angular', []).directive('wimAbout', wimAbout.instance);
+        angular.module('wim_angular', [])
+            .directive('wimAbout', wimAbout.instance);
     })(Directives = WiM.Directives || (WiM.Directives = {}));
 })(WiM || (WiM = {}));
 //# sourceMappingURL=wimAbout.js.map

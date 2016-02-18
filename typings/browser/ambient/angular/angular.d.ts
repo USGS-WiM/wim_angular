@@ -1,10 +1,11 @@
+// Compiled using typings@0.6.8
+// Source: https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/00e7f3fede5f2df55b56c72f40a144824f0f0bfa/angularjs/angular.d.ts
 // Type definitions for Angular JS 1.3+
 // Project: http://angularjs.org
 // Definitions by: Diego Vilar <http://github.com/diegovilar>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
 
-/// <reference path="../jquery/jquery.d.ts" />
 
 declare var angular: angular.IAngularStatic;
 

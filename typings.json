@@ -1,0 +1,7 @@
+{
+  "name": "wim_angular",
+  "ambientDependencies": {
+    "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#00e7f3fede5f2df55b56c72f40a144824f0f0bfa",
+    "angular": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#00e7f3fede5f2df55b56c72f40a144824f0f0bfa"
+  }
+}
