@@ -87,7 +87,7 @@ module WiM.Directives{
             this.gitHubIssues = new GitHubIssueData();
             this.freshdeskTicketData = new FreshdeskTicketData();
             this.selectedAboutTabName = "about";
-            this.selectedHelpTabName = "submitTicket";
+            this.selectedHelpTabName = "faq";
             this.aboutSelected = false;
             this.helpSelected = false;
             this.displayMessage;

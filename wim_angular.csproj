@@ -74,9 +74,6 @@
     <TypeScriptCompile Include="src\Services\StateWatcherService.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="tsd.json" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
