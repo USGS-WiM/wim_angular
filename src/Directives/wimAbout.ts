@@ -131,12 +131,12 @@ module WiM.Directives{
             //if (!isValid) return;
             var url = 'https://streamstatshelp.zendesk.com/api/v2/tickets.json ';
             var data = angular.toJson({ "ticket": this.SupportTicketData });
-            var user = btoa('marsmith@usgs.gov');
-            var token = btoa('/token:bCkA8dLeVkzs5mTPamt1g7zv8EMKUCuTRpPkW7Ez');
+            var user = 'marsmith@usgs.gov';
+            var token = 'bCkA8dLeVkzs5mTPamt1g7zv8EMKUCuTRpPkW7Ez';
 
             //console.log('ticket data',data);
             var headers = {
-                'Authorization': 'Basic bWFyc21pdGhAdXNncy5nb3YvdG9rZW46YkNrQThkTGVWa3pzNW1UUGFtdDFnN3p2OEVNS1VDdVRScFBrVzdFeg=='
+                "Authorization": "Basic " + btoa(user + '/token:' + token)
             };
             var request: WiM.Services.Helpers.RequestInfo = new WiM.Services.Helpers.RequestInfo(url, true, Services.Helpers.methodType.POST, 'json', data, headers);
 
