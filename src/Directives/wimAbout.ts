@@ -48,12 +48,11 @@ module WiM.Directives{
         file: any;
     }
 
-    class FreshdeskTicketData {
-        public firstName: string;
-        public lastName: string;
+    class SupportTicketData {
+        public name: string;
         public email: string;
-        public description: string;
         public subject: string;
+        public comment: string;    
         public attachments: any;
     }
 
@@ -74,7 +73,7 @@ module WiM.Directives{
         public selectedAboutTabName: string;
         public selectedHelpTabName: string;
         public gitHubIssues: GitHubIssueData;
-        public freshdeskTicketData: FreshdeskTicketData;
+        public SupportTicketData: SupportTicketData;
         public displayMessage: string;
         public isValid: boolean;
         
@@ -85,7 +84,7 @@ module WiM.Directives{
             super($http, '');
             $scope.vm = this;
             this.gitHubIssues = new GitHubIssueData();
-            this.freshdeskTicketData = new FreshdeskTicketData();
+            this.SupportTicketData = new SupportTicketData();
             this.selectedAboutTabName = "about";
             this.selectedHelpTabName = "faq";
             this.aboutSelected = false;
@@ -98,7 +97,7 @@ module WiM.Directives{
         //-+-+-+-+-+-+-+-+-+-+-+-
         public uploadFile(event: any): void {
             //console.log("this did work");
-            this.freshdeskTicketData.attachments = event.target.files;
+            this.SupportTicketData.attachments = event.target.files;
         }
 
         //public submitGitHubIssue(): void {
@@ -130,12 +129,14 @@ module WiM.Directives{
             //console.log("ticket form validity: ", isValid);
 
             //if (!isValid) return;
-            var url = 'https://streamstats.freshdesk.com/helpdesk/tickets.json';
-            var data = angular.toJson({ "helpdesk_ticket": this.freshdeskTicketData });
+            var url = 'https://streamstatshelp.zendesk.com/api/v2/tickets.json ';
+            var data = angular.toJson({ "ticket": this.SupportTicketData });
+            var user = btoa('marsmith@usgs.gov');
+            var token = btoa('/token:bCkA8dLeVkzs5mTPamt1g7zv8EMKUCuTRpPkW7Ez');
 
             //console.log('ticket data',data);
             var headers = {
-                "Authorization": "Basic " + btoa('MpxLRniw8Kf9Eax4ZK9b' + ":" + 'X')
+                'Authorization': 'Basic bWFyc21pdGhAdXNncy5nb3YvdG9rZW46YkNrQThkTGVWa3pzNW1UUGFtdDFnN3p2OEVNS1VDdVRScFBrVzdFeg=='
             };
             var request: WiM.Services.Helpers.RequestInfo = new WiM.Services.Helpers.RequestInfo(url, true, Services.Helpers.methodType.POST, 'json', data, headers);
 
@@ -143,7 +144,7 @@ module WiM.Directives{
                 (response: any) => {
                     //console.log('Got a response: ', response);
                     alert("Your request has been submitted.  Your request will be addressed as soon as possible");
-                    this.freshdeskTicketData = new FreshdeskTicketData();
+                    this.SupportTicketData = new SupportTicketData();
                     //sm when complete
                 },(error) => {
                     //sm when error
