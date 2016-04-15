@@ -97,7 +97,7 @@ var WiM;
             };
             return wimAbout;
         })();
-        angular.module('wim_angular', []).directive('wimAbout', wimAbout.instance);
+        angular.module('wim_angular').directive('wimAbout', wimAbout.instance);
     })(Directives = WiM.Directives || (WiM.Directives = {}));
 })(WiM || (WiM = {}));
 //# sourceMappingURL=wimAbout.js.map
