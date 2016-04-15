@@ -48,12 +48,11 @@ module WiM.Directives{
         file: any;
     }
 
-    class FreshdeskTicketData {
-        public firstName: string;
-        public lastName: string;
+    class SupportTicketData {
+        public name: string;
         public email: string;
-        public description: string;
         public subject: string;
+        public comment: string;    
         public attachments: any;
     }
 
@@ -74,7 +73,7 @@ module WiM.Directives{
         public selectedAboutTabName: string;
         public selectedHelpTabName: string;
         public gitHubIssues: GitHubIssueData;
-        public freshdeskTicketData: FreshdeskTicketData;
+        public SupportTicketData: SupportTicketData;
         public displayMessage: string;
         public isValid: boolean;
         
@@ -85,9 +84,9 @@ module WiM.Directives{
             super($http, '');
             $scope.vm = this;
             this.gitHubIssues = new GitHubIssueData();
-            this.freshdeskTicketData = new FreshdeskTicketData();
+            this.SupportTicketData = new SupportTicketData();
             this.selectedAboutTabName = "about";
-            this.selectedHelpTabName = "submitTicket";
+            this.selectedHelpTabName = "faq";
             this.aboutSelected = false;
             this.helpSelected = false;
             this.displayMessage;
@@ -97,8 +96,8 @@ module WiM.Directives{
         //Methods  
         //-+-+-+-+-+-+-+-+-+-+-+-
         public uploadFile(event: any): void {
-            console.log("this did work");
-            this.freshdeskTicketData.attachments = event.target.files;
+            //console.log("this did work");
+            this.SupportTicketData.attachments = event.target.files;
         }
 
         //public submitGitHubIssue(): void {
@@ -130,20 +129,22 @@ module WiM.Directives{
             //console.log("ticket form validity: ", isValid);
 
             //if (!isValid) return;
-            var url = 'https://streamstats.freshdesk.com/helpdesk/tickets.json';
-            var data = angular.toJson({ "helpdesk_ticket": this.freshdeskTicketData });
+            var url = 'https://streamstatshelp.zendesk.com/api/v2/tickets.json ';
+            var data = angular.toJson({ "ticket": this.SupportTicketData });
+            var user = 'marsmith@usgs.gov';
+            var token = 'bCkA8dLeVkzs5mTPamt1g7zv8EMKUCuTRpPkW7Ez';
 
-            console.log('ticket data',data);
+            //console.log('ticket data',data);
             var headers = {
-                "Authorization": "Basic " + btoa('MpxLRniw8Kf9Eax4ZK9b' + ":" + 'X')
+                "Authorization": "Basic " + btoa(user + '/token:' + token)
             };
             var request: WiM.Services.Helpers.RequestInfo = new WiM.Services.Helpers.RequestInfo(url, true, Services.Helpers.methodType.POST, 'json', data, headers);
 
             this.Execute(request).then(
                 (response: any) => {
-                    console.log('Got a response: ', response);
+                    //console.log('Got a response: ', response);
                     alert("Your request has been submitted.  Your request will be addressed as soon as possible");
-                    this.freshdeskTicketData = new FreshdeskTicketData();
+                    this.SupportTicketData = new SupportTicketData();
                     //sm when complete
                 },(error) => {
                     //sm when error
@@ -157,24 +158,24 @@ module WiM.Directives{
             if (this.helpSelected) this.helpSelected = false;
             else this.helpSelected = true;
 
-            console.log(this.helpSelected);
+            //console.log(this.helpSelected);
         }
 
         public toggleAboutSelected(): void {
             if (this.aboutSelected) this.aboutSelected = false;
             else this.aboutSelected = true;
 
-            console.log(this.aboutSelected);
+            //console.log(this.aboutSelected);
         }
         public selectAboutTab(tabname:string): void {
             if (this.selectedAboutTabName == tabname) return;
             this.selectedAboutTabName = tabname;
-            console.log('selected tab: '+tabname);
+            //console.log('selected tab: '+tabname);
         }
         public selectHelpTab(tabname: string): void {
             if (this.selectedHelpTabName == tabname) return;
             this.selectedHelpTabName = tabname;
-            console.log('selected tab: ' + tabname);
+            //console.log('selected tab: ' + tabname);
         }
     }
    

@@ -1,18 +1,17 @@
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var WiM;
 (function (WiM) {
     var Directives;
     (function (Directives) {
         'use string';
-        var FreshdeskTicketData = (function () {
-            function FreshdeskTicketData() {
+        var SupportTicketData = (function () {
+            function SupportTicketData() {
             }
-            return FreshdeskTicketData;
+            return SupportTicketData;
         })();
         var GitHubIssueData = (function () {
             function GitHubIssueData() {
@@ -25,31 +24,30 @@ var WiM;
                 _super.call(this, $http, '');
                 $scope.vm = this;
                 this.gitHubIssues = new GitHubIssueData();
-                this.freshdeskTicketData = new FreshdeskTicketData();
+                this.SupportTicketData = new SupportTicketData();
                 this.selectedAboutTabName = "about";
-                this.selectedHelpTabName = "submitTicket";
+                this.selectedHelpTabName = "faq";
                 this.aboutSelected = false;
                 this.helpSelected = false;
                 this.displayMessage;
                 this.isValid = false;
             }
             wimAboutController.prototype.uploadFile = function (event) {
-                console.log("this did work");
-                this.freshdeskTicketData.attachments = event.target.files;
+                this.SupportTicketData.attachments = event.target.files;
             };
             wimAboutController.prototype.submitTicket = function (isValid) {
                 var _this = this;
-                var url = 'https://streamstats.freshdesk.com/helpdesk/tickets.json';
-                var data = angular.toJson({ "helpdesk_ticket": this.freshdeskTicketData });
-                console.log('ticket data', data);
+                var url = 'https://streamstatshelp.zendesk.com/api/v2/tickets.json ';
+                var data = angular.toJson({ "ticket": this.SupportTicketData });
+                var user = 'marsmith@usgs.gov';
+                var token = 'bCkA8dLeVkzs5mTPamt1g7zv8EMKUCuTRpPkW7Ez';
                 var headers = {
-                    "Authorization": "Basic " + btoa('MpxLRniw8Kf9Eax4ZK9b' + ":" + 'X')
+                    "Authorization": "Basic " + btoa(user + '/token:' + token)
                 };
-                var request = new WiM.Services.Helpers.RequestInfo(url, true, 1 /* POST */, 'json', data, headers);
+                var request = new WiM.Services.Helpers.RequestInfo(url, true, WiM.Services.Helpers.methodType.POST, 'json', data, headers);
                 this.Execute(request).then(function (response) {
-                    console.log('Got a response: ', response);
                     alert("Your request has been submitted.  Your request will be addressed as soon as possible");
-                    _this.freshdeskTicketData = new FreshdeskTicketData();
+                    _this.SupportTicketData = new SupportTicketData();
                 }, function (error) {
                 }).finally(function () {
                 });
@@ -59,26 +57,22 @@ var WiM;
                     this.helpSelected = false;
                 else
                     this.helpSelected = true;
-                console.log(this.helpSelected);
             };
             wimAboutController.prototype.toggleAboutSelected = function () {
                 if (this.aboutSelected)
                     this.aboutSelected = false;
                 else
                     this.aboutSelected = true;
-                console.log(this.aboutSelected);
             };
             wimAboutController.prototype.selectAboutTab = function (tabname) {
                 if (this.selectedAboutTabName == tabname)
                     return;
                 this.selectedAboutTabName = tabname;
-                console.log('selected tab: ' + tabname);
             };
             wimAboutController.prototype.selectHelpTab = function (tabname) {
                 if (this.selectedHelpTabName == tabname)
                     return;
                 this.selectedHelpTabName = tabname;
-                console.log('selected tab: ' + tabname);
             };
             wimAboutController.$inject = ['$scope', '$http'];
             return wimAboutController;

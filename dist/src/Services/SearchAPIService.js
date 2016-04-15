@@ -1,8 +1,7 @@
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var WiM;
 (function (WiM) {
@@ -50,7 +49,6 @@ var WiM;
                 var myScript = document.createElement('script');
                 myScript.src = 'http://txpub.usgs.gov/DSS/search_api/1.1/api/search_api.min.js';
                 myScript.onload = function () {
-                    console.log('search api js loaded.');
                     _this.setSearchAPI();
                 };
                 document.body.appendChild(myScript);
@@ -58,7 +56,6 @@ var WiM;
             SearchAPIService.prototype.setSearchAPI = function () {
                 var _this = this;
                 search_api.on("load", function () {
-                    console.log('search api onload event');
                     search_api.setOpts({
                         "textboxPosition": "user-defined",
                         "theme": "user-defined",
@@ -71,7 +68,6 @@ var WiM;
                     search_api.on("before-search", function () {
                     });
                     search_api.on("location-found", function (lastLocationFound) {
-                        console.log('found a location', lastLocationFound);
                         _this.eventManager.RaiseEvent(Services.onSelectedAreaOfInterestChanged, _this, new SearchAPIEventArgs(new SearchLocation(lastLocationFound.name, lastLocationFound.category, lastLocationFound.state, lastLocationFound.y, lastLocationFound.x)));
                     });
                     search_api.on("no-result", function () {
@@ -133,7 +129,8 @@ var WiM;
         function factory($http, $q, eventManager) {
             return new SearchAPIService($http, $q, eventManager);
         }
-        angular.module('WiM.Services').factory('WiM.Services.SearchAPIService', factory);
+        angular.module('WiM.Services')
+            .factory('WiM.Services.SearchAPIService', factory);
     })(Services = WiM.Services || (WiM.Services = {}));
 })(WiM || (WiM = {}));
 //# sourceMappingURL=SearchAPIService.js.map
