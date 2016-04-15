@@ -196,6 +196,6 @@ module WiM.Directives{
         }//end link
     }//end UrlDirective
 
-    angular.module('wim_angular',[])
+    angular.module('wim_angular')
         .directive('wimAbout', wimAbout.instance);
 }//end module 
