@@ -13,9 +13,9 @@
 x64/
 build/
 bld/
-bin
-obj
-config
+bin/
+obj/
+config/
 
 # Roslyn cache directories
 *.ide/
