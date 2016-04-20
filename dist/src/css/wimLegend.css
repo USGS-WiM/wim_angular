@@ -149,3 +149,78 @@
     text-align: center !important;
 
 }
+
+.wimLegend-list-group-body {
+    background-color:white;
+    border-radius:0 0 5px 5px;
+    padding-right:10px;
+    padding-bottom:25px;
+    padding-top: 10px;
+    padding-left:10px;
+    margin-bottom:3px;
+    border:1px thin;
+}
+.wimLegend-list-group-body a {
+    padding-left:10px;
+    float:left;
+    height: 25px;
+    width:100%;
+    padding-right: 10px;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wimLegend-list-group-item{
+    background-color: #E2E2E2;
+    text-align: right;
+    text-transform: uppercase;
+    font-size: 10pt;
+    box-sizing: border-box;
+    padding: 18px;
+    letter-spacing: 2px;
+    font-weight: 400;
+    color: #6E7490 !important;
+    transition: 0.2s;
+}
+.wimLegend-list-group-item i{
+    padding-left: 5px;
+    display: inline-block;
+    text-align: center;
+    width: 50px;
+}
+.wimLegend-list-group-item:hover{
+    color:#000 !important;
+    transition: 0.2s;
+}
+
+/*Active sidebar item*/
+.wimLegend-list-group-item-active{
+    display: block;
+    background-color: #0071BC;
+    text-align: right;
+    text-transform: uppercase;
+    font-size: 10pt;
+    box-sizing: border-box;
+    padding: 18px;
+    letter-spacing: 2px;
+    font-weight: 400;
+    color: #fff !important;
+    transition: 0.2s;
+}
+.wimLegend-list-group-item-active i{
+    padding-left: 5px;
+    display: inline-block;
+    text-align: center;
+    width: 50px;
+    position: relative; top:3px;
+}
+.wimLegend-list-group-item-active:hover{
+    text-decoration: none !important;
+}
+
+/*Active small link inside*/
+.wimLegend-list-group-item-link-active{
+    color: RGBA(34, 45, 57, 1);
+    font-weight:bolder;
+}
