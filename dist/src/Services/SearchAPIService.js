@@ -1,7 +1,12 @@
+//http://txpub.usgs.gov/DSS/search_api/1.0/dataService/dataService.ashx/search?term=05454500&state=%25&topN=100&LATmin=-90&LATmax=90&LONmin=-180&LONmax=180&includeGNIS=true&includeState=true&includeUsgsSiteSW=true&includeUsgsSiteGW=true&includeUsgsSiteSP=false&includeUsgsSiteAT=false&includeUsgsSiteOT=false&includeZIPcodes=true&includeAREAcodes=true&useCommonGnisClasses=false
+//------------------------------------------------------------------------------
+//----- RegionService -----------------------------------------------------
+//------------------------------------------------------------------------------
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var WiM;
 (function (WiM) {
@@ -56,6 +61,7 @@ var WiM;
             SearchAPIService.prototype.setSearchAPI = function () {
                 var _this = this;
                 search_api.on("load", function () {
+                    //console.log('search api onload event');
                     search_api.setOpts({
                         "textboxPosition": "user-defined",
                         "theme": "user-defined",
