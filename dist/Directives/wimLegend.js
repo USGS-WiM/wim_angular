@@ -1,31 +1,8 @@
-//------------------------------------------------------------------------------
-//----- WiM Legend ------------------------------------------------------
-//------------------------------------------------------------------------------
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-//-------1---------2---------3---------4---------5---------6---------7---------8
-//       01234567890123456789012345678901234567890123456789012345678901234567890
-//-------+---------+---------+---------+---------+---------+---------+---------+
-// copyright:   2015 WiM - USGS
-//    authors:  Jeremy K. Newson USGS Wisconsin Internet Mapping
-//             
-// 
-//   purpose:  
-//          
-//discussion:
-//  http://www.ng-newsletter.com/posts/directives.html
-//      Restrict parameters
-//          'A' - <span ng-sparkline></span>
-//          'E' - <ng-sparkline > </ng-sparkline>
-//          'C' - <span class="ng-sparkline" > </span>
-//          'M' - <!--directive: ng - sparkline-- >
-//Comments
-//04/20/2016 jkn used http://pojo.sodhanalibrary.com/string.html to and added html to template
-//01.11.2016 jkn - Created
-//Import
 var WiM;
 (function (WiM) {
     var Directives;
@@ -43,7 +20,7 @@ var WiM;
                 this.style = style;
             }
             return LegendLayerAddedEventArgs;
-        }(WiM.Event.EventArgs));
+        })(WiM.Event.EventArgs);
         Directives.LegendLayerAddedEventArgs = LegendLayerAddedEventArgs;
         var LegendLayerChangedEventArgs = (function (_super) {
             __extends(LegendLayerChangedEventArgs, _super);
@@ -54,7 +31,7 @@ var WiM;
                 this.Value = value;
             }
             return LegendLayerChangedEventArgs;
-        }(WiM.Event.EventArgs));
+        })(WiM.Event.EventArgs);
         Directives.LegendLayerChangedEventArgs = LegendLayerChangedEventArgs;
         var LegendLayerRemovedEventArgs = (function (_super) {
             __extends(LegendLayerRemovedEventArgs, _super);
@@ -64,7 +41,7 @@ var WiM;
                 this.layerType = ltype;
             }
             return LegendLayerRemovedEventArgs;
-        }(WiM.Event.EventArgs));
+        })(WiM.Event.EventArgs);
         Directives.LegendLayerRemovedEventArgs = LegendLayerRemovedEventArgs;
         var wimLegendController = (function (_super) {
             __extends(wimLegendController, _super);
@@ -73,7 +50,6 @@ var WiM;
                 _super.call(this, $http, '');
                 $scope.vm = this;
                 this.eventManager = eventManager;
-                //subscribe to Events
                 this.eventManager.AddEvent(Directives.onLayerAdded);
                 this.eventManager.AddEvent(Directives.onLayerChanged);
                 this.eventManager.AddEvent(Directives.onLayerRemoved);
@@ -86,16 +62,12 @@ var WiM;
                 this.leafletData = leafletData;
                 this.init();
             }
-            //Methods  
-            //-+-+-+-+-+-+-+-+-+-+-+-
             wimLegendController.prototype.initOverlays = function (mlyr) {
                 if (mlyr.type != "agsDynamic")
                     return;
-                //getsublayers
                 var url = mlyr.url + "/legend?f=pjson";
-                var request = new Services.Helpers.RequestInfo(url, true);
+                var request = new WiM.Services.Helpers.RequestInfo(url, true);
                 this.Execute(request).then(function (response) {
-                    //console.log(response.data);
                     if (response.data.layers.length > 0) {
                         mlyr.isOpen = true;
                         mlyr.layerArray = response.data.layers;
@@ -114,19 +86,18 @@ var WiM;
                         for (var mlayr in maplayers.baselayers) {
                             if (map.hasLayer(maplayers.baselayers[mlayr])) {
                                 map.removeLayer(maplayers.baselayers[mlayr]);
-                            } //end if
-                        } //next
+                            }
+                        }
                         map.addLayer(maplayers.baselayers[key]);
                     });
                 });
                 evt.preventDefault();
-            }; //end change baseLayer
+            };
             wimLegendController.prototype.toggleLayer = function (layerName, visibility) {
                 var layer = this.applicationLayer.layergroup[layerName];
                 layer.visible = (layer.visible) ? false : true;
                 this.eventManager.RaiseEvent(Directives.onLayerChanged, this, new LegendLayerChangedEventArgs(layerName, "visible", layer.visible));
             };
-            //Helper Methods
             wimLegendController.prototype.init = function () {
                 var _this = this;
                 this.overlays = {};
@@ -144,15 +115,14 @@ var WiM;
                             if (map.hasLayer(maplayers.baselayers[key])) {
                                 _this.baselayers.selectedlayerName = key.toString();
                                 break;
-                            } //end if
-                        } //next
-                    }); //end getLayers                                
-                }); //end getMap 
-            }; //end init
+                            }
+                        }
+                    });
+                });
+            };
             wimLegendController.prototype.onLayerAdded = function (sender, e) {
                 if (e.layerType != 'geojson')
                     return;
-                //add to legend
                 if (this.applicationLayer.layergroup.hasOwnProperty(e.LayerName))
                     return;
                 this.applicationLayer.isAvailable = true;
@@ -164,25 +134,21 @@ var WiM;
             wimLegendController.prototype.onLayerRemoved = function (sender, e) {
                 if (e.layerType != 'geojson')
                     return;
-                //remove
                 if (this.applicationLayer.layergroup.hasOwnProperty(e.LayerName))
                     delete this.applicationLayer[e.LayerName];
             };
-            //Constructor
-            //-+-+-+-+-+-+-+-+-+-+-+-
             wimLegendController.$inject = ['$scope', '$http', 'leafletData', 'WiM.Event.EventManager'];
             return wimLegendController;
-        }(Services.HTTPServiceBase)); //end wimLayerControlController class
+        })(WiM.Services.HTTPServiceBase);
         var wimLegend = (function () {
             function wimLegend() {
-                //create isolated scope
                 this.scope = {
                     icons: '=?',
                     autoHideOpacity: '=?',
                     showGroups: '=?',
                     title: '@',
                     baseTitle: '@',
-                    overlaysTitle: '@'
+                    overlaysTitle: '@',
                 };
                 this.restrict = 'E';
                 this.require = '^leaflet';
@@ -247,8 +213,6 @@ var WiM;
                 return new wimLegend;
             };
             wimLegend.prototype.link = function (scope, element, attributes, controller) {
-                //this is where we can register listeners, set up watches, and add functionality. 
-                // The result of this process is why the live data- binding exists between the scope and the DOM tree.
                 var leafletScope = controller.getLeafletScope();
                 var layers = leafletScope.layers;
                 scope.vm.overlays.layergroup = layers.overlays;
@@ -262,20 +226,20 @@ var WiM;
                         map.dragging.disable();
                         map.doubleClickZoom.disable;
                         map.scrollWheelZoom.disable();
-                    }); //end getMap   
+                    });
                 });
                 element.bind('mouseout', function (e) {
                     controller.getMap().then(function (map) {
                         map.dragging.enable();
                         map.doubleClickZoom.enable();
                         map.scrollWheelZoom.enable();
-                    }); //end getMap  
+                    });
                 });
-            }; //end link
+            };
             return wimLegend;
-        }()); //end UrlDirective
+        })();
         angular.module('wim_angular')
             .directive('wimLegend', wimLegend.instance);
     })(Directives = WiM.Directives || (WiM.Directives = {}));
-})(WiM || (WiM = {})); //end module 
+})(WiM || (WiM = {}));
 //# sourceMappingURL=wimLegend.js.map
