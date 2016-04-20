@@ -17,6 +17,9 @@ bin/
 obj/
 config/
 
+.idea
+.idea/workspace.xml
+
 # Roslyn cache directories
 *.ide/
 
