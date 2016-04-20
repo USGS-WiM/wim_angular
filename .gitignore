@@ -188,7 +188,4 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 
-*/**/bin/Debug
-*/**/bin/Release
-*/**/obj/Debug
-*/**/obj/Release
+obj/Debug/
