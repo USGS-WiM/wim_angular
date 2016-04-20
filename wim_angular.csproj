@@ -76,6 +76,7 @@
     <TypeScriptCompile Include="src\Services\StateWatcherService.ts" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="src\css\wimLegend.css" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

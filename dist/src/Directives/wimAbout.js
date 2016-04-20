@@ -1,7 +1,11 @@
+//------------------------------------------------------------------------------
+//----- WiM About --------------------------------------------------------------
+//------------------------------------------------------------------------------
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var WiM;
 (function (WiM) {
@@ -36,6 +40,7 @@ var WiM;
                 this.SupportTicketData.attachments = event.target.files;
             };
             wimAboutController.prototype.submitTicket = function (isValid) {
+                //console.log("ticket form validity: ", isValid);
                 var _this = this;
                 var url = 'https://streamstatshelp.zendesk.com/api/v2/tickets.json ';
                 var data = angular.toJson({ "ticket": this.SupportTicketData });
@@ -88,10 +93,13 @@ var WiM;
                 return new wimAbout;
             };
             wimAbout.prototype.link = function (scope, element, attributes, controller) {
+                //this is where we can register listeners, set up watches, and add functionality. 
+                // The result of this process is why the live data- binding exists between the scope and the DOM tree.
             };
             return wimAbout;
         })();
-        angular.module('wim_angular').directive('wimAbout', wimAbout.instance);
+        angular.module('wim_angular')
+            .directive('wimAbout', wimAbout.instance);
     })(Directives = WiM.Directives || (WiM.Directives = {}));
 })(WiM || (WiM = {}));
 //# sourceMappingURL=wimAbout.js.map
