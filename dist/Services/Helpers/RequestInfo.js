@@ -21,8 +21,8 @@ var WiM;
                     this.data = data;
                 }
                 return RequestInfo;
-            }());
-            Helpers.RequestInfo = RequestInfo; //end class
+            })();
+            Helpers.RequestInfo = RequestInfo;
             (function (methodType) {
                 methodType[methodType["GET"] = 0] = "GET";
                 methodType[methodType["POST"] = 1] = "POST";
@@ -32,5 +32,5 @@ var WiM;
             var methodType = Helpers.methodType;
         })(Helpers = Services.Helpers || (Services.Helpers = {}));
     })(Services = WiM.Services || (WiM.Services = {}));
-})(WiM || (WiM = {})); //end module
+})(WiM || (WiM = {}));
 //# sourceMappingURL=RequestInfo.js.map
