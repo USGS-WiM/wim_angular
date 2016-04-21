@@ -1,6 +1,3 @@
-//------------------------------------------------------------------------------
-//----- AuthenticationBase -----------------------------------------------------
-//------------------------------------------------------------------------------
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -13,17 +10,13 @@ var WiM;
         'use strict';
         var AuthenticationServiceAgent = (function (_super) {
             __extends(AuthenticationServiceAgent, _super);
-            //Constructor
-            //-+-+-+-+-+-+-+-+-+-+-+-
             function AuthenticationServiceAgent($http, $q, baseURL, u) {
                 _super.call(this, $http, baseURL);
                 this.User = u;
             }
-            //Methods
-            //-+-+-+-+-+-+-+-+-+-+-+-
             AuthenticationServiceAgent.prototype.SetBasicAuthentication = function (uri, password) {
                 var request;
-                request = new Helpers.RequestInfo(uri);
+                request = new Services.Helpers.RequestInfo(uri);
                 var authdata;
                 try {
                     authdata = btoa(this.User.username + ":" + password);
@@ -31,9 +24,7 @@ var WiM;
                 catch (e) {
                     authdata = this.encode(this.User.username + ":" + password);
                 }
-                //set default Authorization header
                 this.$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
-                //makes a request to verify authentication
                 return this.Execute(request)
                     .then(function (response) {
                 });
@@ -41,20 +32,16 @@ var WiM;
             AuthenticationServiceAgent.prototype.SetTokenAuthentication = function (uri, password) {
                 var _this = this;
                 try {
-                    var request = new Helpers.RequestInfo(uri);
+                    var request = new Services.Helpers.RequestInfo(uri);
                     return this.Execute(request)
                         .then(function (response) {
-                        //set default Authorization header
                         _this.$http.defaults.headers.common['Authorization'] = 'token ' + response.data;
                     });
                 }
                 catch (e) {
                 }
             };
-            //Helper Methods
-            //-+-+-+-+-+-+-+-+-+-+-+-
             AuthenticationServiceAgent.prototype.encode = function (input) {
-                //http://plnkr.co/edit/H4SVl6?p=preview
                 var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
                 try {
                     var output = "";
@@ -94,8 +81,8 @@ var WiM;
                 }
             };
             return AuthenticationServiceAgent;
-        }(HTTPServiceBase));
-        Services.AuthenticationServiceAgent = AuthenticationServiceAgent; //end class
+        })(Services.HTTPServiceBase);
+        Services.AuthenticationServiceAgent = AuthenticationServiceAgent;
     })(Services = WiM.Services || (WiM.Services = {}));
-})(WiM || (WiM = {})); //end module
+})(WiM || (WiM = {}));
 //# sourceMappingURL=AuthenticationServiceBase.js.map

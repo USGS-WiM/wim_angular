@@ -20,7 +20,7 @@ var WiM;
                 this.style = style;
             }
             return LegendLayerAddedEventArgs;
-        }(WiM.Event.EventArgs));
+        })(WiM.Event.EventArgs);
         Directives.LegendLayerAddedEventArgs = LegendLayerAddedEventArgs;
         var LegendLayerChangedEventArgs = (function (_super) {
             __extends(LegendLayerChangedEventArgs, _super);
@@ -31,7 +31,7 @@ var WiM;
                 this.Value = value;
             }
             return LegendLayerChangedEventArgs;
-        }(WiM.Event.EventArgs));
+        })(WiM.Event.EventArgs);
         Directives.LegendLayerChangedEventArgs = LegendLayerChangedEventArgs;
         var LegendLayerRemovedEventArgs = (function (_super) {
             __extends(LegendLayerRemovedEventArgs, _super);
@@ -41,7 +41,7 @@ var WiM;
                 this.layerType = ltype;
             }
             return LegendLayerRemovedEventArgs;
-        }(WiM.Event.EventArgs));
+        })(WiM.Event.EventArgs);
         Directives.LegendLayerRemovedEventArgs = LegendLayerRemovedEventArgs;
         var wimLegendController = (function (_super) {
             __extends(wimLegendController, _super);
@@ -66,7 +66,7 @@ var WiM;
                 if (mlyr.type != "agsDynamic")
                     return;
                 var url = mlyr.url + "/legend?f=pjson";
-                var request = new Services.Helpers.RequestInfo(url, true);
+                var request = new WiM.Services.Helpers.RequestInfo(url, true);
                 this.Execute(request).then(function (response) {
                     if (response.data.layers.length > 0) {
                         mlyr.isOpen = true;
@@ -139,7 +139,7 @@ var WiM;
             };
             wimLegendController.$inject = ['$scope', '$http', 'leafletData', 'WiM.Event.EventManager'];
             return wimLegendController;
-        }(Services.HTTPServiceBase));
+        })(WiM.Services.HTTPServiceBase);
         var wimLegend = (function () {
             function wimLegend() {
                 this.scope = {
@@ -148,7 +148,7 @@ var WiM;
                     showGroups: '=?',
                     title: '@',
                     baseTitle: '@',
-                    overlaysTitle: '@'
+                    overlaysTitle: '@',
                 };
                 this.restrict = 'E';
                 this.require = '^leaflet';
@@ -237,7 +237,7 @@ var WiM;
                 });
             };
             return wimLegend;
-        }());
+        })();
         angular.module('wim_angular')
             .directive('wimLegend', wimLegend.instance);
     })(Directives = WiM.Directives || (WiM.Directives = {}));
