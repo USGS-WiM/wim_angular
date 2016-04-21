@@ -9,7 +9,7 @@
         public dataType: string
         public params: any;
         public data: any;
-        public transformRequest:any;
+        public transformRequest:any; 
 
         constructor(ul: string, includesbaseurl: boolean = false, mthd: methodType = methodType.GET, dtype: string = "json", data: any = null, headers: any = null, tranform: any = null ) {
             this.url = ul;

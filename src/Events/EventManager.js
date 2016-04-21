@@ -1,29 +1,9 @@
-//------------------------------------------------------------------------------
-//----- EventManager -----------------------------------------------------------
-//------------------------------------------------------------------------------
-//-------1---------2---------3---------4---------5---------6---------7---------8
-//       01234567890123456789012345678901234567890123456789012345678901234567890
-//-------+---------+---------+---------+---------+---------+---------+---------+
-// copyright:   2016 WiM - USGS
-//    authors:  Jeremy K. Newson USGS Wisconsin Internet Mapping
-//             
-// 
-//   purpose:  The service agent is responsible for managing Event subscriptions.
-//          
-//discussion:
-//
-//https://docs.angularjs.org/api/ng/service/$http
-//Comments
-//01.28.2016 jkn - Created
-//Import
 var WiM;
 (function (WiM) {
     var Event;
     (function (Event_1) {
         'use strict';
         var Event = (function () {
-            //Constructor
-            //-+-+-+-+-+-+-+-+-+-+-+-
             function Event(delegate) {
                 this._onChanged = delegate;
             }
@@ -35,20 +15,14 @@ var WiM;
                 configurable: true
             });
             return Event;
-        }()); //end Event
+        })();
         var EventManager = (function () {
-            //Properties
-            //-+-+-+-+-+-+-+-+-+-+-+-
-            //Constructor
-            //-+-+-+-+-+-+-+-+-+-+-+-
             function EventManager() {
                 this._eventList = {};
             }
-            //Methods
-            //-+-+-+-+-+-+-+-+-+-+-+-
             EventManager.prototype.AddEvent = function (EventName) {
                 if (!this._eventList.hasOwnProperty(EventName))
-                    this._eventList[EventName] = new Event(new Delegate());
+                    this._eventList[EventName] = new Event(new Event_1.Delegate());
             };
             EventManager.prototype.SubscribeToEvent = function (EventName, handler) {
                 if (!this._eventList.hasOwnProperty(EventName)) {
@@ -58,11 +32,10 @@ var WiM;
             };
             EventManager.prototype.RaiseEvent = function (EventName, sender, args) {
                 if (sender === void 0) { sender = null; }
-                if (args === void 0) { args = EventArgs.Empty; }
+                if (args === void 0) { args = Event_1.EventArgs.Empty; }
                 if (!this._eventList.hasOwnProperty(EventName))
                     return;
                 this._eventList[EventName].onChanged.raise(sender, args);
-                //console.log("Event Raised " + EventName);
             };
             EventManager.prototype.UnSubscribeToEvent = function (EventName, handler) {
                 if (!this._eventList.hasOwnProperty(EventName))
@@ -70,7 +43,7 @@ var WiM;
                 this._eventList[EventName].onChanged.unsubscribe(handler);
             };
             return EventManager;
-        }()); //end class
+        })();
         factory.$inject = [];
         function factory() {
             return new EventManager();
@@ -78,5 +51,5 @@ var WiM;
         angular.module('WiM.Event', [])
             .factory('WiM.Event.EventManager', factory);
     })(Event = WiM.Event || (WiM.Event = {}));
-})(WiM || (WiM = {})); //end module 
+})(WiM || (WiM = {}));
 //# sourceMappingURL=EventManager.js.map
