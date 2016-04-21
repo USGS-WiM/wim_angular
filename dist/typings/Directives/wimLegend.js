@@ -66,7 +66,7 @@ var WiM;
                 if (mlyr.type != "agsDynamic")
                     return;
                 var url = mlyr.url + "/legend?f=pjson";
-                var request = new Services.Helpers.RequestInfo(url, true);
+                var request = new WiM.Services.Helpers.RequestInfo(url, true);
                 this.Execute(request).then(function (response) {
                     if (response.data.layers.length > 0) {
                         mlyr.isOpen = true;
@@ -139,7 +139,7 @@ var WiM;
             };
             wimLegendController.$inject = ['$scope', '$http', 'leafletData', 'WiM.Event.EventManager'];
             return wimLegendController;
-        }(Services.HTTPServiceBase));
+        }(WiM.Services.HTTPServiceBase));
         var wimLegend = (function () {
             function wimLegend() {
                 this.scope = {

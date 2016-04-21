@@ -13,7 +13,7 @@ var WiM;
                 return this.$http(request);
             };
             return HTTPServiceBase;
-        })();
+        }());
         Services.HTTPServiceBase = HTTPServiceBase;
     })(Services = WiM.Services || (WiM.Services = {}));
 })(WiM || (WiM = {}));
