@@ -21,7 +21,7 @@ var WiM;
                     this.data = data;
                 }
                 return RequestInfo;
-            }());
+            })();
             Helpers.RequestInfo = RequestInfo;
             (function (methodType) {
                 methodType[methodType["GET"] = 0] = "GET";

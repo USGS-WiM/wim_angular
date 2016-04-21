@@ -147,7 +147,7 @@ module WiM.Directives {
                 });
         }
         
-        public changeBaseLayer(key: any, evt: any): void 
+        public changeBaseLayer(key: any, evt: any): void
         {
             this.baselayers.selectedlayerName = key.toString();
             this.leafletData.getMap().then((map: any) => {

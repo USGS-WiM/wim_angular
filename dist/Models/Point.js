@@ -1,22 +1,3 @@
-//------------------------------------------------------------------------------
-//----- Point ------------------------------------------------------------------
-//------------------------------------------------------------------------------
-//-------1---------2---------3---------4---------5---------6---------7---------8
-//       01234567890123456789012345678901234567890123456789012345678901234567890
-//-------+---------+---------+---------+---------+---------+---------+---------+
-// copyright:   2014 WiM - USGS
-//    authors:  Jeremy K. Newson USGS Wisconsin Internet Mapping
-//             
-// 
-//   purpose:  
-//          
-//discussion:
-//
-//Comments
-//08.20.2014 jkn - Created
-//Imports"
-///<reference path="../Extensions/String.ts" />
-// Interface
 var WiM;
 (function (WiM) {
     var Models;
@@ -37,8 +18,8 @@ var WiM;
                 return new Point(lat, long, wkid);
             };
             return Point;
-        }());
-        Models.Point = Point; //end class
+        })();
+        Models.Point = Point;
     })(Models = WiM.Models || (WiM.Models = {}));
-})(WiM || (WiM = {})); //end module
+})(WiM || (WiM = {}));
 //# sourceMappingURL=Point.js.map

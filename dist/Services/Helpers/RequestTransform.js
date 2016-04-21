@@ -10,8 +10,8 @@ var WiM;
                     str.push(encodeURIComponent(p) + "=" + encodeURIComponent(data[p]));
                 return str.join("&");
             }
-            Helpers.paramsTransform = paramsTransform; //end paramsTransform
+            Helpers.paramsTransform = paramsTransform;
         })(Helpers = Services.Helpers || (Services.Helpers = {}));
     })(Services = WiM.Services || (WiM.Services = {}));
-})(WiM || (WiM = {})); //end module 
+})(WiM || (WiM = {}));
 //# sourceMappingURL=RequestTransform.js.map
