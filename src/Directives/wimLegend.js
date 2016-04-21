@@ -20,7 +20,7 @@ var WiM;
                 this.style = style;
             }
             return LegendLayerAddedEventArgs;
-        })(WiM.Event.EventArgs);
+        }(WiM.Event.EventArgs));
         Directives.LegendLayerAddedEventArgs = LegendLayerAddedEventArgs;
         var LegendLayerChangedEventArgs = (function (_super) {
             __extends(LegendLayerChangedEventArgs, _super);
@@ -31,7 +31,7 @@ var WiM;
                 this.Value = value;
             }
             return LegendLayerChangedEventArgs;
-        })(WiM.Event.EventArgs);
+        }(WiM.Event.EventArgs));
         Directives.LegendLayerChangedEventArgs = LegendLayerChangedEventArgs;
         var LegendLayerRemovedEventArgs = (function (_super) {
             __extends(LegendLayerRemovedEventArgs, _super);
@@ -41,7 +41,7 @@ var WiM;
                 this.layerType = ltype;
             }
             return LegendLayerRemovedEventArgs;
-        })(WiM.Event.EventArgs);
+        }(WiM.Event.EventArgs));
         Directives.LegendLayerRemovedEventArgs = LegendLayerRemovedEventArgs;
         var wimLegendController = (function (_super) {
             __extends(wimLegendController, _super);
@@ -66,7 +66,7 @@ var WiM;
                 if (mlyr.type != "agsDynamic")
                     return;
                 var url = mlyr.url + "/legend?f=pjson";
-                var request = new WiM.Services.Helpers.RequestInfo(url, true);
+                var request = new Services.Helpers.RequestInfo(url, true);
                 this.Execute(request).then(function (response) {
                     if (response.data.layers.length > 0) {
                         mlyr.isOpen = true;
@@ -139,7 +139,7 @@ var WiM;
             };
             wimLegendController.$inject = ['$scope', '$http', 'leafletData', 'WiM.Event.EventManager'];
             return wimLegendController;
-        })(WiM.Services.HTTPServiceBase);
+        }(Services.HTTPServiceBase));
         var wimLegend = (function () {
             function wimLegend() {
                 this.scope = {
@@ -148,7 +148,7 @@ var WiM;
                     showGroups: '=?',
                     title: '@',
                     baseTitle: '@',
-                    overlaysTitle: '@',
+                    overlaysTitle: '@'
                 };
                 this.restrict = 'E';
                 this.require = '^leaflet';
@@ -159,18 +159,18 @@ var WiM;
                     '        <button class="close-legend" ng-click="vm.layerControlExpanded = false; $event.stopPropagation();">Close Legend</button>' +
                     '        <div class="list-group">' +
                     '            <!-- baselayers -->' +
-                    '            <a ng-class="!vm.baselayers.isOpen  ? \'wimLegend-list-group-item-active\': \'wimLegend-list-group-item\'" ng-click="vm.baselayers.isOpen=(vm.baselayers.isOpen) ? false : true;">' +
+                    '            <a ng-class="!vm.baselayers.isOpen  ? \' list-group-item-active wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'" ng-click="vm.baselayers.isOpen=(vm.baselayers.isOpen) ? false : true;">' +
                     '                Base Maps' +
                     '                <i ng-class="!vm.baselayers.isOpen ? \'fa fa-chevron-up pull-right\': \'fa fa-chevron-down pull-right\'"></i>' +
                     '            </a> ' +
-                    '            <div ng-hide="vm.baselayers.isOpen" class="wimLegend-list-group-body">' +
+                    '            <div ng-hide="vm.baselayers.isOpen" class="list-group-body wimLegend-list-group-body">' +
                     '                <div class="sitebar-item" ng-repeat="(key, layer) in vm.baselayers.layergroup">' +
                     '                    <input type="radio" id="baselayerRadio{{$id}}" ng-checked="$parent.vm.baselayers.selectedlayerName === key.toString()" ng-value="key.toString()" /><label for="baselayerRadio{{$id}}" ng-click="vm.changeBaseLayer(key, $event)">{{layer.name}}</label>' +
                     '                </div>' +
                     '            </div>  ' +
                     '            <!-- Application Layers -->' +
                     '            <div ng-if="vm.applicationLayer.isAvailable">' +
-                    '                <div ng-class="vm.applicationLayer.isOpen  ? \'wimLegend-list-group-item-active\': \'wimLegend-list-group-item\'">' +
+                    '                <div ng-class="vm.applicationLayer.isOpen  ? \'list-group-item wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'">' +
                     '                    <label> {{vm.applicationLayer.selectedlayerName}}</label>' +
                     '                    <i ng-class="vm.applicationLayer.isOpen ? \'fa fa-chevron-up pull-right\': \'fa fa-chevron-down pull-right\'" ng-click="vm.applicationLayer.isOpen=(vm.applicationLayer.isOpen) ? false : true;"></i>' +
                     '                </div>' +
@@ -183,7 +183,7 @@ var WiM;
                     '            </div>' +
                     '            <!-- overlays --> ' +
                     '            <div ng-repeat="layer in vm.overlays.layergroup" ng-init="vm.initOverlays(layer)">' +
-                    '                <div ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-class="!layer.isOpen  ? \'wimLegend-list-group-item-active\': \'wimLegend-list-group-item\'">' +
+                    '                <div ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-class="!layer.isOpen  ? \'list-group-item-active wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'">' +
                     '                    <input type="checkbox" id="checkbox{{$id}}" ng-checked="layer.visible" />' +
                     '                    <label for="checkbox{{$id}}" ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-click="layer.visible = (layer.visible) ? false : true;">' +
                     '                        {{layer.name}}' +
@@ -237,7 +237,7 @@ var WiM;
                 });
             };
             return wimLegend;
-        })();
+        }());
         angular.module('wim_angular')
             .directive('wimLegend', wimLegend.instance);
     })(Directives = WiM.Directives || (WiM.Directives = {}));

@@ -10,7 +10,7 @@ var WiM;
                 this._handler(sender, e);
             };
             return EventHandler;
-        })();
+        }());
         Event.EventHandler = EventHandler;
     })(Event = WiM.Event || (WiM.Event = {}));
 })(WiM || (WiM = {}));

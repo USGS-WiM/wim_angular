@@ -7,7 +7,7 @@ var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 
 var src = ['src/**/*.js', 'src/**/*.css'];
-var tsDefsrc = ['src/**/*d.ts'];
+var tsDefsrc = ['src/**/**/*d.ts'];
 
 // Concatenate & Minify JS
 //TODO: refactor this, possibly using the gulp-order plugin to assure proper order for concat

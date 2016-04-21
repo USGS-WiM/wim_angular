@@ -240,18 +240,18 @@ module WiM.Directives {
         '        <button class="close-legend" ng-click="vm.layerControlExpanded = false; $event.stopPropagation();">Close Legend</button>' +
         '        <div class="list-group">' +
         '            <!-- baselayers -->' +
-        '            <a ng-class="!vm.baselayers.isOpen  ? \'wimLegend-list-group-item-active\': \'wimLegend-list-group-item\'" ng-click="vm.baselayers.isOpen=(vm.baselayers.isOpen) ? false : true;">' +
+        '            <a ng-class="!vm.baselayers.isOpen  ? \' list-group-item-active wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'" ng-click="vm.baselayers.isOpen=(vm.baselayers.isOpen) ? false : true;">' +
         '                Base Maps' +
         '                <i ng-class="!vm.baselayers.isOpen ? \'fa fa-chevron-up pull-right\': \'fa fa-chevron-down pull-right\'"></i>' +
         '            </a> ' +
-        '            <div ng-hide="vm.baselayers.isOpen" class="wimLegend-list-group-body">' +
+        '            <div ng-hide="vm.baselayers.isOpen" class="list-group-body wimLegend-list-group-body">' +
         '                <div class="sitebar-item" ng-repeat="(key, layer) in vm.baselayers.layergroup">' +
         '                    <input type="radio" id="baselayerRadio{{$id}}" ng-checked="$parent.vm.baselayers.selectedlayerName === key.toString()" ng-value="key.toString()" /><label for="baselayerRadio{{$id}}" ng-click="vm.changeBaseLayer(key, $event)">{{layer.name}}</label>' +
         '                </div>' +
         '            </div>  ' +
         '            <!-- Application Layers -->' +
         '            <div ng-if="vm.applicationLayer.isAvailable">' +
-        '                <div ng-class="vm.applicationLayer.isOpen  ? \'wimLegend-list-group-item-active\': \'wimLegend-list-group-item\'">' +
+        '                <div ng-class="vm.applicationLayer.isOpen  ? \'list-group-item wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'">' +
         '                    <label> {{vm.applicationLayer.selectedlayerName}}</label>' +
         '                    <i ng-class="vm.applicationLayer.isOpen ? \'fa fa-chevron-up pull-right\': \'fa fa-chevron-down pull-right\'" ng-click="vm.applicationLayer.isOpen=(vm.applicationLayer.isOpen) ? false : true;"></i>' +
         '                </div>' +
@@ -264,7 +264,7 @@ module WiM.Directives {
         '            </div>' +
         '            <!-- overlays --> ' +
         '            <div ng-repeat="layer in vm.overlays.layergroup" ng-init="vm.initOverlays(layer)">' +
-        '                <div ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-class="!layer.isOpen  ? \'wimLegend-list-group-item-active\': \'wimLegend-list-group-item\'">' +
+        '                <div ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-class="!layer.isOpen  ? \'list-group-item-active wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'">' +
         '                    <input type="checkbox" id="checkbox{{$id}}" ng-checked="layer.visible" />' +
         '                    <label for="checkbox{{$id}}" ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-click="layer.visible = (layer.visible) ? false : true;">' +
         '                        {{layer.name}}' +
