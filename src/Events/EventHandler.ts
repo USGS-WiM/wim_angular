@@ -10,4 +10,4 @@ export class EventHandler<T extends EventArgs> {
         this._handler(sender, e);
     }
 }
-}
+} 

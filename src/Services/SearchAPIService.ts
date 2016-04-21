@@ -14,7 +14,7 @@
 // 
 //   purpose:  The service agent is responsible for initiating service calls, 
 //             capturing the data that's returned and forwarding the data back to 
-//             the requester.
+//             the requester. 
 //          
 //discussion:
 //
