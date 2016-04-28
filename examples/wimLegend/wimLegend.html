@@ -11,7 +11,6 @@
 
     <!--local references to wim_angular-->
     <script src="../../dist/Directives/directives.module.js"></script>
-
     <script src="../../dist/Events/Delegate.js"></script>
     <script src="../../dist/Events/EventArgs.js"></script>
     <script src="../../dist/Events/EventHandler.js"></script>
@@ -30,11 +29,9 @@
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" href="https://rawgit.com/mcasimir/mobile-angular-ui/master/dist/css/mobile-angular-ui-base.css">
-    <link rel="stylesheet" href="https://rawgit.com/mcasimir/mobile-angular-ui/master/dist/css/mobile-angular-ui-desktop.css">
-    <link rel="stylesheet" href="https://rawgit.com/mcasimir/mobile-angular-ui/master/dist/css/mobile-angular-ui-hover.css">
 
-    <link rel="stylesheet" href="wimLegend.css">
+    <!--local reference to wimLegend.css -->
+    <link rel="stylesheet" href="../../dist/css/wimLegend.css">
 
     <script>
         var app = angular.module("wimLegendExampleApp", ["leaflet-directive", 'WiM.Services', 'WiM.Event', 'wim_angular']);
@@ -115,6 +112,6 @@
         <wim-legend stop-event="click"></wim-legend>
     </leaflet>
     <h1>wim_angular wimLegend Example</h1>
-    <p>You can add overlays to a baselayer, which will show a layer selector on the top right corner, defining <strong>layers</strong> like in this example.</p>
+    <p>This example takes agsDynamic layers or agsFeature Layers and shows legend items for them. Dev stil needs to recreate feature layer symbology for marker</p>
 </body>
 </html>
