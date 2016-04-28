@@ -1,14 +1,14 @@
 ﻿# wim_angular
 > Contains base typescript models and services for WiM.
-> 
+>
 > Source typescript files in /src
 > Distribution javascript files in /dist
 
 ## Project setup
 
 ##### required software
-[node.js](http://nodejs.org)  
-[git](https://git-scm.com/)  
+[node.js](http://nodejs.org)
+[git](https://git-scm.com/)
 [typescript 1.7] (https://github.com/Microsoft/TypeScript)
 
 #### 1.  Install global dependencies
@@ -27,7 +27,7 @@ Inside of your project folder (after git fork and clone):
 ```bash
 npm install
 bower install
-typings install 
+typings install
 ```
 ------
 
@@ -38,6 +38,9 @@ You will need to require WiM.Services, WiM.Event and wim_angular services depend
 ```
 var app = angular.module("myApp", ['WiM.Services', 'WiM.Event', 'wim_angular']);
 ```
+
+Your app will also need jquery and bootstrap as dependencies. Map applications are based on leaflet, [angular-leaflet-directive](https://github.com/tombatossals/angular-leaflet-directive)(tombatossals version), and [esri-leaflet](https://github.com/Esri/esri-leaflet) for the agsDynamic and agsFeature types addressed in wimLegend.
+
 
 
 
