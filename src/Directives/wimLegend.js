@@ -20,7 +20,7 @@ var WiM;
                 this.style = style;
             }
             return LegendLayerAddedEventArgs;
-        }(WiM.Event.EventArgs));
+        })(WiM.Event.EventArgs);
         Directives.LegendLayerAddedEventArgs = LegendLayerAddedEventArgs;
         var LegendLayerChangedEventArgs = (function (_super) {
             __extends(LegendLayerChangedEventArgs, _super);
@@ -31,7 +31,7 @@ var WiM;
                 this.Value = value;
             }
             return LegendLayerChangedEventArgs;
-        }(WiM.Event.EventArgs));
+        })(WiM.Event.EventArgs);
         Directives.LegendLayerChangedEventArgs = LegendLayerChangedEventArgs;
         var LegendLayerRemovedEventArgs = (function (_super) {
             __extends(LegendLayerRemovedEventArgs, _super);
@@ -41,7 +41,7 @@ var WiM;
                 this.layerType = ltype;
             }
             return LegendLayerRemovedEventArgs;
-        }(WiM.Event.EventArgs));
+        })(WiM.Event.EventArgs);
         Directives.LegendLayerRemovedEventArgs = LegendLayerRemovedEventArgs;
         var wimLegendController = (function (_super) {
             __extends(wimLegendController, _super);
@@ -71,8 +71,8 @@ var WiM;
                             mlyr.isOpen = true;
                             mlyr.layerArray = [];
                             var visibleLayers = mlyr.layerOptions.layers;
-                            for (i = 0; i < visibleLayers.length; i++) {
-                                for (j = 0; j < response.data.layers.length; j++) {
+                            for (var i = 0; i < visibleLayers.length; i++) {
+                                for (var j = 0; j < response.data.layers.length; j++) {
                                     if (visibleLayers[i] == response.data.layers[j].layerId) {
                                         mlyr.layerArray.push(response.data.layers[j]);
                                     }
@@ -90,7 +90,7 @@ var WiM;
                         if (response.data.layers.length > 0) {
                             mlyr.isOpen = true;
                             mlyr.layerArray = [];
-                            for (k = 0; k < response.data.layers.length; k++) {
+                            for (var k = 0; k < response.data.layers.length; k++) {
                                 if (layerId == response.data.layers[k].layerId) {
                                     mlyr.layerArray.push(response.data.layers[k]);
                                 }
@@ -164,7 +164,7 @@ var WiM;
             };
             wimLegendController.$inject = ['$scope', '$http', 'leafletData', 'WiM.Event.EventManager'];
             return wimLegendController;
-        }(WiM.Services.HTTPServiceBase));
+        })(WiM.Services.HTTPServiceBase);
         var wimLegend = (function () {
             function wimLegend() {
                 this.scope = {
@@ -173,7 +173,7 @@ var WiM;
                     showGroups: '=?',
                     title: '@',
                     baseTitle: '@',
-                    overlaysTitle: '@'
+                    overlaysTitle: '@',
                 };
                 this.restrict = 'E';
                 this.require = '^leaflet';
@@ -262,7 +262,7 @@ var WiM;
                 });
             };
             return wimLegend;
-        }());
+        })();
         angular.module('wim_angular')
             .directive('wimLegend', wimLegend.instance);
     })(Directives = WiM.Directives || (WiM.Directives = {}));
