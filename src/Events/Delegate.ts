@@ -1,6 +1,6 @@
 
 module WiM.Event {
- export class Delegate<T extends EventArgs> {
+    export class Delegate<T extends EventArgs> {
         private _eventHandlers: Array<EventHandler<T>>;
 
         constructor() {
@@ -14,7 +14,7 @@ module WiM.Event {
         }
 
         public unsubscribe(eventHandler: EventHandler<T>): void {
-            var i = this._eventHandlers.indexOf(eventHandler); 
+            var i = this._eventHandlers.indexOf(eventHandler);
             if (i != -1) {
                 this._eventHandlers.splice(i, 1);
             }

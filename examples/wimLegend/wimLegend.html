@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html ng-app="wimLegendExampleApp">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/1.0.3/esri-leaflet.js"></script>
+    <script src=https://rawgit.com/tombatossals/angular-leaflet-directive/master/dist/angular-leaflet-directive.min.js></script>
+
+    <!--local references to wim_angular-->
+    <script src="../../dist/Directives/directives.module.js"></script>
+    <script src="../../dist/Events/Delegate.js"></script>
+    <script src="../../dist/Events/EventArgs.js"></script>
+    <script src="../../dist/Events/EventHandler.js"></script>
+    <script src="../../dist/Services/service.module.js"></script>
+    <script src="../../dist/Services/Helpers/RequestInfo.js"></script>
+    <script src="../../dist/Services/HTTPServiceBase.js"></script>
+    <script src="../../dist/Services/Helpers/RequestTransform.js"></script>
+    <script src="../../dist/Events/EventManager.js"></script>
+    <script src="../../dist/Directives/wimLegend.js"></script>
+    <!--end local references to wim_angular-->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <!--local reference to wimLegend.css -->
+    <link rel="stylesheet" href="../../dist/css/wimLegend.css">
+
+    <script>
+        var app = angular.module("wimLegendExampleApp", ["leaflet-directive", 'WiM.Services', 'WiM.Event', 'wim_angular']);
+
+        app.controller("wimLegendExampleController", [ "$scope", function($scope) {
+            angular.extend($scope, {
+                center: {
+                    lat: 39,
+                    lng: -100,
+                    zoom: 4
+                },
+                layers: {
+                    baselayers: {
+                        xyz: {
+                            name: 'OpenStreetMap (XYZ)',
+                            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                            type: 'xyz'
+                        }
+                    },
+                    overlays: {
+                        states: {
+                            name: 'States',
+                            type: 'agsDynamic',
+                            url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer',
+                            visible: true,
+                            layerOptions : {
+                                layers: [3],
+                                opacity: 1
+                            }
+                        },
+                        counties: {
+                            name: 'Counties',
+                            type: 'agsDynamic',
+                            url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer',
+                            visible: true,
+                            layerOptions : {
+                                layers: [2],
+                                opacity: 1
+                            }
+                        },
+                        nwis : {
+                            name: "USGS real-time streamgages",
+                            type: "agsFeature",
+                            url : "https://stnmapservices.wim.usgs.gov:6443/arcgis/rest/services/STN/STN_nwis_rt/MapServer/0",
+                            visible: false,
+                            layerOptions : {}
+                        }
+//                        blockGroups : {
+//                            name: 'Block Groups',
+//                            type: 'agsDynamic',
+//                            url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer',
+//                            visible: true,
+//                            layerOptions : {
+//                                layers: [1],
+//                                opacity: 1
+//                            }
+//
+//                        },
+//                        wms: {
+//                            name: 'EEUU States (WMS)',
+//                            type: 'wms',
+//                            visible: true,
+//                            url: 'http://suite.opengeo.org/geoserver/usa/wms',
+//                            layerParams: {
+//                                layers: 'usa:states',
+//                                format: 'image/png',
+//                                transparent: true
+//                            }
+//                        }
+                    }
+                }
+            });
+        }]);
+    </script>
+</head>
+<body ng-controller="wimLegendExampleController">
+    <leaflet lf-center="center" layers="layers" width="100%" height="480px">
+        <wim-legend stop-event="click"></wim-legend>
+    </leaflet>
+    <h1>wim_angular wimLegend Example</h1>
+    <p>This example takes agsDynamic layers or agsFeature Layers and shows legend items for them. Dev stil needs to recreate feature layer symbology for marker</p>
+</body>
+</html>

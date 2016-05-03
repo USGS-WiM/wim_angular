@@ -38,8 +38,8 @@ module WiM.Event {
     }
 
     class Event implements IEvent {
-        private _onChanged: Delegate<WiM.Event.EventArgs>;
-        public get onChanged(): Delegate<WiM.Event.EventArgs> {
+        private _onChanged: Delegate<EventArgs>;
+        public get onChanged(): Delegate<EventArgs> {
             return this._onChanged;
         }
         //Constructor
