@@ -47,10 +47,23 @@
                             url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                             type: 'xyz'
                         },
-                        xyxz: {
-                            name: 'Test Layer',
-                            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                            type: 'xyz'
+                        gray: {
+                            name: "Gray",
+                            type: "agsBase",
+                            layer: "Gray",
+                            visible: false
+                        },
+                        streets: {
+                            name: "Streets",
+                            type: "agsBase",
+                            layer: "Streets",
+                            visible: false
+                        },
+                        topo: {
+                            name: "World Topographic",
+                            type: "agsBase",
+                            layer: "Topographic",
+                            visible: false
                         }
                     },
                     overlays: {
