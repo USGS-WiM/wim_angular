@@ -70,13 +70,18 @@ var WiM;
                         if (response.data.layers.length > 0) {
                             mlyr.isOpen = true;
                             mlyr.layerArray = [];
-                            var visibleLayers = mlyr.layerOptions.layers;
-                            for (var i = 0; i < visibleLayers.length; i++) {
-                                for (var j = 0; j < response.data.layers.length; j++) {
-                                    if (visibleLayers[i] == response.data.layers[j].layerId) {
-                                        mlyr.layerArray.push(response.data.layers[j]);
+                            if (mlyr.layerOptions.layers) {
+                                var visibleLayers = mlyr.layerOptions.layers;
+                                for (var i = 0; i < visibleLayers.length; i++) {
+                                    for (var j = 0; j < response.data.layers.length; j++) {
+                                        if (visibleLayers[i] == response.data.layers[j].layerId) {
+                                            mlyr.layerArray.push(response.data.layers[j]);
+                                        }
                                     }
                                 }
+                            }
+                            else {
+                                mlyr.layerArray = response.data.layers;
                             }
                         }
                     }, function (error) {
