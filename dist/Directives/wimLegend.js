@@ -113,6 +113,7 @@ var WiM;
                     });
                 }
                 if (mlyr.type == "wms") {
+                    mlyr.isOpen = true;
                     mlyr.legendURL = mlyr.url + "?version=1.1.1&request=GetLegendGraphic&format=image/png&layer=" + mlyr.layerParams.layers;
                 }
             };
