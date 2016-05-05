@@ -152,6 +152,8 @@ module WiM.Directives {
                         } else {
                             mlyr.layerArray = response.data.layers;
                         }//end if
+
+                        console.log(mlyr)
                     }//end if
                 }, function (error) {
                 });
@@ -174,6 +176,9 @@ module WiM.Directives {
                     }
                 }, function (error) {
                 });
+            }
+            if (mlyr.type == "wms") {
+                mlyr.legendURL = mlyr.url + "?version=1.1.1&request=GetLegendGraphic&format=image/png&layer=" + mlyr.layerParams.layers;
             }
         }
         
@@ -311,6 +316,9 @@ module WiM.Directives {
         '                                <i>{{leg.label}}</i>' +
         '                            </div>' +
         '                        </div>' +
+        '                    </div>' +
+        '                    <div class="legendGroup" ng-if="layer.type == \'wms\'">' +
+        '                       <img class="legendSwatch" alt="Embedded Image" src="{{layer.legendURL}}" />' +
         '                    </div>' +
         '                </div>' +
         '            </div>' +
