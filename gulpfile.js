@@ -8,6 +8,7 @@ var rename = require('gulp-rename');
 
 var src = ['src/**/*.js', 'src/**/*.css'];
 var tsDefsrc = ['src/**/**/*d.ts'];
+var imagesSrc = ['src/images/*'];
 
 // Concatenate & Minify JS
 //TODO: refactor this, possibly using the gulp-order plugin to assure proper order for concat
@@ -30,8 +31,13 @@ gulp.task('tsDefFiles', function () {
         .pipe(gulp.dest('dist/typings'));
 });
 
+gulp.task('images', function () {
+    return gulp.src(imagesSrc)
+        .pipe(gulp.dest('dist/images'));
+});
+
 // Build
-gulp.task('build', ['compiled', 'tsDefFiles']);
+gulp.task('build', ['compiled', 'tsDefFiles', 'images']);
 
 // Default Taskgul
 gulp.task('default', ['build']);
