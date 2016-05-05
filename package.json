@@ -1,6 +1,6 @@
 {
   "name": "wim_angular",
-  "version": "1.0.0",
+  "version": "1.1.2",
   "description": "Contains base typescript modules and services for WiM",
   "main": "index.js",
   "scripts": {
