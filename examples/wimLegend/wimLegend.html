@@ -95,29 +95,18 @@
                             url : "https://stnmapservices.wim.usgs.gov:6443/arcgis/rest/services/STN/STN_nwis_rt/MapServer/0",
                             visible: false,
                             layerOptions : {}
+                        },
+                        wms: {
+                            name: 'EEUU States (WMS)',
+                            type: 'wms',
+                            visible: true,
+                            url: 'http://suite.opengeo.org/geoserver/usa/wms',
+                            layerParams: {
+                                layers: 'usa:states',
+                                format: 'image/png',
+                                transparent: true
+                            }
                         }
-//                        blockGroups : {
-//                            name: 'Block Groups',
-//                            type: 'agsDynamic',
-//                            url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer',
-//                            visible: true,
-//                            layerOptions : {
-//                                layers: [1],
-//                                opacity: 1
-//                            }
-//
-//                        },
-//                        wms: {
-//                            name: 'EEUU States (WMS)',
-//                            type: 'wms',
-//                            visible: true,
-//                            url: 'http://suite.opengeo.org/geoserver/usa/wms',
-//                            layerParams: {
-//                                layers: 'usa:states',
-//                                format: 'image/png',
-//                                transparent: true
-//                            }
-//                        }
                     }
                 }
             });
