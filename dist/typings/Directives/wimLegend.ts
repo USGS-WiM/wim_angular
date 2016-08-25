@@ -281,7 +281,7 @@ module WiM.Directives {
         '                <i ng-class="!vm.baselayers.isOpen ? \'fa fa-chevron-up pull-right\': \'fa fa-chevron-down pull-right\'"></i>' +
         '            </div> ' +
         '            <div ng-hide="vm.baselayers.isOpen" class="list-group-body wimLegend-list-group-body">' +
-        '                <div class="sitebar-item" ng-repeat="(key, layer) in vm.baselayers.layergroup">' +
+        '                <div class="sidebar-item" ng-repeat="(key, layer) in vm.baselayers.layergroup">' +
         '                    <input type="radio" id="baselayerRadio{{$id}}" ng-checked="$parent.vm.baselayers.selectedlayerName === key.toString()" ng-value="key.toString()" /><label class="hasRadio" ng-class="{ \'radioSelected\': $parent.vm.baselayers.selectedlayerName === key.toString() }" for="baselayerRadio{{$id}}" ng-click="vm.changeBaseLayer(key, $event)">{{layer.name}}</label>' +
         '                </div>' +
         '            </div>  ' +

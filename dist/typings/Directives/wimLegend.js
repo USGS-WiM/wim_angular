@@ -83,6 +83,7 @@ var WiM;
                             else {
                                 mlyr.layerArray = response.data.layers;
                             }
+                            console.log(mlyr);
                         }
                     }, function (error) {
                     });
@@ -103,6 +104,10 @@ var WiM;
                         }
                     }, function (error) {
                     });
+                }
+                if (mlyr.type == "wms") {
+                    mlyr.isOpen = true;
+                    mlyr.legendURL = mlyr.url + "?version=1.1.1&request=GetLegendGraphic&format=image/png&layer=" + mlyr.layerParams.layers;
                 }
             };
             wimLegendController.prototype.changeBaseLayer = function (key, evt) {
@@ -194,8 +199,8 @@ var WiM;
                     '                <i ng-class="!vm.baselayers.isOpen ? \'fa fa-chevron-up pull-right\': \'fa fa-chevron-down pull-right\'"></i>' +
                     '            </div> ' +
                     '            <div ng-hide="vm.baselayers.isOpen" class="list-group-body wimLegend-list-group-body">' +
-                    '                <div class="sitebar-item" ng-repeat="(key, layer) in vm.baselayers.layergroup">' +
-                    '                    <input type="radio" id="baselayerRadio{{$id}}" ng-checked="$parent.vm.baselayers.selectedlayerName === key.toString()" ng-value="key.toString()" /><label for="baselayerRadio{{$id}}" ng-click="vm.changeBaseLayer(key, $event)">{{layer.name}}</label>' +
+                    '                <div class="sidebar-item" ng-repeat="(key, layer) in vm.baselayers.layergroup">' +
+                    '                    <input type="radio" id="baselayerRadio{{$id}}" ng-checked="$parent.vm.baselayers.selectedlayerName === key.toString()" ng-value="key.toString()" /><label class="hasRadio" ng-class="{ \'radioSelected\': $parent.vm.baselayers.selectedlayerName === key.toString() }" for="baselayerRadio{{$id}}" ng-click="vm.changeBaseLayer(key, $event)">{{layer.name}}</label>' +
                     '                </div>' +
                     '            </div>  ' +
                     '            <!-- Application Layers -->' +
@@ -215,7 +220,7 @@ var WiM;
                     '            <div ng-repeat="layer in vm.overlays.layergroup" ng-init="vm.initOverlays(layer)">' +
                     '                <div ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-class="!layer.isOpen  ? \'list-group-item-active wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'">' +
                     '                    <input type="checkbox" id="checkbox{{$id}}" ng-checked="layer.visible" />' +
-                    '                    <label for="checkbox{{$id}}" ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-click="layer.visible = (layer.visible) ? false : true;">' +
+                    '                    <label class="hasCheckbox" ng-class="{ \'checkboxEnabled\': layer.visible }" for="checkbox{{$id}}" ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-click="layer.visible = (layer.visible) ? false : true;">' +
                     '                        {{layer.name}}' +
                     '                    </label>' +
                     '                    <i ng-class="!layer.isOpen ? \'fa fa-chevron-up pull-right\': \'fa fa-chevron-down pull-right\'" ng-click="layer.isOpen=(layer.isOpen) ? false : true;"></i>' +
@@ -230,6 +235,9 @@ var WiM;
                     '                                <i>{{leg.label}}</i>' +
                     '                            </div>' +
                     '                        </div>' +
+                    '                    </div>' +
+                    '                    <div class="legendGroup" ng-if="layer.type == \'wms\'">' +
+                    '                       <img class="legendSwatch" alt="Embedded Image" src="{{layer.legendURL}}" />' +
                     '                    </div>' +
                     '                </div>' +
                     '            </div>' +
