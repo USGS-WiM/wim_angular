@@ -16,7 +16,7 @@ var WiM;
                 this.selectedAreaOfInterest = aoi;
             }
             return SearchAPIEventArgs;
-        })(WiM.Event.EventArgs);
+        }(WiM.Event.EventArgs));
         Services.SearchAPIEventArgs = SearchAPIEventArgs;
         var SearchLocation = (function () {
             function SearchLocation(nm, ct, st, lat, long) {
@@ -28,12 +28,12 @@ var WiM;
                 this.crs = "4326";
             }
             return SearchLocation;
-        })();
+        }());
         var SearchConfig = (function () {
             function SearchConfig() {
             }
             return SearchConfig;
-        })();
+        }());
         var SearchAPIService = (function (_super) {
             __extends(SearchAPIService, _super);
             function SearchAPIService($http, $q, eventManager) {
@@ -63,7 +63,8 @@ var WiM;
                         "DbSearchIncludeUsgsSiteGW": true,
                         "DbSearchIncludeUsgsSiteSP": true,
                         "DbSearchIncludeUsgsSiteAT": true,
-                        "DbSearchIncludeUsgsSiteOT": true
+                        "DbSearchIncludeUsgsSiteOT": true,
+                        "LatLonSearchPrecision": 5
                     });
                     search_api.on("before-search", function () {
                     });
@@ -124,7 +125,7 @@ var WiM;
                 this.config.state = '';
             };
             return SearchAPIService;
-        })(Services.HTTPServiceBase);
+        }(Services.HTTPServiceBase));
         factory.$inject = ['$http', '$q', 'WiM.Event.EventManager'];
         function factory($http, $q, eventManager) {
             return new SearchAPIService($http, $q, eventManager);

@@ -31,6 +31,7 @@ declare module WiM.Services {
         debug: boolean;
         term: string;
         state: string;
+        LatLonSearchPrecision: number;
     }
     class SearchAPIEventArgs extends WiM.Event.EventArgs {
         selectedAreaOfInterest: ISearchAPIOutput;
