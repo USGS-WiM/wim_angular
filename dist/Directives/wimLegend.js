@@ -113,8 +113,8 @@ var WiM;
             wimLegendController.prototype.changeBaseLayer = function (key, evt) {
                 var _this = this;
                 this.baselayers.selectedlayerName = key.toString();
-                this.leafletData.getMap().then(function (map) {
-                    _this.leafletData.getLayers().then(function (maplayers) {
+                this.leafletData.getMap("mainMap").then(function (map) {
+                    _this.leafletData.getLayers("mainMap").then(function (maplayers) {
                         if (map.hasLayer(maplayers.baselayers[key])) {
                             return;
                         }
@@ -144,8 +144,8 @@ var WiM;
                     layergroup: {},
                     isOpen: false
                 };
-                this.leafletData.getMap().then(function (map) {
-                    _this.leafletData.getLayers().then(function (maplayers) {
+                this.leafletData.getMap("mainMap").then(function (map) {
+                    _this.leafletData.getLayers("mainMap").then(function (maplayers) {
                         for (var key in maplayers.baselayers) {
                             if (map.hasLayer(maplayers.baselayers[key])) {
                                 _this.baselayers.selectedlayerName = key.toString();
@@ -260,14 +260,14 @@ var WiM;
                     e.preventDefault();
                 });
                 element.bind('mouseover', function (e) {
-                    controller.getMap().then(function (map) {
+                    controller.getMap("mainMap").then(function (map) {
                         map.dragging.disable();
                         map.doubleClickZoom.disable;
                         map.scrollWheelZoom.disable();
                     });
                 });
                 element.bind('mouseout', function (e) {
-                    controller.getMap().then(function (map) {
+                    controller.getMap("mainMap").then(function (map) {
                         map.dragging.enable();
                         map.doubleClickZoom.enable();
                         map.scrollWheelZoom.enable();
