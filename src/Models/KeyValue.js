@@ -10,7 +10,7 @@ var WiM;
                 this.Value = v;
             }
             return KeyValue;
-        })();
+        }());
     })(Models = WiM.Models || (WiM.Models = {}));
 })(WiM || (WiM = {}));
 //# sourceMappingURL=KeyValue.js.map

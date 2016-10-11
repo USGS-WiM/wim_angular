@@ -21,7 +21,7 @@ var WiM;
                 return new Parameter(name, value, code, descr, unit, limit);
             };
             return Parameter;
-        })();
+        }());
         var Limit = (function () {
             function Limit(min, max) {
                 this.min = min;
@@ -33,7 +33,7 @@ var WiM;
                 return new Limit(min, max);
             };
             return Limit;
-        })();
+        }());
     })(Models = WiM.Models || (WiM.Models = {}));
 })(WiM || (WiM = {}));
 //# sourceMappingURL=Parameter.js.map

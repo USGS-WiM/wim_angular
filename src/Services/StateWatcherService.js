@@ -20,7 +20,7 @@ var WiM;
             StateWatcherService.prototype.stateNotFound = function (event, unfoundState, toParams, fromState, fromParams) {
             };
             return StateWatcherService;
-        })();
+        }());
         factory.$inject = ['$rootScope'];
         function factory($rootScope) {
             return new StateWatcherService($rootScope);
