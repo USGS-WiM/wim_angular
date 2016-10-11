@@ -17,7 +17,7 @@ var WiM;
                 return new Citation(Title, Author, imgSrc, src);
             };
             return Citation;
-        })();
+        }());
     })(Models = WiM.Models || (WiM.Models = {}));
 })(WiM || (WiM = {}));
 //# sourceMappingURL=Citation.js.map

@@ -18,7 +18,7 @@ var WiM;
                 return new Point(lat, long, wkid);
             };
             return Point;
-        })();
+        }());
         Models.Point = Point;
     })(Models = WiM.Models || (WiM.Models = {}));
 })(WiM || (WiM = {}));
