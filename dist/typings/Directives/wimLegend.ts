@@ -186,8 +186,8 @@ module WiM.Directives {
         public changeBaseLayer(key: any, evt: any): void
         {
             this.baselayers.selectedlayerName = key.toString();
-            this.leafletData.getMap().then((map: any) => {
-                this.leafletData.getLayers().then((maplayers: any) => {
+            this.leafletData.getMap("mainMap").then((map: any) => {
+                this.leafletData.getLayers("mainMap").then((maplayers: any) => {
                     if (map.hasLayer(maplayers.baselayers[key])) { return; }
 
                     for (var mlayr in maplayers.baselayers) {
@@ -222,8 +222,8 @@ module WiM.Directives {
             };
 
 
-            this.leafletData.getMap().then((map: any) => {
-                this.leafletData.getLayers().then((maplayers: any) => {
+            this.leafletData.getMap("mainMap").then((map: any) => {
+                this.leafletData.getLayers("mainMap").then((maplayers: any) => {
                     for (var key in maplayers.baselayers) {
                         if (map.hasLayer(maplayers.baselayers[key])) {
                             this.baselayers.selectedlayerName = key.toString();
@@ -345,14 +345,14 @@ module WiM.Directives {
             });
 
             element.bind('mouseover', (e) => {
-               controller.getMap().then((map: any) => {
+               controller.getMap("mainMap").then((map: any) => {
                    map.dragging.disable();  
                    map.doubleClickZoom.disable
                    map.scrollWheelZoom.disable();                            
                 });//end getMap   
             });
             element.bind('mouseout', (e) => {
-                controller.getMap().then((map: any) => {
+                controller.getMap("mainMap").then((map: any) => {
                     map.dragging.enable();
                     map.doubleClickZoom.enable();
                     map.scrollWheelZoom.enable();
