@@ -183,7 +183,7 @@ var WiM;
                     showGroups: '=?',
                     title: '@',
                     baseTitle: '@',
-                    overlaysTitle: '@'
+                    overlaysTitle: '@',
                 };
                 this.restrict = 'E';
                 this.require = '^leaflet';

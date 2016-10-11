@@ -12,12 +12,12 @@ var WiM;
             function SupportTicketData() {
             }
             return SupportTicketData;
-        })();
+        }());
         var GitHubIssueData = (function () {
             function GitHubIssueData() {
             }
             return GitHubIssueData;
-        })();
+        }());
         var wimAboutController = (function (_super) {
             __extends(wimAboutController, _super);
             function wimAboutController($scope, $http) {
@@ -76,7 +76,7 @@ var WiM;
             };
             wimAboutController.$inject = ['$scope', '$http'];
             return wimAboutController;
-        })(WiM.Services.HTTPServiceBase);
+        }(WiM.Services.HTTPServiceBase));
         var wimAbout = (function () {
             function wimAbout() {
                 this.scope = true;
@@ -90,7 +90,7 @@ var WiM;
             wimAbout.prototype.link = function (scope, element, attributes, controller) {
             };
             return wimAbout;
-        })();
+        }());
         angular.module('wim_angular')
             .directive('wimAbout', wimAbout.instance);
     })(Directives = WiM.Directives || (WiM.Directives = {}));

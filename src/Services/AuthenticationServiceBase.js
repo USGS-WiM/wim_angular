@@ -81,7 +81,7 @@ var WiM;
                 }
             };
             return AuthenticationServiceAgent;
-        })(Services.HTTPServiceBase);
+        }(Services.HTTPServiceBase));
         Services.AuthenticationServiceAgent = AuthenticationServiceAgent;
     })(Services = WiM.Services || (WiM.Services = {}));
 })(WiM || (WiM = {}));

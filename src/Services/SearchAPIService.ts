@@ -62,6 +62,7 @@ module WiM.Services {
         debug: boolean;
         term: string;
         state: string;
+        LatLonSearchPrecision: number;
     }
     export class SearchAPIEventArgs extends WiM.Event.EventArgs {
         //properties
@@ -112,6 +113,7 @@ module WiM.Services {
         public debug: boolean;
         public term: string;
         public state: string;
+        public LatLonSearchPrecision: number;
         constructor() {
         }
     }
@@ -156,7 +158,8 @@ module WiM.Services {
                     "DbSearchIncludeUsgsSiteGW": true,
                     "DbSearchIncludeUsgsSiteSP": true,
                     "DbSearchIncludeUsgsSiteAT": true,
-                    "DbSearchIncludeUsgsSiteOT": true
+                    "DbSearchIncludeUsgsSiteOT": true,
+                    "LatLonSearchPrecision": 5
                     //...more options (defaults used for omitted options)...
                 });
                 
