@@ -262,7 +262,7 @@ var WiM;
                 element.bind('mouseover', function (e) {
                     controller.getMap("mainMap").then(function (map) {
                         map.dragging.disable();
-                        map.doubleClickZoom.disable;
+                        map.doubleClickZoom.disable();
                         map.scrollWheelZoom.disable();
                     });
                 });

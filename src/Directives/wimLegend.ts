@@ -347,7 +347,7 @@ module WiM.Directives {
             element.bind('mouseover', (e) => {
                controller.getMap("mainMap").then((map: any) => {
                    map.dragging.disable();  
-                   map.doubleClickZoom.disable
+                   map.doubleClickZoom.disable();
                    map.scrollWheelZoom.disable();                            
                 });//end getMap   
             });
