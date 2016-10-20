@@ -4,5 +4,6 @@ declare module WiM.Models {
         code: string;
         unit: string;
         value: number;
+        loaded: boolean;
     }
 }

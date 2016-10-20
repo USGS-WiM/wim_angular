@@ -26,6 +26,7 @@ module WiM.Models {
         code: string;
         unit: string;
         value: number;
+        loaded: boolean;
     }
     class Parameter implements IParameter {
         //Properties
@@ -34,6 +35,7 @@ module WiM.Models {
         public description: string;
         public unit: string;
         public code: string;
+        public loaded: boolean;
         public limits: Limit
 
         // Constructor
