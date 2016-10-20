@@ -1,5 +1,5 @@
 declare module WiM.Event {
     class EventArgs {
-        static Empty: EventArgs;
+        static readonly Empty: EventArgs;
     }
 }

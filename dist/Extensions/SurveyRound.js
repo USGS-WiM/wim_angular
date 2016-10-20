@@ -13,7 +13,7 @@ if (!Number.prototype.toUSGSvalue) {
         if ((x > 100) && (x < 1000))
             precision = 1;
         if (x < 100)
-            return Number(x.toFixed(3));
+            precision = .1;
         return parseInt(((x + (precision * .5)) / precision).toString()) * precision;
     };
 }
