@@ -11,7 +11,7 @@ if (!Number.prototype.toUSGSvalue) {
         if ((x > 10000) && (x < 100000)) precision = 100;
         if ((x > 1000) && (x < 10000)) precision = 10;
         if ((x > 100) && (x < 1000)) precision = 1;
-        if (x < 100) return Number(x.toFixed(1));
+        if (x < 100) return Number(x.toPrecision(3));
 
         return parseInt(((x + (precision * .5)) / precision).toString()) * precision;
     };
