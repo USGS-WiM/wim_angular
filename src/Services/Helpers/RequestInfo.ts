@@ -12,7 +12,7 @@
         public data: any;
         public transformRequest:any; 
 
-        constructor(ul: string, includesbaseurl: boolean = false, mthd: methodType = methodType.GET, dtype: string = "json", data: any = null, headers: any = null, tranform: any = null, timeout: Number = 60000) {
+        constructor(ul: string, includesbaseurl: boolean = false, mthd: methodType = methodType.GET, dtype: string = "json", data: any = null, headers: any = null, tranform: any = null, timeout: Number = 300000) {
             this.url = ul;
             this.includesBaseURL = includesbaseurl;
             this.method = methodType[mthd];

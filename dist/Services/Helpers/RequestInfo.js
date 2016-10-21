@@ -12,7 +12,7 @@ var WiM;
                     if (data === void 0) { data = null; }
                     if (headers === void 0) { headers = null; }
                     if (tranform === void 0) { tranform = null; }
-                    if (timeout === void 0) { timeout = 60000; }
+                    if (timeout === void 0) { timeout = 300000; }
                     this.url = ul;
                     this.includesBaseURL = includesbaseurl;
                     this.method = methodType[mthd];
