@@ -138,7 +138,7 @@ module WiM.Services {
         public loadSearchAPI() {
 
             var myScript = document.createElement('script');
-            myScript.src = 'http://txpub.usgs.gov/DSS/search_api/1.1/api/search_api.min.js';
+            myScript.src = 'https://txpub.usgs.gov/DSS/search_api/1.1/api/search_api.min.js';
             myScript.onload = () => {
                 //console.log('search api js loaded.');
                 this.setSearchAPI();

@@ -47,7 +47,7 @@ var WiM;
             SearchAPIService.prototype.loadSearchAPI = function () {
                 var _this = this;
                 var myScript = document.createElement('script');
-                myScript.src = 'http://txpub.usgs.gov/DSS/search_api/1.1/api/search_api.min.js';
+                myScript.src = 'https://txpub.usgs.gov/DSS/search_api/1.1/api/search_api.min.js';
                 myScript.onload = function () {
                     _this.setSearchAPI();
                 };
