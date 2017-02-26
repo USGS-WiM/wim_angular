@@ -38,6 +38,10 @@ module WiM.Services {
         type: string;
     }
 
+    export interface ISearchAPIService {
+        //getLocations(searchTerm: string): ng.IPromise<Array<ISearchAPIOutput>>;
+    }
+
     export class SearchAPIEventArgs extends WiM.Event.EventArgs {
         //properties
         public selectedAreaOfInterest: ISearchAPIOutput;
@@ -60,23 +64,21 @@ module WiM.Services {
     }
 
     class SearchAPIService extends HTTPServiceBase {
-        
+
         //Properties
         //-+-+-+-+-+-+-+-+-+-+-+-
 
         //Constructor
         //-+-+-+-+-+-+-+-+-+-+-+-
-        constructor($http: ng.IHttpService, private $q: ng.IQService, private eventManager:Event.IEventManager) {
+        constructor($http: ng.IHttpService, private $q: ng.IQService, private eventManager: Event.IEventManager) {
             super($http, configuration.baseurls['SearchAPI']);
             this.eventManager.AddEvent<SearchAPIEventArgs>(onSelectedAreaOfInterestChanged);
             this.init();
-            this.checkSearchAPI(); 
         }
 
         //Methods
         //-+-+-+-+-+-+-+-+-+-+-+-
         public checkSearchAPI() {
-
             if (search_api) this.setSearchAPI();
             else console.error('The USGS Search API failed to load');
         }
@@ -85,7 +87,6 @@ module WiM.Services {
 
             var widgetObj = search_api.create("searchBox")
                 .setOpts({
-                    "size": "sm",
                     "include_usgs_sw": true,
                     "include_usgs_gw": true,
                     "include_usgs_sp": true,
@@ -114,16 +115,17 @@ module WiM.Services {
                     alert("No location matching the entered text could be found.");
                 });
         }
-        
+
         //HelperMethods
         //-+-+-+-+-+-+-+-+-+-+-+-
         private init() {
+            this.checkSearchAPI();
         }
 
     }//end class
 
     factory.$inject = ['$http', '$q', 'WiM.Event.EventManager'];
-    function factory($http: ng.IHttpService, $q: ng.IQService, eventManager:Event.IEventManager) {
+    function factory($http: ng.IHttpService, $q: ng.IQService, eventManager: Event.IEventManager) {
         return new SearchAPIService($http, $q, eventManager)
     }
     angular.module('WiM.Services')

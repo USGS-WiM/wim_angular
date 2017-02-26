@@ -5,6 +5,8 @@ declare module WiM.Services {
         geometry: Object;
         type: string;
     }
+    interface ISearchAPIService {
+    }
     class SearchAPIEventArgs extends WiM.Event.EventArgs {
         selectedAreaOfInterest: ISearchAPIOutput;
         constructor(aoi: ISearchAPIOutput);
