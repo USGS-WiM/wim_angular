@@ -34,7 +34,6 @@ var WiM;
                 this.eventManager = eventManager;
                 this.eventManager.AddEvent(Services.onSelectedAreaOfInterestChanged);
                 this.init();
-                this.checkSearchAPI();
             }
             SearchAPIService.prototype.checkSearchAPI = function () {
                 if (search_api)
@@ -46,7 +45,6 @@ var WiM;
                 var _this = this;
                 var widgetObj = search_api.create("searchBox")
                     .setOpts({
-                    "size": "sm",
                     "include_usgs_sw": true,
                     "include_usgs_gw": true,
                     "include_usgs_sp": true,
@@ -69,6 +67,7 @@ var WiM;
                 });
             };
             SearchAPIService.prototype.init = function () {
+                this.checkSearchAPI();
             };
             return SearchAPIService;
         }(Services.HTTPServiceBase));
