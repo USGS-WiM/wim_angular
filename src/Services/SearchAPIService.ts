@@ -105,15 +105,9 @@ module WiM.Services {
                     //map.closePopup();
                 })
                 .on("result", (lastLocationFound) => {
-
-                    //console.log('found a location', lastLocationFound);
                     //send this data to region service
                     this.eventManager.RaiseEvent(onSelectedAreaOfInterestChanged, this, new SearchAPIEventArgs(new SearchLocation(lastLocationFound.result.properties, lastLocationFound.result.geometry, lastLocationFound.result.type)));
                 })
-                .on("failure", function () {
-                    // give alert dialog
-                    alert("No location matching the entered text could be found.");
-                });
         }
 
         //HelperMethods
