@@ -61,9 +61,6 @@ var WiM;
                 })
                     .on("result", function (lastLocationFound) {
                     _this.eventManager.RaiseEvent(Services.onSelectedAreaOfInterestChanged, _this, new SearchAPIEventArgs(new SearchLocation(lastLocationFound.result.properties, lastLocationFound.result.geometry, lastLocationFound.result.type)));
-                })
-                    .on("failure", function () {
-                    alert("No location matching the entered text could be found.");
                 });
             };
             SearchAPIService.prototype.init = function () {
