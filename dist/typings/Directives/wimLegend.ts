@@ -152,8 +152,7 @@ module WiM.Directives {
                         } else {
                             mlyr.layerArray = response.data.layers;
                         }//end if
-
-                        console.log(mlyr)
+                        
                     }//end if
                 }, function (error) {
                 });
@@ -271,12 +270,16 @@ module WiM.Directives {
         require = '^leaflet';
         transclude= false;
         controller = wimLegendController;
-        template = '<div ng-class="vm.layerControlExpanded ? \'angular-leaflet-control-layers-expanded\' : \'angular-leaflet-control-layers-collapsed\'" ng-click="vm.layerControlExpanded = true; $event.stopPropagation(); $event.preventDefault()" ng-init="vm.layerControlExpanded == false">' +
+        template = '<div ng-class="vm.layerControlExpanded ? \'angular-leaflet-control-layers-expanded\' : \'angular-leaflet-control-layers-collapsed\'" ng-click="vm.layerControlExpanded = true; $event.stopPropagation(); $event.preventDefault()" ng-init="vm.layerControlExpanded == true">' +
         '    <div ng-show="vm.layerControlExpanded">' +
-        '        <button class="close-legend" ng-click="vm.layerControlExpanded = false; $event.stopPropagation();">Close Legend</button>' +
+        '        <div class="row exploration-tools-header">' +
+        '           <h4 ng-if= "title" > Layer Control }</h4>' +
+        '            <button class="close exploration-tools-close-button" ng-click="vm.layerControlExpanded = false; $event.stopPropagation(); $event.preventDefault()" ng-init="vm.layerControlExpanded = true" stop-event="click"> &times; </button>' +
+        '        </div>' +
+        '        <h6> Legend</h6>' +
         '        <div class="list-group">' +
         '            <!-- baselayers -->' +
-        '            <div ng-class="!vm.baselayers.isOpen  ? \' list-group-item-active wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'" ng-click="vm.baselayers.isOpen=(vm.baselayers.isOpen) ? false : true;">' +
+        '            <div class ="oneline" ng-class="!vm.baselayers.isOpen  ? \' list-group-item-active wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'" ng-click="vm.baselayers.isOpen=(vm.baselayers.isOpen) ? false : true;">' +
         '                <label>Base Maps</label>' +
         '                <i ng-class="!vm.baselayers.isOpen ? \'fa fa-chevron-up pull-right\': \'fa fa-chevron-down pull-right\'"></i>' +
         '            </div> ' +

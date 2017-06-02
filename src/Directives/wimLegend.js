@@ -14,10 +14,11 @@ var WiM;
         var LegendLayerAddedEventArgs = (function (_super) {
             __extends(LegendLayerAddedEventArgs, _super);
             function LegendLayerAddedEventArgs(layername, ltype, style) {
-                _super.call(this);
-                this.LayerName = layername;
-                this.layerType = ltype;
-                this.style = style;
+                var _this = _super.call(this) || this;
+                _this.LayerName = layername;
+                _this.layerType = ltype;
+                _this.style = style;
+                return _this;
             }
             return LegendLayerAddedEventArgs;
         }(WiM.Event.EventArgs));
@@ -25,10 +26,11 @@ var WiM;
         var LegendLayerChangedEventArgs = (function (_super) {
             __extends(LegendLayerChangedEventArgs, _super);
             function LegendLayerChangedEventArgs(layername, propertyname, value) {
-                _super.call(this);
-                this.LayerName = layername;
-                this.PropertyName = propertyname;
-                this.Value = value;
+                var _this = _super.call(this) || this;
+                _this.LayerName = layername;
+                _this.PropertyName = propertyname;
+                _this.Value = value;
+                return _this;
             }
             return LegendLayerChangedEventArgs;
         }(WiM.Event.EventArgs));
@@ -36,9 +38,10 @@ var WiM;
         var LegendLayerRemovedEventArgs = (function (_super) {
             __extends(LegendLayerRemovedEventArgs, _super);
             function LegendLayerRemovedEventArgs(layername, ltype) {
-                _super.call(this);
-                this.LayerName = layername;
-                this.layerType = ltype;
+                var _this = _super.call(this) || this;
+                _this.LayerName = layername;
+                _this.layerType = ltype;
+                return _this;
             }
             return LegendLayerRemovedEventArgs;
         }(WiM.Event.EventArgs));
@@ -46,21 +49,21 @@ var WiM;
         var wimLegendController = (function (_super) {
             __extends(wimLegendController, _super);
             function wimLegendController($scope, $http, leafletData, eventManager) {
-                var _this = this;
-                _super.call(this, $http, '');
-                $scope.vm = this;
-                this.eventManager = eventManager;
-                this.eventManager.AddEvent(Directives.onLayerAdded);
-                this.eventManager.AddEvent(Directives.onLayerChanged);
-                this.eventManager.AddEvent(Directives.onLayerRemoved);
-                this.eventManager.SubscribeToEvent(Directives.onLayerAdded, new WiM.Event.EventHandler(function (sender, e) {
+                var _this = _super.call(this, $http, '') || this;
+                $scope.vm = _this;
+                _this.eventManager = eventManager;
+                _this.eventManager.AddEvent(Directives.onLayerAdded);
+                _this.eventManager.AddEvent(Directives.onLayerChanged);
+                _this.eventManager.AddEvent(Directives.onLayerRemoved);
+                _this.eventManager.SubscribeToEvent(Directives.onLayerAdded, new WiM.Event.EventHandler(function (sender, e) {
                     _this.onLayerAdded(sender, e);
                 }));
-                this.eventManager.SubscribeToEvent(Directives.onLayerRemoved, new WiM.Event.EventHandler(function (sender, e) {
+                _this.eventManager.SubscribeToEvent(Directives.onLayerRemoved, new WiM.Event.EventHandler(function (sender, e) {
                     _this.onLayerRemoved(sender, e);
                 }));
-                this.leafletData = leafletData;
-                this.init();
+                _this.leafletData = leafletData;
+                _this.init();
+                return _this;
             }
             wimLegendController.prototype.initOverlays = function (mlyr) {
                 if (mlyr.type == "agsDynamic") {
@@ -83,7 +86,6 @@ var WiM;
                             else {
                                 mlyr.layerArray = response.data.layers;
                             }
-                            console.log(mlyr);
                         }
                     }, function (error) {
                     });
@@ -172,9 +174,9 @@ var WiM;
                 if (this.applicationLayer.layergroup.hasOwnProperty(e.LayerName))
                     delete this.applicationLayer[e.LayerName];
             };
-            wimLegendController.$inject = ['$scope', '$http', 'leafletData', 'WiM.Event.EventManager'];
             return wimLegendController;
         }(WiM.Services.HTTPServiceBase));
+        wimLegendController.$inject = ['$scope', '$http', 'leafletData', 'WiM.Event.EventManager'];
         var wimLegend = (function () {
             function wimLegend() {
                 this.scope = {
@@ -189,12 +191,16 @@ var WiM;
                 this.require = '^leaflet';
                 this.transclude = false;
                 this.controller = wimLegendController;
-                this.template = '<div ng-class="vm.layerControlExpanded ? \'angular-leaflet-control-layers-expanded\' : \'angular-leaflet-control-layers-collapsed\'" ng-click="vm.layerControlExpanded = true; $event.stopPropagation(); $event.preventDefault()" ng-init="vm.layerControlExpanded == false">' +
+                this.template = '<div ng-class="vm.layerControlExpanded ? \'angular-leaflet-control-layers-expanded\' : \'angular-leaflet-control-layers-collapsed\'" ng-click="vm.layerControlExpanded = true; $event.stopPropagation(); $event.preventDefault()" ng-init="vm.layerControlExpanded == true">' +
                     '    <div ng-show="vm.layerControlExpanded">' +
-                    '        <button class="close-legend" ng-click="vm.layerControlExpanded = false; $event.stopPropagation();">Close Legend</button>' +
+                    '        <div class="row exploration-tools-header">' +
+                    '           <h4 ng-if= "title" > Layer Control }</h4>' +
+                    '            <button class="close exploration-tools-close-button" ng-click="vm.layerControlExpanded = false; $event.stopPropagation(); $event.preventDefault()" ng-init="vm.layerControlExpanded = true" stop-event="click"> &times; </button>' +
+                    '        </div>' +
+                    '        <h6> Legend</h6>' +
                     '        <div class="list-group">' +
                     '            <!-- baselayers -->' +
-                    '            <div ng-class="!vm.baselayers.isOpen  ? \' list-group-item-active wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'" ng-click="vm.baselayers.isOpen=(vm.baselayers.isOpen) ? false : true;">' +
+                    '            <div class ="oneline" ng-class="!vm.baselayers.isOpen  ? \' list-group-item-active wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'" ng-click="vm.baselayers.isOpen=(vm.baselayers.isOpen) ? false : true;">' +
                     '                <label>Base Maps</label>' +
                     '                <i ng-class="!vm.baselayers.isOpen ? \'fa fa-chevron-up pull-right\': \'fa fa-chevron-down pull-right\'"></i>' +
                     '            </div> ' +
