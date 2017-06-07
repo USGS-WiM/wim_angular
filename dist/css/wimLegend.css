@@ -54,6 +54,7 @@
     transition: all .2s;
 }
 
+
 .angular-leaflet-control-layers-header {
     height: 30px;
     display: inline-block;
@@ -152,7 +153,7 @@
 .angular-leaflet-control-layers-expanded .list-group-item label.hasCheckbox,
 .angular-leaflet-control-layers-expanded .list-group-item-active label.hasCheckbox{
     box-sizing: border-box;
-    padding-right: 18px;
+    padding-right: 20px;
 
 }
 .angular-leaflet-control-layers-expanded .list-group-item label,
@@ -207,6 +208,9 @@
     font-size: 10pt;
 }
 
+[type="checkbox"]:not(:checked) + label:after, [type="checkbox"]:checked + label:after {
+    display: none;
+}
 
 /*Sidebar item*/
 .sidebar-item{
@@ -259,9 +263,14 @@
     padding: 0 0 3px 1px;
     line-height: 17px;
 }
+
 .sidebar-item label.hasRadio.radioSelected:before{
     color: #0071BC !important;
     font-size: 8pt;
+}
+.sidebar-item [type=checkbox]:checked + label, 
+[type=checkbox]:not(:checked) + label, [type=radio]:checked + label, [type=radio]:not(:checked) + label {
+    padding-left: 25px !important;
 }
 
 
@@ -391,3 +400,44 @@
     transition: 0.15s;
     cursor: pointer;
 }
+.legend-header {
+    height: 30px;
+    display: inline-block;
+    float: left;
+}
+
+.legend-close-button {
+    margin-right: 20px;
+}
+
+.legend-header .close {
+    font-size: 22pt;
+    margin: 0 auto;
+    width: 40px;
+    height: 40px;
+    opacity: 1;
+    background-color: white;
+    border-radius: 50%;
+    box-sizing: border-box;
+    padding: 0 0 2px 0;
+    float: right;
+    color: rgba(0,0,0,0.5);
+    box-shadow: 1px 1px 5px #333;
+    position: relative;
+    left: 10px;
+    top: -25px;
+}
+
+.legend-header .close:hover {
+    border: none;
+    color: rgba(44,116,183,.5);
+}
+
+.oneline {
+    overflow:hidden;
+    white-space:nowrap;
+}
+
+
+
+
