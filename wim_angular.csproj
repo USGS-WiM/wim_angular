@@ -53,7 +53,6 @@
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="gulpfile.js" />
     <TypeScriptCompile Include="src\Directives\directives.module.ts" />
     <TypeScriptCompile Include="src\Directives\wimAbout.ts" />
     <TypeScriptCompile Include="src\Directives\wimLegend.ts" />
