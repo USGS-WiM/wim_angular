@@ -199,39 +199,45 @@ var WiM;
                     '           <h4 ng-if= "title" > Layer Control }</h4>' +
                     '            <button class="close legend-close-button" ng-click="vm.layerControlExpanded = false; $event.stopPropagation(); $event.preventDefault()" ng-init="vm.layerControlExpanded = true" stop-event="click"> &times; </button>' +
                     '        </div>' +
-                    '        <h6> Legend</h6>' +
+                    '        <h6> Layers </h6>' +
                     '        <div class="list-group">' +
                     '            <!-- baselayers -->' +
                     '            <div class ="wimLegend-basemaps-group" ng-class="!vm.baselayers.isOpen  ? \' list-group-item-active wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'" ng-click="vm.baselayers.isOpen=(vm.baselayers.isOpen) ? false : true;">' +
-                    '                <label>Base Maps</label>' +
-                    '                <i ng-class="!vm.baselayers.isOpen ? \'fa fa-chevron-up pull-right\': \'fa fa-chevron-down pull-right\'"></i>' +
+                    '                <label>' +
+                    '                    <span> Base Maps <i ng-class="!vm.baselayers.isOpen ? \'fa fa-chevron-up pull-right\': \'fa fa-chevron-down pull-right\'"></i> </span>' +
+                    '                </label>' +
                     '            </div> ' +
                     '            <div ng-hide="vm.baselayers.isOpen" class="list-group-body wimLegend-list-group-body">' +
                     '                <div class="sidebar-item wimLegend-basemap-item" ng-repeat="(key, layer) in vm.baselayers.layergroup">' +
-                    '                    <input type="radio" id="baselayerRadio{{$id}}" ng-checked="$parent.vm.baselayers.selectedlayerName === key.toString()" ng-value="key.toString()" /><label class="hasRadio" ng-class="{ \'radioSelected\': $parent.vm.baselayers.selectedlayerName === key.toString() }" for="baselayerRadio{{$id}}" ng-click="vm.changeBaseLayer(key, $event)">{{layer.name}}</label>' +
+                    '                    <label class="rdo" for="baselayerRadio{{$id}}" ng-click="vm.changeBaseLayer(key, $event)">' +
+                    '                        <input type="radio" id="baselayerRadio{{$id}}" ng-checked="$parent.vm.baselayers.selectedlayerName === key.toString()" ng-value="key.toString()" />' +
+                    '                        <span>{{layer.name}}</span>' +
+                    '                    </label>' +
                     '                </div>' +
                     '            </div>  ' +
                     '            <!-- Application Layers -->' +
                     '            <div class="wimLegend-application-group" ng-if="vm.applicationLayer.isAvailable">' +
-                    '                <div ng-class="vm.applicationLayer.isOpen  ? \'list-group-item wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'">' +
-                    '                    <label> {{vm.applicationLayer.selectedlayerName}}</label>' +
-                    '                    <i ng-class="vm.applicationLayer.isOpen ? \'fa fa-chevron-up pull-right\': \'fa fa-chevron-down pull-right\'" ng-click="vm.applicationLayer.isOpen=(vm.applicationLayer.isOpen) ? false : true;"></i>' +
+                    '                <div ng-class="vm.applicationLayer.isOpen  ? \' list-group-item-active wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'">' +
+                    '                    <label>' +
+                    '                        <span> {{vm.applicationLayer.selectedlayerName}} <i ng-class="vm.applicationLayer.isOpen ?  \'fa fa-chevron-up pull-right\': \'fa fa-chevron-down pull-right\'" ng-click="vm.applicationLayer.isOpen=(vm.applicationLayer.isOpen) ? false : true;"></i></span>' +
+                    '                    </label>' +
                     '                </div>' +
                     '                <div ng-show="vm.applicationLayer.isOpen">' +
                     '                    <div class="wimLegend-application-item" ng-repeat="(key, lyr) in vm.applicationLayer.layergroup">' +
-                    '                        <input type="checkbox" id="applicationLayer{{$id}}" ng-checked="lyr.visible" />                        ' +
-                    '                        <label class="hasCheckbox"  ng-class="{ \'checkboxEnabled\': lyr.visible }" for="applicationLayer{{$id}}" ng-click="$parent.vm.toggleLayer(key.toString(), lyr.visible)"><img ng-src={{lyr.style.imagesrc}} />{{lyr.style.displayName}}</label>' +
+                    '                            <label for="applicationLayer{{$id}}" class="chx" ng-click="$parent.vm.toggleLayer(key.toString(), lyr.visible)">' +
+                    '                               <input type="checkbox" id="applicationLayer{{$id}}" ng-checked="lyr.visible" />' +
+                    '                               <span><img ng-src={{lyr.style.imagesrc}} />{{lyr.style.displayName}}</span>' +
+                    '                            </label>' +
                     '                    </div>' +
                     '                </div>' +
                     '            </div>' +
                     '            <!-- overlays --> ' +
                     '            <div class="wimLegend-overlay-group" ng-repeat="layer in vm.overlays.layergroup" ng-init="vm.initOverlays(layer)">' +
                     '                <div ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-class="!layer.isOpen  ? \'list-group-item-active wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'">' +
-                    '                    <input type="checkbox" id="checkbox{{$id}}" ng-checked="layer.visible" />' +
-                    '                    <label class="hasCheckbox" ng-class="{ \'checkboxEnabled\': layer.visible }" for="checkbox{{$id}}" ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-click="layer.visible = (layer.visible) ? false : true;">' +
-                    '                        {{layer.name}}' +
-                    '                    </label>' +
-                    '                    <i ng-class="!layer.isOpen ? \'fa fa-chevron-up pull-right\': \'fa fa-chevron-down pull-right\'" ng-click="layer.isOpen=(layer.isOpen) ? false : true;"></i>' +
+                    '                            <label for="checkbox{{$id}}" class="chx" ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-click="layer.visible = (layer.visible) ? false : true;">' +
+                    '                               <input type="checkbox" id="checkbox{{$id}}" ng-checked="layer.visible" />' +
+                    '                               <span>{{layer.name}}<i ng-class="!layer.isOpen ? \'fa fa-chevron-up pull-right\': \'fa fa-chevron-down pull-right\'" ng-click="layer.isOpen=(layer.isOpen) ? false : true; $event.stopPropagation(); $event.preventDefault()"></i></span>' +
+                    '                            </label>' +
                     '                </div>' +
                     '                <div ng-hide="layer.isOpen">' +
                     '                    <div class="legendGroup" ng-if="layer.type == \'agsDynamic\' || layer.type == \'agsFeature\'">' +
