@@ -12,8 +12,9 @@ var WiM;
         var SearchAPIEventArgs = (function (_super) {
             __extends(SearchAPIEventArgs, _super);
             function SearchAPIEventArgs(aoi) {
-                _super.call(this);
-                this.selectedAreaOfInterest = aoi;
+                var _this = _super.call(this) || this;
+                _this.selectedAreaOfInterest = aoi;
+                return _this;
             }
             return SearchAPIEventArgs;
         }(WiM.Event.EventArgs));
@@ -29,11 +30,12 @@ var WiM;
         var SearchAPIService = (function (_super) {
             __extends(SearchAPIService, _super);
             function SearchAPIService($http, $q, eventManager) {
-                _super.call(this, $http, configuration.baseurls['SearchAPI']);
-                this.$q = $q;
-                this.eventManager = eventManager;
-                this.eventManager.AddEvent(Services.onSelectedAreaOfInterestChanged);
-                this.init();
+                var _this = _super.call(this, $http, configuration.baseurls['SearchAPI']) || this;
+                _this.$q = $q;
+                _this.eventManager = eventManager;
+                _this.eventManager.AddEvent(Services.onSelectedAreaOfInterestChanged);
+                _this.init();
+                return _this;
             }
             SearchAPIService.prototype.checkSearchAPI = function () {
                 if (search_api)

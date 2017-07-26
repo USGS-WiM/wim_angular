@@ -21,16 +21,17 @@ var WiM;
         var wimAboutController = (function (_super) {
             __extends(wimAboutController, _super);
             function wimAboutController($scope, $http) {
-                _super.call(this, $http, '');
-                $scope.vm = this;
-                this.gitHubIssues = new GitHubIssueData();
-                this.SupportTicketData = new SupportTicketData();
-                this.selectedAboutTabName = "about";
-                this.selectedHelpTabName = "faq";
-                this.aboutSelected = false;
-                this.helpSelected = false;
-                this.displayMessage;
-                this.isValid = false;
+                var _this = _super.call(this, $http, '') || this;
+                $scope.vm = _this;
+                _this.gitHubIssues = new GitHubIssueData();
+                _this.SupportTicketData = new SupportTicketData();
+                _this.selectedAboutTabName = "about";
+                _this.selectedHelpTabName = "faq";
+                _this.aboutSelected = false;
+                _this.helpSelected = false;
+                _this.displayMessage;
+                _this.isValid = false;
+                return _this;
             }
             wimAboutController.prototype.uploadFile = function (event) {
                 this.SupportTicketData.attachments = event.target.files;
@@ -74,9 +75,9 @@ var WiM;
                     return;
                 this.selectedHelpTabName = tabname;
             };
-            wimAboutController.$inject = ['$scope', '$http'];
             return wimAboutController;
         }(WiM.Services.HTTPServiceBase));
+        wimAboutController.$inject = ['$scope', '$http'];
         var wimAbout = (function () {
             function wimAbout() {
                 this.scope = true;

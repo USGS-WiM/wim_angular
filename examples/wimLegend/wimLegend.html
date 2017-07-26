@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html ng-app="wimLegendExampleApp">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,6 +69,18 @@
                         }
                     },
                     overlays: {
+                        ANational: {
+                            name: 'National test',
+                            type: 'agsDynamic',
+                            url: 'https://streamstatstest.wim.usgs.gov/arcgis/rest/services/StreamStats/nationalLayers/MapServer',
+                            visible: true,
+                            layerOptions: {
+                                zIndex: 1,
+                                opacity: 0.6,
+                                format: "png8",
+                                f: "image"
+                            }
+                        },
                         states: {
                             name: 'States',
                             type: 'agsDynamic',
@@ -88,13 +100,6 @@
                                 layers: [2],
                                 opacity: 1
                             }
-                        },
-                        nwis : {
-                            name: "USGS real-time streamgages",
-                            type: "agsFeature",
-                            url : "https://stnmapservices.wim.usgs.gov:6443/arcgis/rest/services/STN/STN_nwis_rt/MapServer/0",
-                            visible: false,
-                            layerOptions : {}
                         },
                         wms: {
                             name: 'EEUU States (WMS)',

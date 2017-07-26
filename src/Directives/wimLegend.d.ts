@@ -15,8 +15,9 @@ declare module WiM.Directives {
     class LegendLayerAddedEventArgs extends WiM.Event.EventArgs {
         LayerName: string;
         layerType: String;
+        visible: boolean;
         style: any;
-        constructor(layername: string, ltype: string, style: any);
+        constructor(layername: string, ltype: string, style: any, visible?: boolean);
     }
     class LegendLayerChangedEventArgs extends WiM.Event.EventArgs {
         LayerName: string;

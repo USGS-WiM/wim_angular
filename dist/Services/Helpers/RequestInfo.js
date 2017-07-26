@@ -25,13 +25,13 @@ var WiM;
                 return RequestInfo;
             }());
             Helpers.RequestInfo = RequestInfo;
+            var methodType;
             (function (methodType) {
                 methodType[methodType["GET"] = 0] = "GET";
                 methodType[methodType["POST"] = 1] = "POST";
                 methodType[methodType["PUT"] = 2] = "PUT";
                 methodType[methodType["DELETE"] = 3] = "DELETE";
-            })(Helpers.methodType || (Helpers.methodType = {}));
-            var methodType = Helpers.methodType;
+            })(methodType = Helpers.methodType || (Helpers.methodType = {}));
         })(Helpers = Services.Helpers || (Services.Helpers = {}));
     })(Services = WiM.Services || (WiM.Services = {}));
 })(WiM || (WiM = {}));

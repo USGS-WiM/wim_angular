@@ -11,8 +11,9 @@ var WiM;
         var AuthenticationServiceAgent = (function (_super) {
             __extends(AuthenticationServiceAgent, _super);
             function AuthenticationServiceAgent($http, $q, baseURL, u) {
-                _super.call(this, $http, baseURL);
-                this.User = u;
+                var _this = _super.call(this, $http, baseURL) || this;
+                _this.User = u;
+                return _this;
             }
             AuthenticationServiceAgent.prototype.SetBasicAuthentication = function (uri, password) {
                 var request;
