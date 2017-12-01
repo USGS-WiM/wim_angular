@@ -9,6 +9,7 @@ declare module WiM.Services.Helpers {
         params: any;
         data: any;
         transformRequest: any;
+        withCredentials?: boolean;
         constructor(ul: string, includesbaseurl?: boolean, mthd?: methodType, dtype?: string, data?: any, headers?: any, tranform?: any, timeout?: Number);
     }
     enum methodType {
