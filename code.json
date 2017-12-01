@@ -1,0 +1,46 @@
+[
+  {
+    "name": "wim_angular",
+    "organization": "U.S. Geological Survey",
+    "description": "wim_angular is a collection of custom reusable angularjs libraries and objects.",
+    "version": "v1.1.3",
+    "statusOptionsURL":"https://github.com/GSA/code-gov-web/blob/master/src/assets/schemas/2.0.0.json#L144-L152",
+	"status": "preliminary",	
+
+    "permissions": {
+      "usageType": "openSource",
+      "licenses": [
+        {
+          "name": "Public Domain, CC0-1.0",
+          "URL": "https://github.com/usgs/best-practices/blob/master/LICENSE.md"
+        }
+      ]
+    },
+
+    "homepageURL": "https://wim.usgs.gov",
+    "downloadURL": "https://github.com/USGS-WiM/wim_angular/archive/master.zip",
+    "disclaimerURL": "https://github.com/USGS-WiM/wim_angular/blob/master/LICENSE.md",
+    "repositoryUrl": "https://github.com/USGS-WiM/wim_angular",
+    "vcs": "git",
+
+    "laborHours": null,
+
+    "tags": [
+      "angularjs"
+    ],
+
+    "languages": [
+      "typescript",
+	  "javascript"
+    ],
+
+    "contact": {
+      "name": "Jeremy Newson",
+      "email": "jknewson@usgs.gov"
+    },
+
+    "date": {
+      "metadataLastUpdated": "2017-10-25"
+    }
+  }
+]
