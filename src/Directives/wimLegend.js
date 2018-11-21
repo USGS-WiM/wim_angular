@@ -73,6 +73,10 @@ var WiM;
                 return _this;
             }
             wimLegendController.prototype.initOverlays = function (mlyr) {
+                if (mlyr.layerArray) {
+                    mlyr.isOpen = true;
+                    return;
+                }
                 if (mlyr.type == "agsDynamic") {
                     var url = mlyr.url + "/legend?f=pjson";
                     var request = new WiM.Services.Helpers.RequestInfo(url, true);
