@@ -133,6 +133,10 @@ module WiM.Directives {
         //Methods  
         //-+-+-+-+-+-+-+-+-+-+-+-
         public initOverlays(mlyr: any): void  {
+            if (mlyr.layerArray) {
+                mlyr.isOpen = true;
+                return;
+            }
             if (mlyr.type == "agsDynamic") {
                 // if (mlyr.type != "agsDynamic")
                 //     return;
