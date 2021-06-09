@@ -14,9 +14,8 @@ wim_angular is a collection of custom reusable angularjs libraries and objects.
 This will install the following packages globally
 
 ```
-npm install -g bower
 npm install -g gulp
-npm install -g typings
+npm install -g typescript@~1.7
 ```
 
 ## Getting Started
@@ -32,7 +31,6 @@ This will install the required dependencies to the project
 Inside of your project folder (after git fork and clone):
 ```
 npm install
-bower install
 typings install
 ```
 
@@ -53,6 +51,8 @@ Your app will also need jquery and bootstrap as dependencies. Map applications a
 ##Editing this package
 
 Edits must be made in the base typescript files in the src folder. Please use typescript transpiler version 1.7 We have learned that v1.8 seems to output poorly-formatted IIFE statements that break the package in the browser.
+
+To transpile, run `tsc`. If that doesn't work, try `tsc --init` first.
 
 After editing the TypeScript and transpiling it to JavaScript, run the gulp task `gulp build` to copy the transpiled JS to the dist folder.
 
