@@ -3,7 +3,7 @@
     "name": "wim_angular",
     "organization": "U.S. Geological Survey",
     "description": "wim_angular is a collection of custom reusable angularjs libraries and objects.",
-    "version": "v1.1.3",
+    "version": "v1.1.4",
     "statusOptionsURL":"https://github.com/GSA/code-gov-web/blob/master/src/assets/schemas/2.0.0.json#L144-L152",
 	"status": "preliminary",	
 
