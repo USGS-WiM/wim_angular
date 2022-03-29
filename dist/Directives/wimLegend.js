@@ -57,6 +57,7 @@ var WiM;
             __extends(wimLegendController, _super);
             function wimLegendController($scope, $http, leafletData, eventManager) {
                 var _this = _super.call(this, $http, '') || this;
+                _this.overlayGroups = [];
                 $scope.vm = _this;
                 _this.eventManager = eventManager;
                 _this.eventManager.AddEvent(Directives.onLayerAdded);
@@ -71,6 +72,10 @@ var WiM;
                 _this.leafletData = leafletData;
                 _this.init();
                 return _this;
+            }
+            wimLegendController.prototype.initLayers = function (mlyr) {
+                this.initGroups(mlyr);
+                this.initOverlays(mlyr);
             }
             wimLegendController.prototype.initOverlays = function (mlyr) {
                 if (mlyr.layerArray) {
@@ -89,6 +94,7 @@ var WiM;
                                 for (var i = 0; i < visibleLayers.length; i++) {
                                     for (var j = 0; j < response.data.layers.length; j++) {
                                         if (visibleLayers[i] == response.data.layers[j].layerId) {
+                                            response.data.layers[j].visible = true;
                                             mlyr.layerArray.push(response.data.layers[j]);
                                         }
                                     }
@@ -111,6 +117,7 @@ var WiM;
                             mlyr.layerArray = [];
                             for (var k = 0; k < response.data.layers.length; k++) {
                                 if (layerId == response.data.layers[k].layerId) {
+                                    response.data.layers[k].visible = true;
                                     mlyr.layerArray.push(response.data.layers[k]);
                                 }
                             }
@@ -124,6 +131,26 @@ var WiM;
                         mlyr.legendURL = mlyr.url + "?version=1.1.1&request=GetLegendGraphic&format=image/png&layer=" + mlyr.layerParams.layers;
                 }
             };
+            wimLegendController.prototype.initGroups = function (mlyr) {
+                var groups = [];
+                    if(mlyr.hasOwnProperty("group")){
+                        this.overlayGroups.forEach((group) =>{
+                            if(groups.indexOf(group.group) === -1){
+                                groups.push(group.group);
+                            }
+                        });
+                        if(groups.indexOf(mlyr.group) === -1){
+                            this.overlayGroups.push({group: mlyr.group, layers: [mlyr]});
+                        }else{
+                            this.overlayGroups.forEach((group) =>{
+                                if(group.group === mlyr.group){
+                                    group.layers.push(mlyr)
+                                    group.isOpen = true;
+                                }
+                            });
+                        }
+                    }
+            }
             wimLegendController.prototype.changeBaseLayer = function (key, evt) {
                 var _this = this;
                 this.baselayers.selectedlayerName = key.toString();
@@ -242,7 +269,8 @@ var WiM;
                     '                </div>' +
                     '            </div>' +
                     '            <!-- overlays --> ' +
-                    '            <div class="wimLegend-overlay-group" ng-repeat="layer in vm.overlays.layergroup" ng-init="vm.initOverlays(layer)">' +
+                    '            <div class="wimLegend-overlay-group" ng-repeat="layer in vm.overlays.layergroup" ng-init="vm.initLayers(layer)">' +
+                    '                <div ng-if="!layer.hasOwnProperty(\'group\')">' +
                     '                <div ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-class="!layer.isOpen  ? \'list-group-item-active wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'">' +
                     '                            <label for="checkbox{{$id}}" class="chx" ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-click="layer.visible = (layer.visible) ? false : true;">' +
                     '                               <input type="checkbox" id="checkbox{{$id}}" ng-checked="layer.visible" />' +
@@ -263,6 +291,37 @@ var WiM;
                     '                    <div class="legendGroup" ng-if="layer.type == \'wms\'">' +
                     '                       <img class="legendSwatch" alt="Embedded Image" ng-src="{{layer.legendURL}}" />' +
                     '                    </div>' +
+                    '                </div>' +
+                    '                </div>' +
+                    '            </div>' +
+                    '            <div class="wimLegend-overlay-group" ng-repeat="group in vm.overlayGroups">' +
+                    '               <div ng-class="!group.isOpen  ? \'list-group-item-active wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'">' +
+                    '                            <label>' +
+                    '                               <span>{{group.group}}<i ng-class="!group.isOpen ? \'fa fa-chevron-up pull-right\': \'fa fa-chevron-down pull-right\'" ng-click="group.isOpen=(group.isOpen) ? false : true; $event.stopPropagation(); $event.preventDefault()"></i></span>' +
+                    '                            </label>' +
+                    '                </div>' +
+                    '                <div ng-hide="group.isOpen">' +
+                    '                <div ng-repeat="layer in group.layers">' +
+                    '                    <div class="legendGroup" ng-if="layer.type == \'agsDynamic\' || layer.type == \'agsFeature\'">' +
+                    '                        <div ng-repeat="lyr in layer.layerArray ">' +
+                    '                           <div ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false">' +
+                    '                                <label for="checkbox{{$id}}" class="chx" ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-click="layer.visible = (layer.visible) ? false : true;">' +
+                    '                                    <input type="checkbox" id="checkbox{{$id}}" ng-checked="layer.visible" />' +
+                    '                                    <span><label>{{lyr.layerName}}</label></span>' +
+                    '                                </label>' +
+                    '                           </div>' +
+                    '                            <div ng-repeat="leg in lyr.legend ">' +
+                    '                                <img class="legendSwatch" alt="Embedded Image"' +
+                    '                                     ng-src="data:{{leg.contentType}};base64,{{leg.imageData}}" />' +
+                    '                                <i>{{leg.label}}</i>' +
+                    '                            </div>' +
+                    '                        </div>' +
+                    '                    </div>' +
+                    '                    <div class="legendGroup" ng-if="layer.type == \'wms\'">' +
+                    '                       <img class="legendSwatch" alt="Embedded Image" ng-src="{{layer.legendURL}}" />' +
+                    '                    </div>' +
+                    '                </div>' +
+                    '                </div>' +
                     '                </div>' +
                     '            </div>' +
                     '            ' +
