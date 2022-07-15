@@ -346,7 +346,7 @@ module WiM.Directives {
         '            </div>' +
         '            <!-- overlays --> ' +
         '            <div class="wimLegend-overlay-group" ng-repeat="layer in vm.overlays.layergroup" ng-init="vm.initLayers(layer)">' +
-        '                <div ng-if="!layer.hasOwnProperty(\'group\')">' +
+        '                <div ng-if="!layer.hasOwnProperty(\'group\') && (layer.hidden != true)">' +
         '                <div ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-class="!layer.isOpen  ? \'list-group-item-active wimLegend-list-group-item-active\': \'list-group-item wimLegend-list-group-item\'">' +
         '                            <label for="checkbox{{$id}}" class="chx" ng-if="!layer.layerParams.showOnSelector && layer.layerParams.showOnSelector !== false" ng-click="layer.visible = (layer.visible) ? false : true;">' +
         '                               <input type="checkbox" id="checkbox{{$id}}" ng-checked="layer.visible" />' +
