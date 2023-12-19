@@ -211,7 +211,7 @@ var WiM;
                 if (e.layerType != 'geojson')
                     return;
                 if (this.applicationLayer.layergroup.hasOwnProperty(e.LayerName))
-                    delete this.applicationLayer[e.LayerName];
+                    delete this.applicationLayer.layergroup[e.LayerName];
             };
             return wimLegendController;
         }(WiM.Services.HTTPServiceBase));

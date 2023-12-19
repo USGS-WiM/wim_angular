@@ -202,7 +202,7 @@ var WiM;
                 if (this.applicationLayer.layergroup.hasOwnProperty(e.LayerName))
                     return;
                 this.applicationLayer.isAvailable = true;
-                this.applicationLayer.layergroup[e.LayerName] = {
+                this.applicationLayer.layergroup.layergroup[e.LayerName] = {
                     visible: e.visible,
                     style: e.style
                 };
