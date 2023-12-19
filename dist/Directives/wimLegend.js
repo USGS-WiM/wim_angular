@@ -202,7 +202,7 @@ var WiM;
                 if (this.applicationLayer.layergroup.hasOwnProperty(e.LayerName))
                     return;
                 this.applicationLayer.isAvailable = true;
-                this.applicationLayer.layergroup.layergroup[e.LayerName] = {
+                this.applicationLayer.layergroup[e.LayerName] = {
                     visible: e.visible,
                     style: e.style
                 };
@@ -211,7 +211,7 @@ var WiM;
                 if (e.layerType != 'geojson')
                     return;
                 if (this.applicationLayer.layergroup.hasOwnProperty(e.LayerName))
-                    delete this.applicationLayer[e.LayerName];
+                    delete this.applicationLayer.layergroup[e.LayerName];
             };
             return wimLegendController;
         }(WiM.Services.HTTPServiceBase));
