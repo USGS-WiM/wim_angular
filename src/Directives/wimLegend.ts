@@ -284,7 +284,7 @@ module WiM.Directives {
             if (e.layerType != 'geojson') return; 
             //remove
             if (this.applicationLayer.layergroup.hasOwnProperty(e.LayerName))
-                delete this.applicationLayer[e.LayerName];
+                delete this.applicationLayer.layergroup[e.LayerName];
         }
 
     }//end wimLayerControlController class
