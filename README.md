@@ -1,5 +1,9 @@
 ![WiM](wimlogo.png)
 
+Update, 2024-05-22: Deprecated
+
+This repository has been has moved to a different hosting platform and is no longer being actively maintained. Please see https://code.usgs.gov/WiM/wim_angular (USGS internal access may be required) for latest updates related to this effort.
+
 # wim_angular
 
 wim_angular is a collection of custom reusable angularjs libraries and objects.
